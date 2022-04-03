@@ -118,6 +118,7 @@ class Usuario
     {
         return $this->nombre;
     }
+
     public function getCorreo()
     {
         return $this->correo;

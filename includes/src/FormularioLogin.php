@@ -57,6 +57,7 @@ class FormularioLogin extends Form
             } else {
                 $_SESSION['login'] = true;
                 $_SESSION['nombre'] = $usuario->getNombre();
+                $_SESSION['correo'] = $usuario->getCorreo();
                // $_SESSION['esAdmin'] = strcmp($usuario->getRol(), 'admin') == 0 ? true : false;
                 $result = 'index.php';
             }
