@@ -4,9 +4,9 @@ require_once __DIR__.'/Aplicacion.php';
 class Carrito{
    
     private $oferta1;
+    private $suma;
     public static function inicio(){
-        
-        
+       
         if(isset($_SESSION["login"])){
            
              $nombre=$_SESSION["nombre"];
@@ -31,24 +31,19 @@ class Carrito{
             echo '<a>Tienes ofertas ¡Usalas!</a>';
             echo'<a href=" oferta.php">Canjear</a>';
         }else{
-            self::consultaDescuento();
+            self::consultaDescuento($sumTot);
         }
-          
+        
     }
-
+        
     public static function consultaPedidosBebPiz(){
         $nombre=$_SESSION["nombre"];
         $app = Aplicacion::getInstancia();
        
         $db = $app->conexionBd();
-//
-        $query1="SELECT Correo
-                FROM Usuarios WHERE Nombre='$nombre'";
-        $resultado=$db->query($query1);
-        $row = $resultado->fetch_assoc();
-        $co=$row['Correo'];
-/////
-        $query="SELECT a.Nombre,a.Precio,s.Oferta  FROM Pizzas a
+
+        $co=$_SESSION['correo'];
+        $query="SELECT a.Nombre,a.Precio,s.Oferta FROM Pizzas a
                         JOIN Pedidos_Pizzas p ON p.ID_PizzaPedida=a.ID_Pizza
                         JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
                         WHERE s.Estado=1 AND s.Usuario='$co'
@@ -65,25 +60,18 @@ class Carrito{
                         echo 'No hay ningun pedido';
                     }else{
                         while($row = $resultado->fetch_assoc()) {
-                            echo $row['Nombre'].' '.$row['Precio'].' '.'</br>';
-                            $oferta=$row['Oferta'];
+                            echo $row['Nombre'].' '.$row['Precio'].'</br>';
+                          $oferta= $row['Oferta'];
                         }
                     
                     }
-                    $oferta1=$oferta;
-                 return $oferta;
+                   return $oferta;
     }
     public static function consultaPrecio(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
-        ////
-        $nombre=$_SESSION["nombre"];
-            $query1="SELECT Correo
-            FROM Usuarios WHERE Nombre='$nombre'";
-         $resultado=$db->query($query1);
-            $row = $resultado->fetch_assoc();
-            $co=$row['Correo'];
-    ////
+      
+        $co=$_SESSION['correo'];
         $query1="SELECT SUM(a.Precio) as Precio1 FROM Pizzas a
         JOIN Pedidos_Pizzas p ON p.ID_PizzaPedida=a.ID_Pizza
         JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
@@ -107,14 +95,8 @@ class Carrito{
     public static function consultaPersonalizada(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
-          ////
-          $nombre=$_SESSION["nombre"];
-          $query1="SELECT Correo
-          FROM Usuarios WHERE Nombre='$nombre'";
-            $resultado=$db->query($query1);
-            $row = $resultado->fetch_assoc();
-            $co=$row['Correo'];
-  ////
+
+        $co=$_SESSION['correo'];
                 $query="SELECT i.Nombre ,i.Precio FROM Ingredientes i
                         JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
                         JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
@@ -136,19 +118,35 @@ class Carrito{
                     return $sumTot;
                 }
     }
-    public static function consultaDescuento(){
+    public static function consultaDescuento($sumTot){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
-       $query1="SELECT Descuento
+        $suma=$sumTot;
+        $co=$_SESSION['correo'];
+
+        $query="SELECT Oferta
+        FROM Pedidos
+        WHERE Usuario ='$co'";
+        $resultado=$db->query($query);
+        $row = $resultado->fetch_assoc();
+        $oferta= $row['Oferta'];
+        $query1="SELECT Descuento
                 FROM ofertas
-                WHERE ID_Oferta='$oferta1'";
+                WHERE ID_Oferta='$oferta'";
                     
             $resultado1=$db->query($query1);
             if(	$row1 = $resultado1->fetch_assoc()){
-                echo '<strike>Precio Total a pagar '.$sumTot.'</strike>';
+                echo '<strike>Precio Total a pagar '.$suma.'</strike>';
                 echo'</br>';
-                echo'Precio nuevo a pagar '.$sumTot-$row1['Descuento'];
+                echo'Precio nuevo a pagar '.$suma-$row1['Descuento'];
             }
+    }
+
+    private static function setSuma($valor){
+        $this->suma= $valor; 
+    }
+    private static function getSuma(){
+        return $this->suma;
     }
 }
 ?>
