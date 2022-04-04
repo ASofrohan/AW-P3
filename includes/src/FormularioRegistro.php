@@ -101,7 +101,7 @@ class FormularioRegistro extends Form
             } else {
                 $_SESSION['login'] = true;
                 $_SESSION['nombre'] = $nombre;
-                $_SESSION['id']=$nombreUsuario;
+                $_SESSION['correo']=$nombreUsuario;
                 $result = 'index.php';
             }
         }
