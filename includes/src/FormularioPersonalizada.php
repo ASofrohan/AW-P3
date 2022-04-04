@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__.'/Form.php';
-//require_once __DIR__.'/Aplicacion.php';
 require_once __DIR__.'/Pizzas.php';
 
 class FormularioPesonalizada extends Form
