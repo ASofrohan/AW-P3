@@ -7,8 +7,8 @@ session_start();
 <head>
 <link rel="stylesheet" type="text/css" href="estilo.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="bebidas.js"></script>
-<title>Bebidas</title>
+<script type="text/javascript" src="pizzas.js"></script>
+<title>Pedidos</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@ session_start();
 <div id="contenedor">
 
 	<?php
-		include ("./inlcudes/comun/cabecera.php");
+		include ("cabecera.php");
 	?>
 
 	<main>
@@ -40,31 +40,23 @@ session_start();
 	$query="SELECT * FROM Bebidas";
 	$resultado=$conn->query($query);
 
-	
-
-	echo '<form action="#" method="post" id=bebidas_cb>';
-	
-	while($row = $resultado->fetch_assoc()) {
-		
-		echo '<input type="checkbox" name="bebidas[]" value="' . $row['Precio'] . '" id="' . $row['ID_Bebida'] . '" onClick=recalcularPrecio(this) /> ' . $row['Nombre'] . '</br>';
-		//echo '<input type="button" name="bebidas[]" value="' . '"onClick=contador++;myFunction()' . '>Aumentar </button>' . $row['Precio'] .'" onClick=recalcularPrecio(this) /> ' . '<br>';
-		
-	}
-	echo '<input type="button" "onclick="aumentar()">+</ br>';
-	echo '<input type="button"onclick="disminuir()">-</ br>';
-	echo '</form>';
-
-	echo '<p>PRECIO: </p>';
-	echo '<p id="precio"></p>';
-
-	echo '<button onClick="añadir()">Añadir</button>';
-
+	echo '<div id="bebidas">';
+		$bebida=0;
+		while($row = $resultado->fetch_assoc()) {
+			echo '<input type="number" name="bebidas" id="bebidas[]"
+                min="0" max="120" step="1" value="0">';
+			echo $row['Nombre'];
+			echo '</br>';
+		}
+		echo'<p>PRECIO: </p>';
+		echo '<p id="precio">0</p>';
+	echo '</div>'
 	?>
-			
+
 	</main>
 	
 	<?php
-		include ("./includes/comun/pie.php");
+		include ("pie.php");
 	?>
 
 </div> <!-- Fin del contenedor -->
