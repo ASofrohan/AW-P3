@@ -2,7 +2,7 @@
 require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Pizzas.php';
 
-class FormularioPesonalizada extends Form
+class FormularioPersonalizada extends Form
 {
     public function __construct() {
         parent::__construct('formPersonalizada');
