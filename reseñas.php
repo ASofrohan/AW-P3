@@ -5,11 +5,23 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/FormularioMensaje.php';
 
 $form = new FormularioMensaje();
-$htmlFormMensaje = $form->gestiona();
+if(!isset($_SESSION["login"])){
+	$htmlFormMensaje="";
+}
+else{
+	$htmlFormMensaje = $form->gestiona();
+}
 
 $tituloPagina = 'Reseñas';
 $array=$form->mostrarForo();
-$contenidoPrincipal =<<<EOF
+//$com=$array[0]->getComentario();
+
+$contenidoPrincipal =
+
+<<<EOF
+	<div  style="overflow: auto; width: 400px; height: 300px">
+		$array
+	</div>
 		$htmlFormMensaje
 EOF;
 
