@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Mensaje.php';
+require_once __DIR__.'/Usuario.php';
 
 class FormularioMensaje extends Form
 {
@@ -10,20 +11,21 @@ class FormularioMensaje extends Form
     
     protected function generaCamposFormulario($datos, $errores = array())
     {
-        $nombreUsuario = $datos['nombreUsuario'] ?? '';
-        $comentario = $datos['comentario'] ?? '';
+        $comentario = $datos['mensaje'] ?? '';
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
         $errorComentario = self::createMensajeError($errores, 'comentario', 'span', array('class' => 'error'));
-        $errorPuntuacion = self::createMensajeError($errores, 'puntuacion', 'span', array('class' => 'error'));
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
 
         $html = <<<EOF
             <fieldset>
                 $htmlErroresGlobales
                 <div class="grupo-control">
-                <label>Mensaje:</label><textarea name='mensaje'></textarea>
+                <label>Mensaje:
+                <br>
+                <textarea name='mensaje'></textarea>$errorComentario
+                <br>
                 </div>
                 <div class="grupo-control">
                 <label>Estrellas:</label>
@@ -34,8 +36,9 @@ class FormularioMensaje extends Form
                   <option value="4">****</option>
                   <option value="5" selected>*****</option>
                 </select>
-                </div>$errorPuntuacion
-                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button></div>
+                </div>
+                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button>
+                </div>
             </fieldset>
         EOF;
         return $html;
@@ -45,28 +48,35 @@ class FormularioMensaje extends Form
     protected function procesaFormulario($datos)
     {
         $result = array();
-        
-        if ( empty($mensaje)) {
-            $result['mensaje'] = "El mensaje no puede estar vacio.";
-        }
 
-
+        $user = $_SESSION['correo'];
         $puntuacion = $datos['estrellas'] ?? null;
+        
+        $mensaje = $datos['mensaje'] ?? null;
+        if ( empty($mensaje)) {
+            $result['comentario'] = "El mensaje no puede estar vacio.";
+        }
+        
+
         
         if (count($result) === 0) {
             $mensaje = Mensaje::crea($user,$mensaje,$puntuacion);
-            //if ( ! $user ) {
-            //    $result[] = "El usuario ya existe";
-           // } else {
-                //$_SESSION['login'] = true;
-               // $_SESSION['nombre'] = $nombre;
-                $result = 'reseñas.php';
+            $result = 'reseñas.php';
         }
         return $result;
     }
 
     public function mostrarForo(){
-        return Mensaje::mostrarForo();
+        $foro=Mensaje::mostrarForo();
+        $foroToString="";
+        foreach ($foro as $val) {
+            $correo=$val->getUser();
+            $user = Usuario::buscaUsuario($correo);
+            $foroToString=$foroToString . "Usuario: " . $user->getNombre() . 
+            $user->getApellidos() . "<br>Comentario: " . $val->getComentario() .
+            "<br>Puntuacion: " . $val->getPuntuacion() . "<br><br>";
+        }
+        return $foroToString;
     }
 
 }

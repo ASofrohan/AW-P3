@@ -123,6 +123,11 @@ class Usuario
     {
         return $this->correo;
     }
+
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
 }
 
 
