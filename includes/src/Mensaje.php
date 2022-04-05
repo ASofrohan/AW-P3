@@ -3,6 +3,7 @@ require_once __DIR__.'/Aplicacion.php';
 
 class Mensaje
 {
+    private $id;
 
     private $user;
 
@@ -19,13 +20,13 @@ class Mensaje
     }
 
 
-    public static function crea($user,$mensaje,$puntuacion)
+    public static function crea($user,$comentario,$puntuacion)
     {
        /*$user = self::buscaUsuario($nombreUsuario);
         if ($user) {
             return false;
         }*/
-        $mensaje = new Mensaje($user,$mensaje,$puntuacion);
+        $mensaje = new Mensaje($user,$comentario,$puntuacion);
         return self::inserta($mensaje);
     }
 
@@ -54,17 +55,40 @@ class Mensaje
         $query=sprintf("SELECT * FROM Foro");
         $result = $conn->query($query);
         //echo "<div  style='overflow: auto; width: 400px; height: 300px'>";
-        $array=array();
-        while ($reg = mysqli_fetch_array($result, MYSQLI_ASSOC)  ){
-            $array[]=$reg['ID_Comentario'] . ". Usuario: " . $reg['ID_Usuario'] . " Puntuacion: " . $reg['Puntuacion'];
-            /*echo" <p><strong>{$reg['ID_Comentario']}
-            </strong>{$reg['ID_Usuario']}<Br>{$reg['Comentario']}<Br>
-            Puntuacion: {$reg['Puntuacion']}</p>";*/
-        }
-        
-        $result->free();
+        $arrayForo=array();
 
-        return $array;
+        if($result){
+            if(mysqli_num_rows($result)>0){
+                $i=0;
+                while($row = mysqli_fetch_assoc($result)) {
+                    
+                    $comentario=$row['Comentario'];
+                    $user=$row['ID_Usuario'];
+                    $puntuacion=$row['Puntuacion'];
+                    $p = new Mensaje($user,$comentario,$puntuacion);
+                    $arrayForo[$i] = $p;
+                    $i += 1;
+                }
+            }
+        }
+
+        return $arrayForo;
+    }
+
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    public function getPuntuacion()
+    {
+        return $this->puntuacion;
     }
 
 }
