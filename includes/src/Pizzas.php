@@ -16,7 +16,16 @@ class Pizzas
         $this->$nombre = $nombre;
     }
 
-    public static function getIngredientes(){
+    public static function getTabla($nombre){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query = "SELECT * FROM $nombre";
+        $resultado=$conn->query($query);
+
+        return $resultado;
+    }
+
+   /* public static function getIngredientes(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
         $query = "SELECT * FROM ingredientes";
@@ -41,6 +50,6 @@ class Pizzas
         $resultado=$conn->query($query);
 
         return $resultado;
-    }
+    }*/
 }
 
