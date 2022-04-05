@@ -5,7 +5,9 @@ class Carrito{
    
     private $oferta1;
     private $suma;
-    public static function inicio(){
+    private $arrayPizza;
+    
+    public  function inicio(){
        
         if(isset($_SESSION["login"])){
            
@@ -16,7 +18,7 @@ class Carrito{
           
         }
     }
-    public static function sesionCarrito($nombre){
+    public  function sesionCarrito($nombre){
     
         echo 'Pedidos por pagar por = '.$nombre.'</br>';
         $oferta= self::consultaPedidosBebPiz();
@@ -25,18 +27,21 @@ class Carrito{
         $sumTot=4.99+ self::consultaPrecio()+ self::consultaPersonalizada();
         
         echo'</br>';
+        if($oferta!=null){
         if($oferta==4){
-            echo 'Precio Total a pagar '.$sumTot;
+            echo 'Precio Total a pagar '.$sumTot.' €';
             echo'</br>';
             echo '<a>Tienes ofertas ¡Usalas!</a>';
-            echo'<a href=" oferta.php">Canjear</a>';
+            echo'<a href=" oferta.php">Canjear  </a><br>';
+            echo'<a>¿Quieres editar el pedido?</a><a href=procesarEdit.php><button>EDITAR</button></a><br>';
+            echo '<a href=procesarCompra.php><button>Comprar</button></a>';
         }else{
             self::consultaDescuento($sumTot);
-        }
+        }}
         
     }
         
-    public static function consultaPedidosBebPiz(){
+    public function consultaPedidosBebPiz(){
         $nombre=$_SESSION["nombre"];
         $app = Aplicacion::getInstancia();
        
@@ -58,16 +63,18 @@ class Carrito{
                     $row_cnt = mysqli_num_rows($resultado);
                     if ($row_cnt==0){
                         echo 'No hay ningun pedido';
+                        return null;
                     }else{
                         while($row = $resultado->fetch_assoc()) {
+                           
                             echo $row['Nombre'].' '.$row['Precio'].'</br>';
                           $oferta= $row['Oferta'];
                         }
-                    
+                        return $oferta;
                     }
-                   return $oferta;
+                   
     }
-    public static function consultaPrecio(){
+    public  function consultaPrecio(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
       
@@ -92,7 +99,7 @@ class Carrito{
         $sumTot=$sum1+$sum2;
         return $sumTot;
     }
-    public static function consultaPersonalizada(){
+    public  function consultaPersonalizada(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
 
@@ -111,14 +118,14 @@ class Carrito{
                 }else{
                     echo 'Pizzas personalizadas </br>';
                     while($row = $resultado2->fetch_assoc()) {
-                            echo $row['Nombre'].' '.$row['Precio'].' '.'</br>';
+                            echo $row['Nombre'].' '.$row['Precio'].'  '.'</br>';
                             
                         $sumTot=$row['Precio'];
                     }
                     return $sumTot;
                 }
     }
-    public static function consultaDescuento($sumTot){
+    public  function consultaDescuento($sumTot){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
         $suma=$sumTot;
@@ -136,13 +143,13 @@ class Carrito{
                     
             $resultado1=$db->query($query1);
             if(	$row1 = $resultado1->fetch_assoc()){
-                echo '<strike>Precio Total a pagar '.$suma.'</strike>';
+                echo '<strike>Precio Total a pagar '.$suma.'€</strike>';
                 echo'</br>';
-                echo'Precio nuevo a pagar '.$suma-$row1['Descuento'];
+                echo'Precio nuevo a pagar '.$suma-$row1['Descuento'].'€';
             }
     }
 
-    private static function setSuma($valor){
+    private  function setSuma($valor){
         $this->suma= $valor; 
     }
     private static function getSuma(){
