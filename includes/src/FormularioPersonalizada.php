@@ -53,17 +53,21 @@ class FormularioPersonalizada extends Form
 				echo '<img src="images/pizzas/'.$row["Nombre"].'.jpg" WIDTH=250 HEIGHT=250>';
 				echo '<p>'.$row["Precio"].'</p>';
                 self::formulario($row["Personalizada"]);
+                //echo '<a href="self::formulario('.$row["Personalizada"]')"><p>Mas info.</p>';
+                echo'<a href="includes/src/FormularioPersonalizada.php">Mas Info.</a>';
 		}
         echo'</div>';
     }
 
     public function formulario($personalizada){
+        $formulario="";
         if($personalizada==1){
-            self:: formularioIngredintes();
+           $formulario = $formulario . self:: formularioIngredintes();
         }
-        self:: formularioTamanio();
-        self:: formularioMasa();
-        return 0;
+        $formulario = $formulario . self:: formularioTamanio();
+        $formulario = $formulario . self:: formularioMasa();
+        //return 0;
+        return $formulario;
     }
 }
 ?>

@@ -10,6 +10,7 @@ $tituloPagina = 'Pizzas';
 
 $contenidoPrincipal =<<<EOF
 		<h1>$tituloPagina</h1>
+		$seleccion
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
