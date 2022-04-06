@@ -1,4 +1,26 @@
+<?php
+require_once __DIR__.'/includes/src/Carrito.php';
+require_once __DIR__.'/includes/config.php';
+/*$editar=true;
+$carrito= new Carrito();
+if($carrito->getEdit())echo'trueeeee';
+ else echo 'falseee';
+   $carrito->setEdit();
+ if($carrito->getEdit())echo'trueeeee';
+ else echo 'falseee';*/
+ 
+ function eliminar($id){
+    $app = Aplicacion::getInstancia();
+    $db = $app->conexionBd();
+    echo $id;
+    $co=$_SESSION['correo'];
+    $query="DELETE a.ID_PizzaPedida
+            FROM Pedidos_Pizzas a
+            JOIN Pedidos p ON a.ID_Pedido=p.ID_Pedido
+            WHERE p.Usuario ='$co' AND p.ID_Pedido=1 AND a.ID_PizzaPedida='$id'";//cambiar id pedido
+    $resultado=$db->query($query);
+ }
+?>
 <script>
-    alert('edit realizada');
-    location.href='carrito.php';
+   // location.href='Carrito.php';
 </script>
