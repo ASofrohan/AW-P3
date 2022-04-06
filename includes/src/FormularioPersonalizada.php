@@ -45,8 +45,22 @@ class FormularioPersonalizada extends Form
         echo '</select>';
     } 
 
-    public function formulario(){
-        self:: formularioIngredintes();
+    public function pizzas(){
+        $pizzas = Pizzas::getTabla('pizzas');
+        echo'<div id=pizzas>';
+        while($row = $pizzas->fetch_assoc()) {
+                echo' <h2>'.$row["Nombre"].'</h2>';
+				echo '<img src="images/pizzas/'.$row["Nombre"].'.jpg" WIDTH=250 HEIGHT=250>';
+				echo '<p>'.$row["Precio"].'</p>';
+                self::formulario($row["Personalizada"]);
+		}
+        echo'</div>';
+    }
+
+    public function formulario($personalizada){
+        if($personalizada==1){
+            self:: formularioIngredintes();
+        }
         self:: formularioTamanio();
         self:: formularioMasa();
         return 0;
