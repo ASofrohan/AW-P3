@@ -1,13 +1,14 @@
 <header>
+		<a href="index.php"><img id="logo" src="images/logo.jpeg" ALIGN=left WIDTH=80 HEIGHT=80></a>
 		<h1>PizzaGuay</h1>
 		<?php
 		if (!isset($_SESSION["esAdmin"])) {
 			
-				echo '<a href="index.php">INICIO</a>
-				<a href="pizzas.php">PIZZAS</a>                    
-				<a href="ofertas.php">OFERTAS</a>
-				<a href="bebidas.php">BEBIDAS</a>
-				<a href="reseñas.php">RESEÑAS</a>';
+			echo '<a href="index.php">INICIO</a>
+			<a href="pizzas.php">PIZZAS</a>                    
+			<a href="ofertas.php">OFERTAS</a>
+			<a href="bebidas.php">BEBIDAS</a>
+			<a href="reseñas.php">RESEÑAS</a>';
 		} else{
 			echo '<a href="index.php">INICIO</a>
 			<a href="pizzas.php">PIZZAS</a>                    
