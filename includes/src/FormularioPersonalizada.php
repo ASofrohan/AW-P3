@@ -3,49 +3,13 @@ require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Pizzas.php';
 require_once __DIR__.'/Masas.php';
 require_once __DIR__.'/Tamaños.php';
+require_once __DIR__.'/Ingredientes.php';
 
 class FormularioPersonalizada extends Form
 {
     public function __construct() {
         parent::__construct('formPersonalizada');
     }
-    
-    public function formularioIngredintes(){
-        //$ingredientes = Pizzas::getIngredientes();
-        $ingredientes = Pizzas::getTabla('ingredientes');
-        echo '<p>INGREDIENTES: </p>';
-        echo '<form action="#" method="post" id=ingredientes_cb>';
-        while($row = $ingredientes->fetch_assoc()) {
-            echo '<input type="checkbox" name="ingredientes[]" value="' . $row['Precio'] . '" id="' . $row['ID_Ingrediente'] . '" onClick=recalcularPrecio(this) /> ' . $row['Nombre'] . '</br>';
-        }
-        echo '</form>';
-    }
-
-    public function formularioTamanio(){
-       // $tamanio = Pizzas::getTamanio();
-       $tamanio = Pizzas::getTabla('tamaños');
-
-        echo '<p>TAMAÑO: </p>';
-        echo '<select name="tamaños" onchange=precioTam(this)>';
-        echo'<option disabled selected>seleccione una opción</option>';
-        while($row = $tamanio->fetch_assoc()) {
-            echo '<option value="' . $row["Precio"] .'" onClick=precioTam(this)> ' . $row["Tamaño"] . ' </option>';
-        }
-        echo '</select>';
-    } 
-
-    public function formularioMasa(){
-        //$tamanio = Pizzas::getMasas();
-        $masas = Pizzas::getTabla('masas');
-
-        echo '<p>MASA: </p>';
-        echo '<select name="masas">';
-        echo'<option disabled selected>seleccione una opción</option>';
-        while($row = $masas->fetch_assoc()) {
-            echo '<option value="' . $precioIn .'" > ' . $row["Tipo"] . ' </option>';
-        }
-        echo '</select>';
-    } 
 
     public function pizzas(){
         $pizzas = Pizzas::muestraPizzas();
@@ -56,7 +20,7 @@ class FormularioPersonalizada extends Form
             $image=$val->get_image();
             $precio=$val->get_precio();
 
-            $pizzaString=$pizzaString . '<h2>' . $nombre . '</h2>
+            $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>
             <a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>
             <p>Precio:</p> ' . $precio;
         }
@@ -64,8 +28,24 @@ class FormularioPersonalizada extends Form
     }
 
     public function formulario(){
+        $masas = Ingredientes::muestraIngredientes();
+        $html = '<h4>INGREDIENTES: </h4>';
+        $html = $html . '<form action="#" method="post" id=ingredientes>';
+
+        foreach ($masas as $val) {
+            $nombre=$val->get_nombre();
+            $precio=$val->get_precio();
+            $id=$val->get_id();
+            $image=$val->get_image();
+
+            $html = $html . '<input type="checkbox" name="ingredientes[]" value="' . $precio . '" id="' . $id . '" onClick=recalcularPrecio(this) /> ' . $nombre;
+            $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
+        }
+        $html = $html . '</form>';
+
         $masas = Masas::muestraMasas();
-        $html='<select name="masas">
+        $html= $html . '<h4>MASAS: </h4>';
+        $html= $html . '<select name="masas">
         <option disabled selected>seleccione una opción</option>';
 
         foreach ($masas as $val) {
@@ -76,6 +56,7 @@ class FormularioPersonalizada extends Form
         $html = $html . '</select></br>';
 
         $tamaños = Tamaños::muestraTamaños();
+        $html= $html . '<h4>TAMAÑOS: </h4>';
         $html = $html . '<select name="tamaño">
         <option disabled selected>seleccione una opción</option>';
 

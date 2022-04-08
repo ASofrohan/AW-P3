@@ -57,7 +57,7 @@ class Pizzas
     {
         return $this->precio;
     }
-    public function get_presonalizada()
+    public function get_personalizada()
     {
         return $this->personalizada;
     }
@@ -69,32 +69,5 @@ class Pizzas
     {
         return $this->image;
     }
-
-   /* public static function getIngredientes(){
-        $app = Aplicacion::getInstancia();
-        $conn = $app->conexionBd();
-        $query = "SELECT * FROM ingredientes";
-        $resultado=$conn->query($query);
-
-        return $resultado;
-    }
-
-    public static function getMasas(){
-        $app = Aplicacion::getInstancia();
-        $conn = $app->conexionBd();
-        $query = "SELECT * FROM masas";
-        $resultado=$conn->query($query);
-
-        return $resultado;
-    }
-
-    public static function getTamanio(){
-        $app = Aplicacion::getInstancia();
-        $conn = $app->conexionBd();
-        $query = "SELECT * FROM tamaños";
-        $resultado=$conn->query($query);
-
-        return $resultado;
-    }*/
 }
 
