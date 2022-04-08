@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Pizzas.php';
+require_once __DIR__.'/Masas.php';
+require_once __DIR__.'/Tamaños.php';
 
 class FormularioPersonalizada extends Form
 {
@@ -46,28 +48,45 @@ class FormularioPersonalizada extends Form
     } 
 
     public function pizzas(){
-        $pizzas = Pizzas::getTabla('pizzas');
-        echo'<div id=pizzas>';
-        while($row = $pizzas->fetch_assoc()) {
-                echo' <h2>'.$row["Nombre"].'</h2>';
-				echo '<img src="images/pizzas/'.$row["Nombre"].'.jpg" WIDTH=250 HEIGHT=250>';
-				echo '<p>'.$row["Precio"].'</p>';
-                self::formulario($row["Personalizada"]);
-                //echo '<a href="self::formulario('.$row["Personalizada"]')"><p>Mas info.</p>';
-                echo'<a href="includes/src/FormularioPersonalizada.php">Mas Info.</a>';
-		}
-        echo'</div>';
+        $pizzas = Pizzas::muestraPizzas();
+        $pizzaString="";
+
+        foreach ($pizzas as $val) {
+            $nombre=$val->get_nombre();
+            $image=$val->get_image();
+            $precio=$val->get_precio();
+
+            $pizzaString=$pizzaString . '<h2>' . $nombre . '</h2>
+            <a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>
+            <p>Precio:</p> ' . $precio;
+        }
+        return $pizzaString;
     }
 
-    public function formulario($personalizada){
-        $formulario="";
-        if($personalizada==1){
-           $formulario = $formulario . self:: formularioIngredintes();
+    public function formulario(){
+        $masas = Masas::muestraMasas();
+        $html='<select name="masas">
+        <option disabled selected>seleccione una opción</option>';
+
+        foreach ($masas as $val) {
+            $tipo=$val->get_tipo();
+
+            $html = $html . '<option> ' . $tipo . ' </option>';
         }
-        $formulario = $formulario . self:: formularioTamanio();
-        $formulario = $formulario . self:: formularioMasa();
-        //return 0;
-        return $formulario;
+        $html = $html . '</select></br>';
+
+        $tamaños = Tamaños::muestraTamaños();
+        $html = $html . '<select name="tamaño">
+        <option disabled selected>seleccione una opción</option>';
+
+        foreach ($tamaños as $val) {
+            $tamaño=$val->get_tamaño();
+
+            $html = $html . '<option> ' . $tamaño . ' </option>';
+        }
+        $html = $html . '</select>';
+
+        return $html;
     }
 }
 ?>
