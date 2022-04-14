@@ -12,7 +12,7 @@ header {
 
 main {
 	float: left;
-	height: 400px;
+	height: 100%;
 	width: 100%;
 	background-color: #C88484;
 }

@@ -1,4 +1,4 @@
-document = "pizzas.php";
+document = "FormularioPersonalizada.php";
 
 var precioPizza= 4.99
 var precioIngrediente= 0.00;

@@ -24,18 +24,19 @@ class FormularioPersonalizada extends Form
            /* $pizzaString = $pizzaString . '<h2>'' . $nombre . </h2>
             <a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>
             <h3>Precio:</h3> ' . $precio;*/
+
+
             $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>';
             if($pers==1){
                 $pizzaString = $pizzaString . '<a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>';
             }
             else{
                 $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
-
+                $pizzaString = $pizzaString . $formulario;
             }
-
-            $pizzaString = $pizzaString . $formulario;
-            
-            $pizzaString = $pizzaString . ' <h3>Precio:</h3> ' . $precio;
+            $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
+            <p id="precio">  ' . $precio . '</p>';
+            $pizzaString = $pizzaString . ' <button>Añadir</button>';
         }
         return $pizzaString;
     }
