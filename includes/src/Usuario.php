@@ -74,7 +74,7 @@ class Usuario
         if ($user) {
             return false;
         }
-        $user = new Usuario($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso,$postal);
+        $user = new Usuario($correo, $nombre, $apellidos, self::hashPassword($contraseña), $calle,$ciudad,$piso,$postal);
         return self::inserta($user);
     }
 
@@ -127,6 +127,11 @@ class Usuario
     public function getApellidos()
     {
         return $this->apellidos;
+    }
+
+    private static function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 }
 

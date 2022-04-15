@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
 
-class Oferta{
+class Ofertas{
 
-    __construct(){
+    public function __construct(){
         if(isset($_SESSION["login"])){
            
             $nombre=$_SESSION["nombre"];
@@ -14,8 +14,13 @@ class Oferta{
 
     }
 
-    mostrarOfertas(){
-        
+    public function mostrarOfertas(){
+        $app = Aplicacion::getInstancia();
+        $db = $app->conexionBd();
+
+        $query = "SELECT * FROM Ofertas";
+
+
     }
 
 
