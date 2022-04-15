@@ -6,13 +6,15 @@ require_once __DIR__.'/includes/src/Carrito.php';
 require_once __DIR__.'/includes/src/Aplicacion.php';
 
 $carrito= new Carrito();
-//$editar=false;
-$nombre=$carrito->inicio();
 
-//$array=$carrito->sesionCarrito($nombre);
+$nombre=$carrito->inicio();
 $tituloPagina = 'Carrito';
 ?>
-	<div id="contenido">
+
+<link rel="stylesheet" type="text/css" href="css/estilo.css" />
+
+<div id="carrito">
+
 		<?php
 	if($nombre!=null){
 		$arrayPyB= $carrito->consultaPedidosBebPiz();
@@ -76,4 +78,4 @@ $tituloPagina = 'Carrito';
 		echo'No estas registrado';
 	}
 		?>
-	<div>
+</div>

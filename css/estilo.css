@@ -56,11 +56,13 @@ div#contenido {
 	background-color:  #C88484;
 }
 
-div#carrito {
+div.carrito {
+	color:rgb(43, 20, 220);
 	padding: 10px;
 	float: right;
-	width: 400px;
+	width: 17px;
 	height: 400px;
+	
 }
 
 /*cambioss*/
