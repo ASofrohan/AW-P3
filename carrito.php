@@ -72,7 +72,7 @@ function mostrar($nombre,$carrito){
 				}
 			}
 			$carritoToString=$carritoToString.'<br>';
-			$carritoToString=$carritoToString.'<a>¿Quieres editar el pedido?</a><a href=procesarEdit.php><button>EDITAR</button></a><br>';
+			
 			$carritoToString=$carritoToString.'<a href=procesarCompra.php><button>Comprar</button></a>';
 		}
 		
