@@ -70,12 +70,51 @@ div#contenido {
 	background-color:  #C88484;
 }
 
-div#carrito {
-	padding: 10px;
-	float: right;
-	width: 400px;
-	height: 400px;
+
+
+/*cambioss*/
+/*#menu {
+    position: relative;
+    overflow: hidden;
+    padding: 20px 0px;
+    box-sizing: border-box;
 }
+#menu a{
+    color:crimson;
+}
+
+#menu h1 {
+    font-size: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+#menu h4 {
+    font-size: 12px;
+    font-weight: 200;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+
+#menu div {
+    padding-right:100px;
+}
+
+button {
+    padding: 0.5rem 2rem;
+    font-size: 20px;
+    background-color: crimson;
+    border: 1px solid crimson;
+    color: white;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    min-width: 250px;
+    min-height: 50px;
+}
+*/
 
 div#foro {
 	padding: 30px;

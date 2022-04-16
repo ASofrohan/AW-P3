@@ -6,7 +6,7 @@ require_once __DIR__.'/includes/src/FormularioPersonalizada.php';
 
 $form = new FormularioPersonalizada();
 $seleccion = $form->formulario();
-$tituloPagina = 'Pizzas';
+$tituloPagina = 'Pizza Personalizada';
 
 $contenidoPrincipal =<<<EOF
 		<h1>$tituloPagina</h1>

@@ -19,14 +19,61 @@ class FormularioPersonalizada extends Form
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
-
-            $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>
+            $pers=$val->get_personalizada();
+            if($pers==1)
+            $formulario=self::formulario();
+            else
+            $formulario=self::formularioPersonalizada();
+           /* $pizzaString = $pizzaString . '<h2>'' . $nombre . </h2>
             <a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>
-            <p>Precio:</p> ' . $precio;
+            <h3>Precio:</h3> ' . $precio;*/
+            $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>';
+            if($pers==1){
+                $pizzaString = $pizzaString . '<a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>';
+            }
+            else{
+                $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
+
+            }
+
+            $pizzaString = $pizzaString . $formulario;
+            if($pers!=1)
+            $pizzaString = $pizzaString . ' <h3>Precio:</h3> ' . $precio;
+            
+
         }
         return $pizzaString;
     }
 
+    public function formularioPersonalizada(){
+      
+        $masas = Masas::muestraMasas();
+        $html= '<h4>MASAS: </h4>';
+        $html= $html . '<select name="masas">
+        <option disabled selected>seleccione una opción</option>';
+
+        foreach ($masas as $val) {
+            $tipo=$val->get_tipo();
+
+            $html = $html . '<option> ' . $tipo . ' </option>';
+        }
+        $html = $html . '</select></br>';
+
+        $tamaños = Tamaños::muestraTamaños();
+        $html= $html . '<h4>TAMAÑOS: </h4>';
+        $html = $html . '<select name="tamaño" onchange="precioTam(this)">
+        <option disabled selected>seleccione una opción</option>';
+
+        foreach ($tamaños as $val) {
+            $tamaño=$val->get_tamaño();
+            $html = $html . '<option> ' . $tamaño . ' </option>';
+        }
+        $html = $html . '</select>';
+
+        return $html;
+    }
+
+    
     public function formulario(){
         $masas = Ingredientes::muestraIngredientes();
         $html = '<h4>INGREDIENTES: </h4>';
@@ -57,7 +104,7 @@ class FormularioPersonalizada extends Form
 
         $tamaños = Tamaños::muestraTamaños();
         $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="tamaño">
+        $html = $html . '<select name="tamaño" onchange="precioTam(this)">
         <option disabled selected>seleccione una opción</option>';
 
         foreach ($tamaños as $val) {
@@ -67,6 +114,9 @@ class FormularioPersonalizada extends Form
         }
         $html = $html . '</select>';
 
+        $html = $html . '<h3>Precio: </h3>';
+        $html = $html . '<p id= "precio"> 0 </p>';
+        echo '<script> initPrecio(5) </script>';
         return $html;
     }
 }
