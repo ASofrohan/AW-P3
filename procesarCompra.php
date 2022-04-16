@@ -5,7 +5,7 @@ require_once __DIR__.'/includes/config.php';
         
         $co=$_SESSION['correo'];
 
-        $query="UPDATE Pedidos
+        $query="UPDATE pedidos
         SET Estado=0
         WHERE Usuario ='$co' AND ID_Pedido=1";//cambiar id pedido
         $resultado=$db->query($query);

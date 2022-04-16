@@ -37,7 +37,7 @@ session_start();
     <h1 href="bebidas.php">Elige tu bebida</h1>
 
 	<?php
-	$query="SELECT * FROM Bebidas";
+	$query="SELECT * FROM bebidas";
 	$resultado=$conn->query($query);
 
 	echo '<div id="bebidas">';
