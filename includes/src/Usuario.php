@@ -35,9 +35,9 @@ class Usuario
 
     public static function login($correo, $contraseña)
     {
-        $usuario = self::buscaUsuario($correo);
-        if ($usuario) {
-            return $usuario;
+        $user = self::buscaUsuario($correo);
+        if ($user->compruebaPassword($contraseña)) {
+            return $user;
         }
         return false;
     }
@@ -78,6 +78,12 @@ class Usuario
         return self::inserta($user);
     }
 
+    public static function edita($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso,$postal)
+    {
+        $user = new Usuario($correo, $nombre, $apellidos, self::hashPassword($contraseña), $calle,$ciudad,$piso,$postal);
+        return self::actualiza($user);
+    }
+
     private static function inserta($usuario)
     {
         $app = Aplicacion::getInstancia();
@@ -114,6 +120,47 @@ class Usuario
         return $usuario;
     }
 
+    private static function actualiza($usuario)
+    {
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $correo=$_SESSION['correo'];
+        $query=sprintf("SELECT * FROM Usuarios where Correo='$correo'");
+        if ( !$conn->query($query) ) {
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        } else{
+            $resultado=$conn->query($query);
+            $row = $resultado->fetch_assoc();
+            $id = $row["Domicilio"];
+            $query = sprintf("UPDATE Usuarios SET Correo='%s',Nombre='%s',Apellidos='%s',Contraseña='%s' where 
+            Correo='$correo'"
+            ,$conn->real_escape_string($usuario->correo)
+            , $conn->real_escape_string($usuario->nombre)
+            ,$conn->real_escape_string($usuario->apellidos)
+            ,$conn->real_escape_string($usuario->contraseña));
+            if ( !$conn->query($query) ) {
+                echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+                exit();
+            } else{
+             $query = sprintf("UPDATE Domicilios SET Calle='%s',Ciudad='%s',Piso='%s',CodigoPostal='%s' where 
+             ID_Domicilio='$id'"
+             , $conn->real_escape_string($usuario->calle)
+             , $conn->real_escape_string($usuario->ciudad)
+             , $conn->real_escape_string($usuario->piso)
+             , $conn->real_escape_string($usuario->postal));
+       
+             if ( !$conn->query($query) ) {
+               echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+               exit();
+            }
+          }
+        }
+        
+        return $usuario;
+    }
+
+
     public function getNombre()
     {
         return $this->nombre;
@@ -132,6 +179,11 @@ class Usuario
     private static function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    public function compruebaPassword($password)
+    {
+        return password_verify($password, $this->contraseña);
     }
 }
 
