@@ -30,20 +30,6 @@ div.saludo {
 	text-align: right;
 }
 
-/*fieldset .foro{
-	width: 900em;
-	height: 800em;
-	position: relative;
-}*/
-
-/*div#foro {
-	margin: 5px;
-	position: relative;
-  	top: -10em;
-  	right: -20em;
-}*/
-
-
 fieldset {
 	border: 1px solid black;
 	width: 15em;
@@ -124,4 +110,3 @@ div#foro {
 	top: 15em;
   	right: 20em;
 }
-
