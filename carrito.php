@@ -36,8 +36,11 @@ function mostrar($nombre,$carrito){
 			}
 		
 			$oferta=$arrayPyB[$arrlength-1];
+			$carritoToString=$carritoToString.'<br></br>';
+		}else{
+			$carritoToString=$carritoToString.'No hay pedidos';
+			$carritoToString=$carritoToString.'<br>';
 		}
-		$carritoToString=$carritoToString.'<br></br>';
 		if($arrayPP!=null){
 			$arrlength = count($arrayPP);
 			if($arrlength==0){

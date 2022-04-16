@@ -62,8 +62,7 @@ class Carrito{
         $resultado=$db->query($query);
         $row_cnt = mysqli_num_rows($resultado);
         if ($row_cnt==0){
-            echo'No hay pedidos';
-            echo '<br>';
+           
             return null;
         }else{
             while($row = $resultado->fetch_assoc()) {

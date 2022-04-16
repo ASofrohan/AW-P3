@@ -35,16 +35,16 @@ class FormularioPersonalizada extends Form
                 $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
 
             }
-
-            $pizzaString = $pizzaString . $formulario;
             if($pers!=1)
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> ' . $precio;
-            
-
+            $pizzaString = $pizzaString . $formulario;
+        
         }
         return $pizzaString;
     }
+public function procesarPedido(){
 
+}
     public function formularioPersonalizada(){
       
         $masas = Masas::muestraMasas();
@@ -69,11 +69,13 @@ class FormularioPersonalizada extends Form
             $html = $html . '<option> ' . $tamaño . ' </option>';
         }
         $html = $html . '</select>';
-
+        $html = $html .'<br>';
         return $html;
     }
 
-    
+    public function procesarPedidoTamaño($tamaño,$tipo ){
+        header("Location:carrito.php");
+    }
     public function formulario(){
         $masas = Ingredientes::muestraIngredientes();
         $html = '<h4>INGREDIENTES: </h4>';
