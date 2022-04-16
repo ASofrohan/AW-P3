@@ -20,6 +20,9 @@ class FormularioPersonalizada extends Form
             $image=$val->get_image();
             $precio=$val->get_precio();
             $pers=$val->get_personalizada();
+            if($pers==1)
+            $formulario=self::formulario();
+            else
             $formulario=self::formularioPersonalizada();
            /* $pizzaString = $pizzaString . '<h2>'' . $nombre . </h2>
             <a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>
@@ -34,13 +37,16 @@ class FormularioPersonalizada extends Form
             }
 
             $pizzaString = $pizzaString . $formulario;
-            
+            if($pers!=1)
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> ' . $precio;
+            
+
         }
         return $pizzaString;
     }
 
     public function formularioPersonalizada(){
+      
         $masas = Masas::muestraMasas();
         $html= '<h4>MASAS: </h4>';
         $html= $html . '<select name="masas">
@@ -60,7 +66,6 @@ class FormularioPersonalizada extends Form
 
         foreach ($tamaños as $val) {
             $tamaño=$val->get_tamaño();
-
             $html = $html . '<option> ' . $tamaño . ' </option>';
         }
         $html = $html . '</select>';
