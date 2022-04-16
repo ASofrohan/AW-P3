@@ -15,8 +15,8 @@ if($carrito->getEdit())echo'trueeeee';
     echo $id;
     $co=$_SESSION['correo'];
     $query="DELETE a.ID_PizzaPedida
-            FROM Pedidos_Pizzas a
-            JOIN Pedidos p ON a.ID_Pedido=p.ID_Pedido
+            FROM pedidos_pizzas a
+            JOIN pedidos p ON a.ID_Pedido=p.ID_Pedido
             WHERE p.Usuario ='$co' AND p.ID_Pedido=1 AND a.ID_PizzaPedida='$id'";//cambiar id pedido
     $resultado=$db->query($query);
  }

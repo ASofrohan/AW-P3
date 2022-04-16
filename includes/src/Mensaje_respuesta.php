@@ -55,7 +55,7 @@ class Mensaje_respuesta
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO Foro_respuestas(ID_Usuario,Respuesta,ID_Comentario) VALUES('%s','%s', '%s')"
+        $query=sprintf("INSERT INTO foro_respuestas(ID_Usuario,Respuesta,ID_Comentario) VALUES('%s','%s', '%s')"
 	    , $conn->real_escape_string($respuesta->user)
 	    , $conn->real_escape_string($respuesta->respuesta)
         , $conn->real_escape_string($respuesta->id_comentario));

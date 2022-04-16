@@ -46,14 +46,14 @@ class Usuario
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Usuarios U WHERE U.Correo = '%s'", $conn->real_escape_string($correo));
+        $query = sprintf("SELECT * FROM usuarios U WHERE U.Correo = '%s'", $conn->real_escape_string($correo));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $dom=$fila['Domicilio'];
-                $query = sprintf("SELECT * FROM Domicilios WHERE ID_Domicilio = '$dom'");
+                $query = sprintf("SELECT * FROM domicilios WHERE ID_Domicilio = '$dom'");
              $resultado=$conn->query($query);
              $row = $resultado->fetch_assoc();
                 $user = new Usuario($fila['Correo'], $fila['Nombre'], $fila['Apellidos'], $fila['Contraseña'], $row['Calle'],$row['Ciudad'],$row['Piso'],$row['CodigoPostal']);
@@ -82,7 +82,7 @@ class Usuario
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO Domicilios(Calle, Ciudad, Piso, CodigoPostal) VALUES('%s', '%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO domicilios(Calle, Ciudad, Piso, CodigoPostal) VALUES('%s', '%s', '%s', '%s')"
             , $conn->real_escape_string($usuario->calle)
             , $conn->real_escape_string($usuario->ciudad)
             , $conn->real_escape_string($usuario->piso)
@@ -95,11 +95,11 @@ class Usuario
             $ciudad=$usuario->ciudad;
             $piso=$usuario->piso;
             $postal=$usuario->postal;
-            $query = "SELECT * FROM Domicilios WHERE Calle = '$calle' and Ciudad='$ciudad' and Piso='$piso' and CodigoPostal='$postal'";
+            $query = "SELECT * FROM domicilios WHERE Calle = '$calle' and Ciudad='$ciudad' and Piso='$piso' and CodigoPostal='$postal'";
              $resultado=$conn->query($query);
              $row = $resultado->fetch_assoc();
              $id = $row["ID_Domicilio"];
-             $query = sprintf("INSERT INTO Usuarios (Correo, Nombre, Apellidos,Contraseña, Admin, Domicilio) VALUES ('%s','%s','%s','%s','0','$id')"
+             $query = sprintf("INSERT INTO usuarios (Correo, Nombre, Apellidos,Contraseña, Admin, Domicilio) VALUES ('%s','%s','%s','%s','0','$id')"
              , $conn->real_escape_string($usuario->correo)
              , $conn->real_escape_string($usuario->nombre)
              , $conn->real_escape_string($usuario->apellidos)
