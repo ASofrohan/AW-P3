@@ -18,7 +18,7 @@ class Ofertas{
         $conn = $app->conexionBd();
 
         $query = "SELECT * FROM Ofertas";
-        $resultado = $conn->query($queryOfertas);
+        $resultado = $conn->query($query);
 
         return $resultado;
     }

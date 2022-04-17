@@ -16,8 +16,17 @@ class FormularioOfertas extends Form{
             $tipo=$val->get_tipo();
             $codigo=$val->get_codigo();
             $descuento=$val->get_descuento();
-            $formulario=self::formularioPersonalizada();
+
+            if($tipo != 3){
+                $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
+                $pizzaString = $pizzaString . ' <button>Aplicar</button>';
+            }
         }
+        return $ofertaString;
     }
 
+    public function ofertaAñadida(){
+        $mensaje = "<p>Oferta aplicada</p>";
+        return $mensaje;
+    }
 }
