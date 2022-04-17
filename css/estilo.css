@@ -56,12 +56,6 @@ div#contenido {
 	background-color:  #C88484;
 }
 
-div#carrito {
-	padding: 10px;
-	float: right;
-	width: 400px;
-	height: 400px;
-}
 
 /*cambioss*/
 /*#menu {
@@ -105,6 +99,7 @@ button {
     min-width: 250px;
     min-height: 50px;
 }
+*/
 
 div#foro {
 	padding: 30px;

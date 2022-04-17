@@ -11,11 +11,11 @@ class Carrito{
        
         if(isset($_SESSION["login"])){
              $nombre=$_SESSION["nombre"];
-             self::sesionCarrito($nombre);
+             
         }else{
-            echo'no esta registrado';
-          
+           $nombre=null;
         }
+        return $nombre;
     }
     public  function sesionCarrito($nombre){
     
@@ -23,9 +23,7 @@ class Carrito{
         echo'<br>';
         $oferta= self::consultaPedidosBebPiz();
             echo'</br>';
-        
-        $sumTot=4.99+ self::consultaPrecio()+ self::consultaPersonalizada();
-        
+    
         echo'</br>';
         if($oferta!=null){
             if($oferta==4){
@@ -36,10 +34,9 @@ class Carrito{
                 echo'<a>¿Quieres editar el pedido?</a><a href=procesarEdit.php><button>EDITAR</button></a><br>';
                 echo '<a href=procesarCompra.php><button>Comprar</button></a>';
             }else{
-                self::consultaDescuento($sumTot);
+                self::consultaDescuento();
             }
         }
-        
     }
         
     public function consultaPedidosBebPiz(){
@@ -48,9 +45,11 @@ class Carrito{
        
         $db = $app->conexionBd();
 
+        $array=array();
+
         $co=$_SESSION['correo'];
         $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,a.Precio,s.Oferta FROM Pizzas a
-                JOIN Pedidos_Pizzas p ON p.ID_PizzaPedida=a.ID_Pizza
+                JOIN Pedidos_Pizzas p ON p.ID_Pizza=a.ID_Pizza
                 JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
                 WHERE s.Estado=1 AND s.Usuario='$co'
                 UNION
@@ -63,20 +62,21 @@ class Carrito{
         $resultado=$db->query($query);
         $row_cnt = mysqli_num_rows($resultado);
         if ($row_cnt==0){
-            echo 'No hay ningun pedido';
+           
             return null;
         }else{
             while($row = $resultado->fetch_assoc()) {
                 $id=$row['id'];
-                echo $row['Nombre'].' '.$row['Precio'].' '
-                .'<a href=procesarEdit.php:eliminar($id)><button>basura</button></a>'.''.'</br>';
-                //'<a href=procesarEdit.php?func=funcion eliminar('$row['id']')><button>basura</button></a>'
+                array_push($array,$row['Nombre'],$row['Precio']);
+               // echo $row['Nombre'].' '.$row['Precio'].' '
+                //.'<a href=procesarEdit.php:eliminar($id)><button>basura</button></a>'.''.'</br>';
+                ////'<a href=procesarEdit.php?func=funcion eliminar('$row['id']')><button>basura</button></a>'
                                 
                 $oferta= $row['Oferta'];
             }
-             return $oferta;
-        }
-                   
+            array_push($array,$oferta);
+             return $array;
+        }        
     }
     public  function consultaPrecio(){
         $app = Aplicacion::getInstancia();
@@ -84,7 +84,7 @@ class Carrito{
       
         $co=$_SESSION['correo'];
         $query1="SELECT SUM(a.Precio) as Precio1 FROM Pizzas a
-        JOIN Pedidos_Pizzas p ON p.ID_PizzaPedida=a.ID_Pizza
+        JOIN Pedidos_Pizzas p ON p.ID_Pizza=a.ID_Pizza
         JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
         WHERE s.Estado=1 AND s.Usuario='$co'";
 
@@ -106,52 +106,68 @@ class Carrito{
     public  function consultaPersonalizada(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
-
+        $array2=array();
         $co=$_SESSION['correo'];
-                $query="SELECT i.Nombre ,i.Precio FROM Ingredientes i
-                        JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
-                        JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
-                        JOIN Pedidos o ON a.ID_Pedido=o.ID_Pedido
-                        WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
-                        ";
-                $resultado2=$db->query($query);
-                $row_cnt = mysqli_num_rows($resultado2);
-                if ($row_cnt==0){
-                    echo 'No hay pizzas personalizadas';
-                    return 0;
-                }else{
-                    echo 'Pizzas personalizadas <br>';
-                    echo '<br>';
-                    while($row = $resultado2->fetch_assoc()) {
-                            echo $row['Nombre'].' '.$row['Precio'].'<a href=procesarEdit.php><button>basura</button></a>'.'</br>';
-                            
-                        $sumTot=$row['Precio'];
-                    }
-                    return $sumTot;
+            $query="SELECT i.Nombre ,i.Precio FROM Ingredientes i
+                    JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
+                    JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
+                    JOIN Pedidos o ON a.ID_Pedido=o.ID_Pedido
+                    WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
+                    ";
+            $resultado2=$db->query($query);
+            $row_cnt = mysqli_num_rows($resultado2);
+            if ($row_cnt==0){
+                
+                return null;
+            }else{
+               
+                while($row = $resultado2->fetch_assoc()) {
+                    array_push($array2,$row['Nombre'],$row['Precio']);
                 }
+                return $array2;
+            }
     }
-    public  function consultaDescuento($sumTot){
+    public function precioPerso(){
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
-        $suma=$sumTot;
+        $precio=0;
         $co=$_SESSION['correo'];
-
+            $query="SELECT i.Precio FROM Ingredientes i
+                    JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
+                    JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
+                    JOIN Pedidos o ON a.ID_Pedido=o.ID_Pedido
+                    WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
+                    ";
+            $resultado2=$db->query($query);
+            $row_cnt = mysqli_num_rows($resultado2);
+            if ($row_cnt==0){
+                return 0;
+            }else{
+                while($row = $resultado2->fetch_assoc()) {
+                   $precio+=$row['Precio'];
+                }
+                return $precio;
+            }
+    }
+    public  function consultaDescuento(){
+        $app = Aplicacion::getInstancia();
+        $db = $app->conexionBd();
+        $co=$_SESSION['correo'];
+        $oferta=null;
         $query="SELECT Oferta
         FROM Pedidos
         WHERE Usuario ='$co'";
         $resultado=$db->query($query);
-        $row = $resultado->fetch_assoc();
+      if(  $row = $resultado->fetch_assoc())
         $oferta= $row['Oferta'];
         $query1="SELECT Descuento
                 FROM ofertas
                 WHERE ID_Oferta='$oferta'";
                     
             $resultado1=$db->query($query1);
-            if(	$row1 = $resultado1->fetch_assoc()){
-                echo '<strike>Precio Total a pagar '.$suma.'€</strike>';
-                echo'</br>';
-                echo'Precio nuevo a pagar '.$suma-$row1['Descuento'].'€';
-            }
+            if(	$row1 = $resultado1->fetch_assoc())
+                return $row1['Descuento'];
+            else return 0;
     }
 
     private  function setSuma($valor){
@@ -167,4 +183,3 @@ class Carrito{
         return $this->editar;
     }
 }
-?>

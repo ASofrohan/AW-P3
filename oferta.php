@@ -1,41 +1,22 @@
-<?php
-	session_start();
-?>
+<?php 
+require_once __DIR__.'/includes/config.php';
 
-<!DOCTYPE html>
+$tituloPagina = 'ProcesarOfertaCarrito';
+$contenidoPrincipal=<<<EOF
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="estilo.css" />
-	<meta charset="utf-8">
-	<title>Mensaje</title>
-</head>
-
-<body>
-<?php
-	include ("./includes/comun/cabecera.php");
-?>
-<div id="contenedor">	
-
-        <main>
-		
-	<div id="oferta">
-		
-		<form action="procesarOferta.php" method="post">
-        <fieldset name="oferta">
-                Oferta:
-                <br> 
-                <input type="text" name="oferta" required>
-                <br>
-				<input type="submit">
-        </fieldset>
-    </form>
-	</div>	
-		</main>
-		
-	<?php
-		include ("./includes/comun/pie.php");
-	?>
-</div> <!-- Fin del contenedor -->
-
-</body>
+<div id="oferta">
+  
+  <form action="procesarOferta.php" method="post"><!--he puesto un 2 en oferta para que me funcione en carrito-->
+      <fieldset name="oferta">
+              Oferta:
+              <br> 
+              <input type="text" name="oferta" required>
+              <br>
+      <input type="submit">
+      </fieldset>
+      </form>
+</div>	
 </html>
+EOF;
+include __DIR__.'/includes/vistas/plantillas/plantilla.php';
+?>

@@ -37,7 +37,7 @@ if(isset($_SESSION["login"])){
     $resultadoPizzaNueva = $conn->query($selectpizzaNueva);
     $idNuevaPizza = $resultadoPizzaNueva->fetch_assoc();
     //insert ingredientes
-    $query = "SELECT ID_Ingrediente FROM Ingredientes";
+    $query = "SELECT ID_Ingrediente FROM ingredientes";
     $resultado = $conn->query($query);
     while($row = $resultado->fetch_assoc()) {
         if(in_array($row['ID_Ingrediente'], $_POST['Ingredientes'])){

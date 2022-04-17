@@ -30,14 +30,8 @@ function mostrarSaludo(){
 		<a href="carrito.php">CARRITO</a></div>';
 	}
 	else{
-		if(!$_SESSION["login"]){
-			echo '<div class="saludo">Usuario desconocido<a href="login.php">Login</a>
-			<a href="carrito.php">CARRITO</a></div>';
-		}
-		else{
-			echo '<div class="saludo">Hola ' . $_SESSION["nombre"] .' <a href="logout.php">(salir)</a>
-			<a href="carrito.php">CARRITO</a></div>';
-		}
+		echo '<div class="saludo">Hola ' . $_SESSION["nombre"] .' <a href="logout.php">(salir)</a><a href="actualizar.php">Editar perfil</a>
+		<a href="carrito.php">CARRITO</a></div>';
 	}
 }
 ?>

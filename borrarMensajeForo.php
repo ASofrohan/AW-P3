@@ -3,7 +3,7 @@
 //Inicio del procesamiento
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/FormularioBorrarMensaje.php';
-require_once __DIR__.'/includes/src/Reseña.php';
+require_once __DIR__.'/includes/src/Resenia.php';
 
 $form = new FormularioBorrarMensaje();
 $reseña=new Reseña();
