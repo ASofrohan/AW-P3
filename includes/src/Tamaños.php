@@ -53,6 +53,6 @@ class Tamaños
     }
     public function get_precio()
     {
-        return $this->tamaño;
+        return $this->precio;
     }
 }

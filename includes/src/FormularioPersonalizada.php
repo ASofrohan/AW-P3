@@ -20,10 +20,11 @@ class FormularioPersonalizada extends Form
             $image=$val->get_image();
             $precio=$val->get_precio();
             $pers=$val->get_personalizada();
-            if($pers==1)
-            $formulario=self::formulario();
-            else
             $formulario=self::formularioPersonalizada();
+            /*if($pers==1)
+                $formulario=self::formulario();
+            else
+                $formulario=self::formularioPersonalizada();*/
 
             $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>';
             if($pers==1){
@@ -38,10 +39,10 @@ class FormularioPersonalizada extends Form
             <p id="precio">  ' . $precio . '</p>';
             $pizzaString = $pizzaString . ' <button>Añadir</button>';
             
-            if($pers!=1)
+            /*if($pers!=1)
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> ' . $precio;
             $pizzaString = $pizzaString . $formulario;
-            $pizzaString = $pizzaString . $nombre;
+            $pizzaString = $pizzaString . $nombre;*/
             ////////////////////////////////////INSERCION DE PIZZAS 
             $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
@@ -99,7 +100,8 @@ public function procesarPedido(){
 
         foreach ($tamaños as $val) {
             $tamaño=$val->get_tamaño();
-            $html = $html . '<option> ' . $tamaño . ' </option>';
+            $precio=$val->get_precio();
+            $html = $html . '<option value="'.$precio.'"> ' . $tamaño . ' </option>';
         }
         $html = $html . '</select>';
         $html = $html .'<br>';
@@ -144,8 +146,8 @@ public function procesarPedido(){
 
         foreach ($tamaños as $val) {
             $tamaño=$val->get_tamaño();
-
-            $html = $html . '<option> ' . $tamaño . ' </option>';
+            $precio=$val->get_precio();
+            $html = $html . '<option value="'.$precio.'"> ' . $tamaño . ' </option>';
         }
         $html = $html . '</select>';
 
