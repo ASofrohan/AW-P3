@@ -71,7 +71,10 @@ function mostrar($nombre,$carrito){
 				if($descuento!=0){
 					$carritoToString=$carritoToString. '<strike>Precio Total a pagar '.$sumTot.'€</strike>';
 					$carritoToString=$carritoToString.'<br>';
+					if($sumTot-$descuento>0)
 					$carritoToString=$carritoToString.'Precio nuevo a pagar '.$sumTot-$descuento.'€';
+					else
+					$carritoToString=$carritoToString.'Precio nuevo a pagar 0 €';
 				}
 			}
 			$carritoToString=$carritoToString.'<br>';
