@@ -47,7 +47,8 @@ class FormularioBorrarMensaje extends Form
         if (count($result) === 0) {
             $mensaje = Mensaje::borra($id);
             if($mensaje==null){
-                $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti.";
+                $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti o el mensaje ha sido respondido 
+                y no puede ser eliminado.";
                 return $result;
             }
             $result = 'foro.php';
