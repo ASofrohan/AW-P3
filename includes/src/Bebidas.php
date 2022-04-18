@@ -6,12 +6,14 @@ class Bebidas
     private $id_bebida;
     private $nombre;
     private $precio;
+    private $image;
 
-    private function __construct($id_bebida, $nombre, $precio)
+    private function __construct($id_bebida, $nombre, $precio, $image)
     {
         $this->id_bebida= $id_bebida;
         $this->nombre = $nombre;
         $this->precio = $precio;
+        $this->image = $image;
     }
 
     public static function getBebidas(){
@@ -23,7 +25,7 @@ class Bebidas
         return $resultado;
     }
 
-    public static function muestraPizzas(){
+    public static function muestraBebidas(){
         $bebidas = self::getBebidas();
         $arrayBebidas = array();
 
@@ -35,7 +37,7 @@ class Bebidas
                 $precio=$row['Precio'];
                 $nombre=$row['Nombre'];
                 $image=$row['Image'];
-                $b = new Bebidas($id_bebida, $precio, $nombre, $image);
+                $b = new Bebidas($id_bebida, $nombre, $precio, $image);
                 $arrayBebidas[$i] = $b;
                 $i += 1;
             }
@@ -61,5 +63,3 @@ class Bebidas
     }
 
 }
-
-
