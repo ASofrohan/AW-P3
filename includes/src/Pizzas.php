@@ -49,6 +49,38 @@ class Pizzas
         return $arrayPizzas;
     }
 
+    public function inserta(){
+        $app = Aplicacion::getInstancia();
+        $db = $app->conexionBd();
+        if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
+            //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
+            $co=$_SESSION['correo'];
+        
+            $query1="SELECT * FROM pedidos_pizzas";
+            $resultado1=$db->query($query1);
+            $row_cnt = mysqli_num_rows($resultado1);
+            
+            $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
+            $resultado2=$db->query($query2);
+            $row_cnt2 = mysqli_num_rows($resultado2);
+            if($row_cnt2!=0){//tiene pedidos activos
+                if(	$row = $resultado2->fetch_assoc())
+                    $idPedido= $row['ID_Pedido']; 
+            }else{//no tiene pedidos, hay que meterle
+                $query3="SELECT * FROM pedidos ";
+                $resultado3=$db->query($query3);
+                $row_cnt3 = mysqli_num_rows($resultado3);
+
+                $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado) VALUES($row_cnt3+1,'$co',4,0000-00-00,1)";
+                $resultado4=$db->query($query4);
+                $idPedido=$row_cnt3+1;
+            }
+            //modificar esto, los valores de las masasa, tamaños
+            $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 1, 1,1)";
+            $resultado=$db->query($query);
+        }
+    }
+
     public function get_id()
     {
         return $this->id_pizza;
