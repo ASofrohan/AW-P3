@@ -54,7 +54,7 @@ class Carrito{
                 WHERE s.Estado=1 AND s.Usuario='$co'
                 UNION
                 SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM Bebidas b
-                JOIN Pedidos_Bebidas q ON q.ID_BebidaPedida=b.ID_Bebida
+                JOIN Pedidos_Bebidas q ON q.ID_Bebida=b.ID_Bebida
                 JOIN Pedidos i ON i.ID_Pedido=q.ID_Pedido
                 WHERE i.Estado=1 AND i.Usuario='$co'
                     ";
