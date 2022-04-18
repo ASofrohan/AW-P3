@@ -23,7 +23,7 @@ class Bebidas
         return $resultado;
     }
 
-    public static function muestraPizzas(){
+    public static function muestraBebidas(){
         $bebidas = self::getBebidas();
         $arrayBebidas = array();
 
