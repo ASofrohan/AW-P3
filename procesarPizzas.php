@@ -14,7 +14,6 @@ if(isset($_SESSION["login"])){
         $queryInsert = sprintf("INSERT INTO pedidos(Usuario, Oferta, Fecha, Estado) 
         VALUES('%s','4', curdate(), '1')",
         $conn->real_escape_string($correo));
-        );
     }
     $query = "SELECT ID_Pedido FROM pedidos WHERE Usuario = '$correo' and Estado = '1'";
     $resultado = $conn->query($query);
@@ -33,7 +32,7 @@ if(isset($_SESSION["login"])){
 
     $queryInsert = "INSERT INTO pedidos_pizzas(ID_pedido, ID_pizza, ID_masa, ID_Tamaño)
                     VALUES ($idPedido, '3', $idMasa, $idTam)";
-    $selectpizzaNueva = "SELECT TOP 1 ID_PizzaPedida FROM pedidos_pizzas ORDER BY ID_pizzaPedida DESC"
+    $selectpizzaNueva = "SELECT TOP 1 ID_PizzaPedida FROM pedidos_pizzas ORDER BY ID_pizzaPedida DESC";
     $resultadoPizzaNueva = $conn->query($selectpizzaNueva);
     $idNuevaPizza = $resultadoPizzaNueva->fetch_assoc();
     //insert ingredientes
