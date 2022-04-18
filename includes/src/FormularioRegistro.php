@@ -30,7 +30,7 @@ class FormularioRegistro extends Form
             <fieldset>
                 $htmlErroresGlobales
                 <div class="grupo-control">
-                    <label>Nombre de usuario:</label> <input class="control" type="text" name="correo" />$errorCorreo
+                    <label>Correo electronico:</label> <input class="control" type="text" name="correo" />$errorCorreo
                 </div>
                 <div class="grupo-control">
                     <label>Nombre completo:</label> <input class="control" type="text" name="nombre" value="$nombre" />$errorNombre
