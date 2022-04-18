@@ -11,16 +11,19 @@ class FormularioOfertas extends Form{
     public function ofertas(){
         $ofertas = Ofertas::muestraOfertas();
         $ofertaString="";
-
+        $i=1;
         foreach ($ofertas as $val){
             $tipo=$val->get_tipo();
             $codigo=$val->get_codigo();
             $descuento=$val->get_descuento();
-
+              
             if($tipo != 3){
+                $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
-                $pizzaString = $pizzaString . ' <button>Aplicar</button>';
+                $ofertaString = $ofertaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
+                $ofertaString = $ofertaString . '</form>';
             }
+            $i++;
         }
         return $ofertaString;
     }
