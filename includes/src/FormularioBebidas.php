@@ -11,24 +11,25 @@ class FormularioBebidas extends Form
     public function bebidas(){
         $bebidas = Bebidas::muestraBebidas();
         $bebidaString="";
+        $i=1;
 
         foreach ($bebidas as $val) {
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
 
-            $bebidaString = $bebidaString . '<h2>' . $nombre . '</h2>';
-            $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
-            //$bebidaString = $bebidaString;
-            
+            $bebidaString = $bebidaString . '<form id="form" name="form" method="post" autocomplete="off">';
+                $bebidaString = $bebidaString . '<h2>' . $nombre . '</h2>';
+                $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
+                $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
+                <p id="precio">  ' . $precio . '</p>';
+                $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
+            $bebidaString = $bebidaString . '</form>';
+            ++$i;
 
-            $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
-            <p id="precio">  ' . $precio . '</p>';
-            $bebidaString = $bebidaString . ' <button>Añadir</button>';
-            
             $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
-            if($_SESSION['login']==true){//resolver esto, que sale un mensaje arriba
+            if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
                 //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
                 $co=$_SESSION['correo'];
            
@@ -52,8 +53,10 @@ class FormularioBebidas extends Form
                     $idPedido=$row_cnt3+1;
                 }
                 //modificar esto, los valores de las masasa, tamaños
-                $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($row_cnt+1, $idPedido,1)";
-                $resultado=$db->query($query);
+                if(isset($_POST[$i])){
+                    $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($row_cnt+1, $idPedido, $i)";
+                    $resultado=$db->query($query);
+                }
             }
         }
         return $bebidaString;
