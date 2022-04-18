@@ -22,6 +22,11 @@ class FormularioOfertas extends Form{
                 $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
                 $ofertaString = $ofertaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Aplicar"/>';
                 $ofertaString = $ofertaString . '</form>';
+            }else{
+                $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
+                $ofertaString = $ofertaString . '<h2>Eliminar oferta</h2>';
+                $ofertaString = $ofertaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Aplicar"/>';
+                $ofertaString = $ofertaString . '</form>';
             }
 
             ////////////////////////////77
