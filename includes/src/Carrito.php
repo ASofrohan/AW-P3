@@ -93,7 +93,7 @@ class Carrito{
             $sum1=$row1['Precio1'];
 
         $query2="SELECT SUM(b.Precio) AS Precio2 FROM Bebidas b
-        JOIN Pedidos_Bebidas q ON q.ID_BebidaPedida=b.ID_Bebida
+        JOIN Pedidos_Bebidas q ON q.ID_Bebida=b.ID_Bebida
         JOIN Pedidos i ON i.ID_Pedido=q.ID_Pedido
         WHERE i.Estado=1 AND i.Usuario='$co'";
         $resultado2=$db->query($query2);

@@ -26,7 +26,7 @@ class FormularioBebidas extends Form
                 $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
             $bebidaString = $bebidaString . '</form>';
             ++$i;
-
+            ////////////////////////////77
             $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
             if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
