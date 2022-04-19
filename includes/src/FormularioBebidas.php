@@ -23,9 +23,9 @@ class FormularioBebidas extends Form
                 $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
                 $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
                 <p id="precio">  ' . $precio . '</p>';
-                $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
+                $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
             $bebidaString = $bebidaString . '</form>';
-            ++$i;
+            $i++;
             ////////////////////////////77
             $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
@@ -54,6 +54,7 @@ class FormularioBebidas extends Form
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
+                    echo'<p>'.$i.'</p>';
                     $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($row_cnt+1, $idPedido, $i)";
                     $resultado=$db->query($query);
                 }
@@ -61,6 +62,5 @@ class FormularioBebidas extends Form
         }
         return $bebidaString;
     }
-
 }
 ?>

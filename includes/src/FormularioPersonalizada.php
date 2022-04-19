@@ -157,7 +157,8 @@ public function procesarPedido(){
 
         $html = $html . '<h3>Precio: </h3>';
         $html = $html . '<p id= "precio"> 0 </p>';
-        echo '<script> initPrecio(5) </script>';
+        /////////////////////////////////////////////////////////
+
         return $html;
     }
 }
