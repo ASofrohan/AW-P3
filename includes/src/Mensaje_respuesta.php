@@ -55,7 +55,7 @@ class Mensaje_respuesta
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO Foro_respuestas(ID_Usuario,Respuesta,ID_Comentario) VALUES('%s','%s', '%s')"
+        $query=sprintf("INSERT INTO foro_respuestas(ID_Usuario,Respuesta,ID_Comentario) VALUES('%s','%s', '%s')"
 	    , $conn->real_escape_string($respuesta->user)
 	    , $conn->real_escape_string($respuesta->respuesta)
         , $conn->real_escape_string($respuesta->id_comentario));
@@ -65,7 +65,7 @@ class Mensaje_respuesta
         } 
         else{
             $respuestas=true;
-            $query=sprintf("UPDATE Foro SET Respuestas=$respuestas WHERE ID_Comentario=$respuesta->id_comentario");
+            $query=sprintf("UPDATE foro SET Respuestas=$respuestas WHERE ID_Comentario=$respuesta->id_comentario");
             if ( !$conn->query($query) ) {
                 echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
                 exit();
