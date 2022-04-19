@@ -42,7 +42,7 @@ class FormularioRegistro extends Form
                     <label>Password:</label> <input class="control" type="password" name="password1" />$errorPassword1
                 </div>
                 <div class="grupo-control">
-                    <label>Vuelve a introducir el Password:</label> <input class="control" type="password2" name="password2" />$errorPassword2
+                    <label>Vuelve a introducir el Password:</label> <input class="control" type="password" name="password2" />$errorPassword2
                 </div>
                 <div class="grupo-control">
                     <label>Calle:</label> <input class="control" type="text" name="calle" />$errorCalle
