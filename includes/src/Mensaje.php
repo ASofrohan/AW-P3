@@ -66,7 +66,7 @@ class Mensaje
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
         $estrellas=$mensaje->puntuacion;
-        $query=sprintf("INSERT INTO Foro(ID_Usuario,Comentario,Puntuacion) VALUES('%s','%s', '%s')"
+        $query=sprintf("INSERT INTO foro(ID_Usuario,Comentario,Puntuacion) VALUES('%s','%s', '%s')"
 	    , $conn->real_escape_string($mensaje->user)
 	    , $conn->real_escape_string($mensaje->comentario)
         , $conn->real_escape_string($mensaje->puntuacion));
@@ -86,13 +86,13 @@ class Mensaje
         $id=$mensaje->id;
         $correo=$_SESSION['correo'];
 
-        $query=sprintf("SELECT * FROM Foro WHERE ID_Comentario=$id");
+        $query=sprintf("SELECT * FROM foro WHERE ID_Comentario=$id");
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
         if($user==$correo){
             $editado=true;
-            $query=sprintf("UPDATE Foro SET Comentario='%s',Puntuacion='%s',Editado=$editado where 
+            $query=sprintf("UPDATE foro SET Comentario='%s',Puntuacion='%s',Editado=$editado where 
             ID_Comentario=$id", $conn->real_escape_string($mensaje->comentario)
             , $conn->real_escape_string($mensaje->puntuacion));
             if ( !$conn->query($query) ) {
@@ -115,13 +115,13 @@ class Mensaje
         $id=$mensaje->id;
         $correo=$_SESSION['correo'];
 
-        $query=sprintf("SELECT * FROM Foro WHERE ID_Comentario=$id");
+        $query=sprintf("SELECT * FROM foro WHERE ID_Comentario=$id");
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
         $respuestas=$row['Respuestas'];
         if($user==$correo && $respuestas==0){
-            $query=sprintf("DELETE FROM Foro where ID_Comentario=$id");
+            $query=sprintf("DELETE FROM foro where ID_Comentario=$id");
             if ( !$conn->query($query) ) {
                 echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
                 exit();
@@ -139,7 +139,7 @@ class Mensaje
 
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query=sprintf("SELECT * FROM Foro");
+        $query=sprintf("SELECT * FROM foro");
         $result = $conn->query($query);
         //echo "<div  style='overflow: auto; width: 400px; height: 300px'>";
         $arrayForo=array();

@@ -125,7 +125,7 @@ class Usuario
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
         $correo=$_SESSION['correo'];
-        $query=sprintf("SELECT * FROM Usuarios where Correo='$correo'");
+        $query=sprintf("SELECT * FROM usuarios where Correo='$correo'");
         if ( !$conn->query($query) ) {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
@@ -133,7 +133,7 @@ class Usuario
             $resultado=$conn->query($query);
             $row = $resultado->fetch_assoc();
             $id = $row["Domicilio"];
-            $query = sprintf("UPDATE Usuarios SET Correo='%s',Nombre='%s',Apellidos='%s',Contraseña='%s' where 
+            $query = sprintf("UPDATE usuarios SET Correo='%s',Nombre='%s',Apellidos='%s',Contraseña='%s' where 
             Correo='$correo'"
             ,$conn->real_escape_string($usuario->correo)
             , $conn->real_escape_string($usuario->nombre)
@@ -143,7 +143,7 @@ class Usuario
                 echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
                 exit();
             } else{
-             $query = sprintf("UPDATE Domicilios SET Calle='%s',Ciudad='%s',Piso='%s',CodigoPostal='%s' where 
+             $query = sprintf("UPDATE domicilios SET Calle='%s',Ciudad='%s',Piso='%s',CodigoPostal='%s' where 
              ID_Domicilio='$id'"
              , $conn->real_escape_string($usuario->calle)
              , $conn->real_escape_string($usuario->ciudad)

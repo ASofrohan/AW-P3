@@ -17,7 +17,7 @@ class Ofertas{
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
 
-        $query = "SELECT * FROM Ofertas";
+        $query = "SELECT * FROM ofertas";
         $resultado = $conn->query($query);
 
         return $resultado;
