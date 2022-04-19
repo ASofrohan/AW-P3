@@ -29,12 +29,11 @@ class FormularioOfertas extends Form{
                 $ofertaString = $ofertaString . '</form>';
             }
 
-            ////////////////////////////77
+            ////////////////////////////
             $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
 
-            if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
-                //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
+            if(isset($_SESSION['login'])){
                 $co=$_SESSION['correo'];
            
                 $query1="SELECT * FROM pedidos_bebidas";
@@ -56,7 +55,6 @@ class FormularioOfertas extends Form{
                     $resultado4=$db->query($query4);
                     $idPedido=$row_cnt3+1;
                 }
-                //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
                     $query="UPDATE pedidos SET Oferta='$i' WHERE Usuario ='$co' AND ID_Pedido='$idPedido'";
                     $resultado=$db->query($query);

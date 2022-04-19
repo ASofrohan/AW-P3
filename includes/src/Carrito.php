@@ -175,7 +175,6 @@ class Carrito{
                 return $row1['Descuento'];
             else return 0;
     }
-
     private  function setSuma($valor){
         $this->suma= $valor; 
     }
