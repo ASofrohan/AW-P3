@@ -146,7 +146,7 @@ public function procesarPedido(){
 
         $tamaños = Tamaños::muestraTamaños();
         $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="tamaño" onchange=precioTam(this)>
+        $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
         <option disabled selected>seleccione una opción</option>';
 
         foreach ($tamaños as $val) {
@@ -197,9 +197,6 @@ public function procesarPedido(){
             }
 
         }
-
-
-
 
         return $html;
     }
