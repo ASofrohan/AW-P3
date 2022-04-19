@@ -52,14 +52,14 @@ class Usuario
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Usuarios U WHERE U.Correo = '%s'", $conn->real_escape_string($correo));
+        $query = sprintf("SELECT * FROM usuarios U WHERE U.Correo = '%s'", $conn->real_escape_string($correo));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $dom=$fila['Domicilio'];
-                $query = sprintf("SELECT * FROM Domicilios WHERE ID_Domicilio = '$dom'");
+                $query = sprintf("SELECT * FROM domicilios WHERE ID_Domicilio = '$dom'");
              $resultado=$conn->query($query);
              $row = $resultado->fetch_assoc();
                 $user = new Usuario($fila['Correo'], $fila['Nombre'], $fila['Apellidos'], $fila['Contraseña'], $row['Calle'],$row['Ciudad'],$row['Piso'],$row['CodigoPostal']);
@@ -111,7 +111,7 @@ class Usuario
              $resultado=$conn->query($query);
              $row = $resultado->fetch_assoc();
              $id = $row["ID_Domicilio"];
-             $query = sprintf("INSERT INTO Usuarios (Correo, Nombre, Apellidos,Contraseña, Admin, Domicilio) VALUES ('%s','%s','%s','%s','0','$id')"
+             $query = sprintf("INSERT INTO usuarios (Correo, Nombre, Apellidos,Contraseña, Admin, Domicilio) VALUES ('%s','%s','%s','%s','0','$id')"
              , $conn->real_escape_string($usuario->correo)
              , $conn->real_escape_string($usuario->nombre)
              , $conn->real_escape_string($usuario->apellidos)
@@ -131,7 +131,7 @@ class Usuario
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
         $correo=$_SESSION['correo'];
-        $query=sprintf("SELECT * FROM Usuarios where Correo='$correo'");
+        $query=sprintf("SELECT * FROM usuarios where Correo='$correo'");
         if ( !$conn->query($query) ) {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
@@ -139,7 +139,7 @@ class Usuario
             $resultado=$conn->query($query);
             $row = $resultado->fetch_assoc();
             $id = $row["Domicilio"];
-            $query = sprintf("UPDATE Usuarios SET Correo='%s',Nombre='%s',Apellidos='%s',Contraseña='%s' where 
+            $query = sprintf("UPDATE usuarios SET Correo='%s',Nombre='%s',Apellidos='%s',Contraseña='%s' where 
             Correo='$correo'"
             ,$conn->real_escape_string($usuario->correo)
             , $conn->real_escape_string($usuario->nombre)
@@ -149,7 +149,7 @@ class Usuario
                 echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
                 exit();
             } else{
-             $query = sprintf("UPDATE Domicilios SET Calle='%s',Ciudad='%s',Piso='%s',CodigoPostal='%s' where 
+             $query = sprintf("UPDATE domicilios SET Calle='%s',Ciudad='%s',Piso='%s',CodigoPostal='%s' where 
              ID_Domicilio='$id'"
              , $conn->real_escape_string($usuario->calle)
              , $conn->real_escape_string($usuario->ciudad)

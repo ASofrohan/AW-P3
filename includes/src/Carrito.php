@@ -48,14 +48,14 @@ class Carrito{
         $array=array();
 
         $co=$_SESSION['correo'];
-        $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,a.Precio,s.Oferta FROM Pizzas a
-                JOIN Pedidos_Pizzas p ON p.ID_Pizza=a.ID_Pizza
-                JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
+        $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,a.Precio,s.Oferta FROM pizzas a
+                JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
+                JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
                 WHERE s.Estado=1 AND s.Usuario='$co'
                 UNION
-                SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM Bebidas b
-                JOIN Pedidos_Bebidas q ON q.ID_Bebida=b.ID_Bebida
-                JOIN Pedidos i ON i.ID_Pedido=q.ID_Pedido
+                SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM bebidas b
+                JOIN pedidos_bebidas q ON q.ID_Bebida=b.ID_Bebida
+                JOIN pedidos i ON i.ID_Pedido=q.ID_Pedido
                 WHERE i.Estado=1 AND i.Usuario='$co'
                     ";
         $resultado = mysqli_query($db,$query);	
@@ -83,18 +83,18 @@ class Carrito{
         $db = $app->conexionBd();
       
         $co=$_SESSION['correo'];
-        $query1="SELECT SUM(a.Precio) as Precio1 FROM Pizzas a
-        JOIN Pedidos_Pizzas p ON p.ID_Pizza=a.ID_Pizza
-        JOIN Pedidos s ON p.ID_Pedido=s.ID_Pedido
+        $query1="SELECT SUM(a.Precio) as Precio1 FROM pizzas a
+        JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
+        JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
         WHERE s.Estado=1 AND s.Usuario='$co'";
 
         $resultado1=$db->query($query1);
         if(	$row1 = $resultado1->fetch_assoc())
             $sum1=$row1['Precio1'];
 
-        $query2="SELECT SUM(b.Precio) AS Precio2 FROM Bebidas b
-        JOIN Pedidos_Bebidas q ON q.ID_Bebida=b.ID_Bebida
-        JOIN Pedidos i ON i.ID_Pedido=q.ID_Pedido
+        $query2="SELECT SUM(b.Precio) AS Precio2 FROM bebidas b
+        JOIN pedidos_bebidas q ON q.ID_Bebida=b.ID_Bebida
+        JOIN pedidos i ON i.ID_Pedido=q.ID_Pedido
         WHERE i.Estado=1 AND i.Usuario='$co'";
         $resultado2=$db->query($query2);
         if(	$row2 = $resultado2->fetch_assoc())
@@ -108,10 +108,10 @@ class Carrito{
         $db = $app->conexionBd();
         $array2=array();
         $co=$_SESSION['correo'];
-            $query="SELECT i.Nombre ,i.Precio FROM Ingredientes i
-                    JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
-                    JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
-                    JOIN Pedidos o ON a.ID_Pedido=o.ID_Pedido
+            $query="SELECT i.Nombre ,i.Precio FROM ingredientes i
+                    JOIN pizza_ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
+                    JOIN pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
+                    JOIN pedidos o ON a.ID_Pedido=o.ID_Pedido
                     WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
                     ";
             $resultado2=$db->query($query);
@@ -134,10 +134,10 @@ class Carrito{
         $db = $app->conexionBd();
         $precio=0;
         $co=$_SESSION['correo'];
-            $query="SELECT i.Precio FROM Ingredientes i
-                    JOIN Pizza_Ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
-                    JOIN Pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
-                    JOIN Pedidos o ON a.ID_Pedido=o.ID_Pedido
+            $query="SELECT i.Precio FROM ingredientes i
+                    JOIN pizza_ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
+                    JOIN pedidos_pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
+                    JOIN pedidos o ON a.ID_Pedido=o.ID_Pedido
                     WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
                     ";
             $resultado2=$db->query($query);
@@ -157,7 +157,7 @@ class Carrito{
         $co=$_SESSION['correo'];
         $oferta=null;
         $query="SELECT Oferta
-        FROM Pedidos
+        FROM pedidos
         WHERE Usuario ='$co'";
         $resultado=$db->query($query);
       if(  $row = $resultado->fetch_assoc())

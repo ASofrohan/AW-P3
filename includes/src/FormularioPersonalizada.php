@@ -2,7 +2,7 @@
 require_once __DIR__.'/Form.php';
 require_once __DIR__.'/Pizzas.php';
 require_once __DIR__.'/Masas.php';
-require_once __DIR__.'/Tamaños.php';
+require_once __DIR__.'/Tamanios.php';
 require_once __DIR__.'/Ingredientes.php';
 
 class FormularioPersonalizada extends Form
