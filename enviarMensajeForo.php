@@ -14,7 +14,7 @@ else{
 	$htmlFormMensaje = $form->gestiona();
 }
 
-$tituloPagina = 'Borrar mensaje foro';
+$tituloPagina = 'Enviar mensaje foro';
 $array=$reseña->mostrarReseñas();
 //$com=$array[0]->getComentario();
 

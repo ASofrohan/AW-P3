@@ -30,7 +30,7 @@ class FormularioPersonalizada extends Form
             else{
                 $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
                 $pizzaString = $pizzaString . $formulario;
-                ++$i;
+                //++$i;
             }
 
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
@@ -71,9 +71,10 @@ class FormularioPersonalizada extends Form
 
                 if(isset($_POST[$i]) && $pers!=1){
                     //modificar esto, los valores de las masasa, tamaños
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, $i - 1, 1,1)";
+                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, $i, 1,1)";
                     $resultado=$db->query($query);
                 }
+                ++$i;
             }
         }
         return $pizzaString;
@@ -145,7 +146,7 @@ public function procesarPedido(){
 
         $tamaños = Tamaños::muestraTamaños();
         $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="tamaño" onchange=precioTam(this)>
+        $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
         <option disabled selected>seleccione una opción</option>';
 
         foreach ($tamaños as $val) {
@@ -156,8 +157,46 @@ public function procesarPedido(){
         $html = $html . '</select>';
 
         $html = $html . '<h3>Precio: </h3>';
-        $html = $html . '<p id= "precio"> 0 </p>';
+        $html = $html . '<p id= "precio">4.99</p>';
+        $html = $html . '<input name="pers" type="submit" id="3"value="Añadir"/>';
         /////////////////////////////////////////////////////////
+
+
+
+        $app = Aplicacion::getInstancia();
+        $db = $app->conexionBd();
+        if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
+            //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
+            $co=$_SESSION['correo'];
+       
+            $query1="SELECT * FROM pedidos_pizzas";
+            $resultado1=$db->query($query1);
+            $row_cnt = mysqli_num_rows($resultado1);
+            
+            $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
+            $resultado2=$db->query($query2);
+            $row_cnt2 = mysqli_num_rows($resultado2);
+            if($row_cnt2!=0){//tiene pedidos activos
+                if(	$row = $resultado2->fetch_assoc())
+                    $idPedido= $row['ID_Pedido']; 
+            }else{//no tiene pedidos, hay que meterle
+                $query3="SELECT * FROM pedidos ";
+                $resultado3=$db->query($query3);
+                $row_cnt3 = mysqli_num_rows($resultado3);
+
+                $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado) VALUES($row_cnt3+1,'$co',4,0000-00-00,1)";
+                $resultado4=$db->query($query4);
+                $idPedido=$row_cnt3+1;
+            }
+            //echo'<p>fuera</p>';
+            if(isset($_POST["pers"])){
+                //echo'<p>dentro</p>';
+                //modificar esto, los valores de las masasa, tamaños
+                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 3, 1,1)";
+                $resultado=$db->query($query);
+            }
+
+        }
 
         return $html;
     }

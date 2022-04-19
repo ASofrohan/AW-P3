@@ -55,7 +55,6 @@ class FormularioBebidas extends Form
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
-                    echo'<p>'.$i.'</p>';
                     $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($row_cnt+1, $idPedido, $i)";
                     $resultado=$db->query($query);
                 }

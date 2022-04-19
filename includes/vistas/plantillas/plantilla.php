@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="css/estilo.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><?= $tituloPagina ?></title>
-<script type="text/javascript" src="pizzas.js"></script>
+<script type="text/javascript" src="js/pizzas.js"></script>
 </head>
 
 <body>
