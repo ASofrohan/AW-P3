@@ -2,6 +2,14 @@
 require_once __DIR__.'/src/Aplicacion.php';
 
 /**
+ * Parámetros de conexión a la BD
+ */
+define('BD_HOST', 'vm15.db.swarm.test');
+define('BD_NAME', 'pizzaguay');
+define('BD_USER', 'pizzaguay');
+define('BD_PASS', 'pizzaguay');
+
+/**
  * Configuracion del soporte UTF-8, localizacion (idioma y pais)
  */
 ini_set('default_charset', 'UTF-8');
@@ -9,13 +17,6 @@ setLocale(LC_ALL, 'es_ES.UTF.8');
 
 date_default_timezone_set('Europe/Madrid');
 
-/**
- * Parámetros de conexión a la BD
- */
-define('BD_HOST', 'localhost');
-define('BD_NAME', 'PizzaGuay');
-define('BD_USER', 'root');
-define('BD_PASS', '');
 
 // Inicializa la aplicacion
 $app = Aplicacion::getInstancia();

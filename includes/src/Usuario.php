@@ -94,7 +94,7 @@ class Usuario
     {
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO Domicilios(Calle, Ciudad, Piso, CodigoPostal) VALUES('%s', '%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO domicilios(Calle, Ciudad, Piso, CodigoPostal) VALUES('%s', '%s', '%s', '%s')"
             , $conn->real_escape_string($usuario->calle)
             , $conn->real_escape_string($usuario->ciudad)
             , $conn->real_escape_string($usuario->piso)
@@ -107,7 +107,7 @@ class Usuario
             $ciudad=$usuario->ciudad;
             $piso=$usuario->piso;
             $postal=$usuario->postal;
-            $query = "SELECT * FROM Domicilios WHERE Calle = '$calle' and Ciudad='$ciudad' and Piso='$piso' and CodigoPostal='$postal'";
+            $query = "SELECT * FROM domicilios WHERE Calle = '$calle' and Ciudad='$ciudad' and Piso='$piso' and CodigoPostal='$postal'";
              $resultado=$conn->query($query);
              $row = $resultado->fetch_assoc();
              $id = $row["ID_Domicilio"];
