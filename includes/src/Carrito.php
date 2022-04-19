@@ -115,6 +115,8 @@ class Carrito{
                     WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
                     ";
             $resultado2=$db->query($query);
+            if($resultado2==null)$row_cnt=0;
+            else
             $row_cnt = mysqli_num_rows($resultado2);
             if ($row_cnt==0){
                 
@@ -169,7 +171,6 @@ class Carrito{
                 return $row1['Descuento'];
             else return 0;
     }
-
     private  function setSuma($valor){
         $this->suma= $valor; 
     }
