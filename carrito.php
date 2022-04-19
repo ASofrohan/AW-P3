@@ -3,7 +3,7 @@
 
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/Carrito.php';
-require_once __DIR__.'/includes/src/Aplicacion.php';
+//require_once __DIR__.'/includes/src/Aplicacion.php';
 
 $carrito= new Carrito();
 $nombre=$carrito->inicio();
