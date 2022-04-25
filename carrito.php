@@ -35,7 +35,7 @@ function mostrar($nombre,$carrito){
 			foreach($pizzaPedida as $pizza) {
 				$pedido=$pizza->get_pedido();
 				$idPizza=$pizza->get_id();
-				
+				$tipo=$pizza->get_idPizza();
 				$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
 				$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
 				$x++;
@@ -47,11 +47,21 @@ function mostrar($nombre,$carrito){
 				}
 				$carritoToString=$carritoToString.'</form>';
 				if(isset($_POST[$i])){
-					$app = Aplicacion::getInstancia();
-					$db = $app->conexionBd();
-					$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
-					$resultado=$db->query($query);
-					header("Location:carrito.php");
+					if($tipo!=3){
+						$app = Aplicacion::getInstancia();
+						$db = $app->conexionBd();
+						$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+						$resultado=$db->query($query);
+						header("Location:carrito.php");
+					}else{
+						$app = Aplicacion::getInstancia();
+						$db = $app->conexionBd();
+						$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizza'";
+						$resultado=$db->query($query);
+						$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+						$resultado1=$db->query($query1);
+						header("Location:carrito.php");
+					}
 				}
 				$i++;
 				$x++;
@@ -96,14 +106,23 @@ function mostrar($nombre,$carrito){
 			else{
 				$carritoToString=$carritoToString.'Pizzas personalizadas <br>';
 				for($x = 0; $x < $arrlength; $x++) {
+					$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
 					$carritoToString=$carritoToString.$arrayPP[$x].'  ';
 					$carritoToString = $carritoToString .'  ';
+					$x++;
+					$carritoToString=$carritoToString.$arrayPP[$x].'  ';
 					if($x%2==1){
 						$carritoToString = $carritoToString . '<input name="'.$x.'" type="submit" id="'.$x.'"value="basura"/>';
 						$carritoToString=$carritoToString.'<br>';
 					}
+					$carritoToString=$carritoToString.'</form>';
 					if(isset($_POST[$x])){
 						//modificar esto, los valores de las masasa, tamaños
+						/*$app = Aplicacion::getInstancia();
+						$db = $app->conexionBd();
+						$query="DELETE FROM pizza_ingredintes WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+						$resultado=$db->query($query);
+						header("Location:carrito.php");*/
 						
 					}
 				
