@@ -49,10 +49,17 @@ class FormularioPersonalizada extends Form
                 //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
                 $co=$_SESSION['correo'];
            
+                $obtencionIdPizzaPedida=array();
+
                 $query1="SELECT * FROM pedidos_pizzas";
                 $resultado1=$db->query($query1);
                 $row_cnt = mysqli_num_rows($resultado1);
-                
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($obtencionIdPizzaPedida,$row['ID_PizzaPedida']);
+                }
+                for($j=0;$j<$row_cnt;$j++){
+                    $idPP=$obtencionIdPizzaPedida[$j];
+                }
                 $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
                 $resultado2=$db->query($query2);
                 $row_cnt2 = mysqli_num_rows($resultado2);
@@ -71,7 +78,7 @@ class FormularioPersonalizada extends Form
 
                 if(isset($_POST[$i]) && $pers!=1){
                     //modificar esto, los valores de las masasa, tamaños
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, $i, 1,1)";
+                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, 1,1)";
                     $resultado=$db->query($query);
                 }
                 ++$i;
@@ -190,7 +197,7 @@ public function procesarPedido(){
             }
             //echo'<p>fuera</p>';
             if(isset($_POST["pers"])){
-                //echo'<p>dentro</p>';
+                echo'<p>dentro</p>';
                 //modificar esto, los valores de las masasa, tamaños
                 $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 3, 1,1)";
                 $resultado=$db->query($query);

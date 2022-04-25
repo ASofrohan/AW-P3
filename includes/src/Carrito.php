@@ -51,27 +51,31 @@ class Carrito{
         $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,a.Precio,s.Oferta FROM pizzas a
                 JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
                 JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
-                WHERE s.Estado=1 AND s.Usuario='$co'
-                UNION
-                SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM bebidas b
+                WHERE s.Estado=1 AND s.Usuario='$co'ORDER BY a.Nombre ASC";
+                
+        $query2="SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM bebidas b
                 JOIN pedidos_bebidas q ON q.ID_Bebida=b.ID_Bebida
                 JOIN pedidos i ON i.ID_Pedido=q.ID_Pedido
-                WHERE i.Estado=1 AND i.Usuario='$co'
-                    ";
-        $resultado = mysqli_query($db,$query);	
+                WHERE i.Estado=1 AND i.Usuario='$co' 
+                ORDER BY b.Nombre ASC";
+                    
+        //$resultado = mysqli_query($db,$query);	
         $resultado=$db->query($query);
         $row_cnt = mysqli_num_rows($resultado);
-        if ($row_cnt==0){
+        $resultado2=$db->query($query2);
+        $row_cnt2 = mysqli_num_rows($resultado);
+        if ($row_cnt+$row_cnt2==0){
            
             return null;
         }else{
             while($row = $resultado->fetch_assoc()) {
                 $id=$row['id'];
-                array_push($array,$row['Nombre'],$row['Precio']);
-               // echo $row['Nombre'].' '.$row['Precio'].' '
-                //.'<a href=procesarEdit.php:eliminar($id)><button>basura</button></a>'.''.'</br>';
-                ////'<a href=procesarEdit.php?func=funcion eliminar('$row['id']')><button>basura</button></a>'
-                                
+                array_push($array,$row['Nombre'],$row['Precio']);      
+                $oferta= $row['Oferta'];
+            }
+            while($row = $resultado2->fetch_assoc()) {
+                $id=$row['id'];
+                array_push($array,$row['Nombre'],$row['Precio']);      
                 $oferta= $row['Oferta'];
             }
             array_push($array,$oferta);

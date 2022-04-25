@@ -34,10 +34,19 @@ class FormularioBebidas extends Form
                 //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
                 $co=$_SESSION['correo'];
            
+                $obtencionIdBebidaPedida=array();
+
                 $query1="SELECT * FROM pedidos_bebidas";
                 $resultado1=$db->query($query1);
                 $row_cnt = mysqli_num_rows($resultado1);
                 
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($obtencionIdBebidaPedida,$row['ID_BebidaPedida']);
+                }
+                for($j=0;$j<$row_cnt;$j++){
+                    $idPP=$obtencionIdBebidaPedida[$j];
+                }
+
                 $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
                 $resultado2=$db->query($query2);
                 $row_cnt2 = mysqli_num_rows($resultado2);
@@ -55,7 +64,7 @@ class FormularioBebidas extends Form
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
-                    $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($row_cnt+1, $idPedido, $i)";
+                    $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($idPP+1, $idPedido, $i)";
                     $resultado=$db->query($query);
                 }
             }
