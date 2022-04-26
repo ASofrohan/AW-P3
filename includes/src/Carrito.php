@@ -65,7 +65,6 @@ class Carrito{
         $resultado2=$db->query($query2);
         $row_cnt2 = mysqli_num_rows($resultado2);
         if ($row_cnt+$row_cnt2==0){
-           echo 'skdjbvsadlkjbvhsdfjlhbvsjdlvhb';
             return null;
         }else{
             while($row = $resultado->fetch_assoc()) {
