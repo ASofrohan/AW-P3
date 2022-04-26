@@ -35,6 +35,9 @@ class FormularioPersonalizada extends Form
 
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
             <p id="precio">  ' . $precio . '</p>';
+            /*$id_precio = "precio" . $val.get_id();
+            $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
+            <p id="'.$id_precio.'">  ' . $precio . '</p>';*/
 
             if($pers!=1){
                 $pizzaString = $pizzaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
@@ -78,7 +81,22 @@ class FormularioPersonalizada extends Form
 
                 if(isset($_POST[$i]) && $pers!=1){
                     //modificar esto, los valores de las masasa, tamaños
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, 1,1)";
+                    $masa = $_POST['masas'];
+                    $tamanio = $_POST['tamaño'];
+                    //echo'<p>'.$tamanio.'</p>';
+
+                    $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
+                    $res_masa=$db->query($query_masa);
+                    $row_masa=$res_masa->fetch_assoc();
+                    $id_masa=$row_masa['ID_Masa'];
+
+                    $query_tam="SELECT ID_Tamaño FROM tamaños WHERE Precio='$tamanio'";
+                    $res_tam=$db->query($query_tam);
+                    $row_tam=$res_tam->fetch_assoc();
+                    $id_tamanio=$row_tam['ID_Tamaño'];
+
+                    ////////////////
+                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, $id_masa, $id_tamanio)";
                     $resultado=$db->query($query);
                 }
                 ++$i;
@@ -99,7 +117,7 @@ public function procesarPedido(){
         foreach ($masas as $val) {
             $tipo=$val->get_tipo();
 
-            $html = $html . '<option> ' . $tipo . ' </option>';
+            $html = $html . '<option>' . $tipo . ' </option>';
         }
         $html = $html . '</select></br>';
 
