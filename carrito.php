@@ -32,64 +32,68 @@ function mostrar($nombre,$carrito){
 			$arrlength = count($arrayPyB);
 			$carritoToString=$carritoToString.'Pedidos por pagar por = '.$nombre.' </a>'.'<br></br>';
 			$x = 0;
-			foreach($pizzaPedida as $pizza) {
-				$pedido=$pizza->get_pedido();
-				$idPizza=$pizza->get_id();
-				$tipo=$pizza->get_idPizza();
-				$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-				$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-				$x++;
-				$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-				if($x%2==1){
-					$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-					$carritoToString=$carritoToString.$idPizza;
-					$carritoToString=$carritoToString.'<br>';
+			if($pizzaPedida!=null){
+				foreach($pizzaPedida as $pizza) {
+					$pedido=$pizza->get_pedido();
+					$idPizza=$pizza->get_id();
+					$tipo=$pizza->get_idPizza();
+					$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
+					$x++;
+					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
+					if($x%2==1){
+						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
+						$carritoToString=$carritoToString.$idPizza;
+						$carritoToString=$carritoToString.'<br>';
+					}
+					$carritoToString=$carritoToString.'</form>';
+					if(isset($_POST[$i])){
+						if($tipo!=3){
+							$app = Aplicacion::getInstancia();
+							$db = $app->conexionBd();
+							$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+							$resultado=$db->query($query);
+							header("Location:carrito.php");
+						}else{
+							$app = Aplicacion::getInstancia();
+							$db = $app->conexionBd();
+							$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizza'";
+							$resultado=$db->query($query);
+							$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+							$resultado1=$db->query($query1);
+							header("Location:carrito.php");
+						}
+					}
+					$i++;
+					$x++;
+				
 				}
-				$carritoToString=$carritoToString.'</form>';
-				if(isset($_POST[$i])){
-					if($tipo!=3){
+			}
+			if($bebidaPedida!=null){
+				foreach($bebidaPedida as $bebida) {
+					$pedido=$bebida->get_pedido();
+					$idBebida=$bebida->get_id();
+					$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
+					$x++;
+					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
+					if($x%2==1){
+						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
+						$carritoToString=$carritoToString.$idBebida;
+						$carritoToString=$carritoToString.'<br>';
+					}
+					$carritoToString=$carritoToString.'</form>';
+					if(isset($_POST[$i])){
 						$app = Aplicacion::getInstancia();
 						$db = $app->conexionBd();
-						$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
+						$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
 						$resultado=$db->query($query);
-						header("Location:carrito.php");
-					}else{
-						$app = Aplicacion::getInstancia();
-						$db = $app->conexionBd();
-						$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizza'";
-						$resultado=$db->query($query);
-						$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
-						$resultado1=$db->query($query1);
 						header("Location:carrito.php");
 					}
+					$i++;
+					$x++;
+					
 				}
-				$i++;
-				$x++;
-			
-			}
-			foreach($bebidaPedida as $bebida) {
-				$pedido=$bebida->get_pedido();
-				$idBebida=$bebida->get_id();
-				$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-				$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-				$x++;
-				$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-				if($x%2==1){
-					$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-					$carritoToString=$carritoToString.$idBebida;
-					$carritoToString=$carritoToString.'<br>';
-				}
-				$carritoToString=$carritoToString.'</form>';
-				if(isset($_POST[$i])){
-					$app = Aplicacion::getInstancia();
-					$db = $app->conexionBd();
-					$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
-					$resultado=$db->query($query);
-					header("Location:carrito.php");
-				}
-				$i++;
-				$x++;
-				
 			}
 			$oferta=$arrayPyB[$arrlength-1];
 			$carritoToString=$carritoToString.'<br></br>';

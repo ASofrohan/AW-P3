@@ -52,7 +52,8 @@ class Carrito{
                 JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
                 JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
                 WHERE s.Estado=1 AND s.Usuario='$co'ORDER BY a.Nombre ASC";
-                
+              $resultado=$db->query($query);
+              $row_cnt = mysqli_num_rows($resultado);  
         $query2="SELECT q.ID_BebidaPedida AS id,b.Nombre,b.Precio,i.Oferta FROM bebidas b
                 JOIN pedidos_bebidas q ON q.ID_Bebida=b.ID_Bebida
                 JOIN pedidos i ON i.ID_Pedido=q.ID_Pedido
@@ -60,12 +61,11 @@ class Carrito{
                 ORDER BY b.Nombre ASC";
                     
         //$resultado = mysqli_query($db,$query);	
-        $resultado=$db->query($query);
-        $row_cnt = mysqli_num_rows($resultado);
+        
         $resultado2=$db->query($query2);
-        $row_cnt2 = mysqli_num_rows($resultado);
+        $row_cnt2 = mysqli_num_rows($resultado2);
         if ($row_cnt+$row_cnt2==0){
-           
+           echo 'skdjbvsadlkjbvhsdfjlhbvsjdlvhb';
             return null;
         }else{
             while($row = $resultado->fetch_assoc()) {
