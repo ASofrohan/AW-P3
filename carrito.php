@@ -16,6 +16,8 @@ EOF;
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
 
 function mostrar($nombre,$carrito){
+	$app = Aplicacion::getInstancia();
+	$db = $app->conexionBd();
 	$pizzaPedida = PizzaPedida::muestraPizzas();
 	$bebidaPedida = BebidaPedida::muestraBebidas();
 	$carritoToString="";
@@ -65,8 +67,6 @@ function mostrar($nombre,$carrito){
 								$carritoToString=$carritoToString.'</form>';
 								if(isset($_POST[$j])){
 									//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
-									$app = Aplicacion::getInstancia();
-									$db = $app->conexionBd();
 									$query="DELETE FROM pizza_ingredientes WHERE ID_PizzaPedida='$idPizzaIngre'";
 									$resultado=$db->query($query);
 									header("Location:carrito.php");
@@ -91,14 +91,11 @@ function mostrar($nombre,$carrito){
 					}
 					if(isset($_POST[$i])){
 						if($tipo!=3){
-							$app = Aplicacion::getInstancia();
-							$db = $app->conexionBd();
+							
 							$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
 							$resultado=$db->query($query);
 							header("Location:carrito.php");
 						}else{
-							$app = Aplicacion::getInstancia();
-							$db = $app->conexionBd();
 							$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizza'";
 							$resultado=$db->query($query);
 							$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
@@ -125,8 +122,6 @@ function mostrar($nombre,$carrito){
 					}
 					$carritoToString=$carritoToString.'</form>';
 					if(isset($_POST[$i])){
-						$app = Aplicacion::getInstancia();
-						$db = $app->conexionBd();
 						$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
 						$resultado=$db->query($query);
 						header("Location:carrito.php");
