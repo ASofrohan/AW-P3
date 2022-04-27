@@ -2,6 +2,7 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/Carrito.php';
 require_once __DIR__.'/includes/src/PizzaPedida.php';
+require_once __DIR__.'/includes/src/PizzaIngrediente.php';
 require_once __DIR__.'/includes/src/BebidaPedida.php';
 require_once __DIR__.'/includes/src/Aplicacion.php';
 require_once __DIR__.'/includes/src/Form.php';
@@ -53,31 +54,37 @@ function mostrar($nombre,$carrito){
 						}
 						
 						if($arrayPP!=null){
+							$pizzaIngrediente = PizzaIngrediente::muestraIngredientes($idPizza);
+
 							$arrlength1 = count($arrayPP);
-							for($j = 0; $j < $arrlength1; $j++) {
-								$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-								$carritoToString=$carritoToString.' &nbsp '.$arrayPP[$j].'  ';
-								$carritoToString = $carritoToString .'  ';
-								$j++;
-								$carritoToString=$carritoToString.$arrayPP[$j].'  ';
-								if($j%2==1){
-									$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="BASURA"/>';
-									$carritoToString=$carritoToString.'<br>';
+							if($pizzaIngrediente!=null){
+								$j=0;
+								foreach($pizzaIngrediente as $ing) {
+									$idPizzaIngre=$ing->get_idIngredientePizza();
+									$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+									$carritoToString=$carritoToString.' &nbsp '.$arrayPP[$j].'  ';
+									$carritoToString = $carritoToString .'  ';
+									$j++;
+									$carritoToString=$carritoToString.$arrayPP[$j].'  ';
+									if($j%2==1){
+										$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="BASURA"/>';
+										$carritoToString=$carritoToString.'<br>';
+									}
+									$carritoToString=$carritoToString.'</form>';
+									if(isset($_POST[$j])){
+										//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
+										$query="DELETE FROM pizza_ingredientes WHERE ID_IngredientePizza='$idPizzaIngre'";
+										$resultado=$db->query($query);
+										header("Location:carrito.php");
+										
+									}
+									$j++;
 								}
-								$carritoToString=$carritoToString.'</form>';
-								if(isset($_POST[$j])){
-									//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
-									$query="DELETE FROM pizza_ingredientes WHERE ID_PizzaPedida='$idPizzaIngre'";
-									$resultado=$db->query($query);
-									header("Location:carrito.php");
-									
-								}
-							
 							}
 							$carritoToString=$carritoToString."<br>";
 							$sumTot=$precio+$precioP;
 							$carritoToString=$carritoToString.'</form>';
-						}else{$carritoToString=$carritoToString.'No has elegido ingredientes';}
+						}else{$carritoToString=$carritoToString.'No has elegido ingredientes'."<br>";}
 						
 					}else{
 						$x++;
