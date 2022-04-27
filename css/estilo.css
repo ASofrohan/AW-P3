@@ -5,7 +5,7 @@ body {
 header {
 	padding: 30px;
 	height: 100px;
-	background-color: #5F7E80;
+	background-color: #aaaaaa;
 	color: white;
 }
 
@@ -14,13 +14,13 @@ main {
 	float: left;
 	height: 100%;
 	width: 100%;
-	background-color: #C88484;
+	background-color: #ffffff;
 }
 
 footer	 {
 	clear: both;
 	padding: 20px;
-	background-color: #5F7E80;
+	background-color: #b1b1b1;
 	color: white;
 	text-align: center;
 }
@@ -38,7 +38,7 @@ fieldset {
 
 legend {
 	color: #fff;
-	background: #5F7E80;
+	background: #acacac;
 	border: 1px solid black;
 	padding: 2px 6px;
 } 
@@ -53,53 +53,8 @@ div#contenido {
 	float: right;
 	min-height: 100px;
 	width: 200px;
-	background-color:  #C88484;
+	background-color:  #ffffff;
 }
-
-
-/*cambioss*/
-/*#menu {
-    position: relative;
-    overflow: hidden;
-    padding: 20px 0px;
-    box-sizing: border-box;
-}
-#menu a{
-    color:crimson;
-}
-
-#menu h1 {
-    font-size: 40px;
-    padding: 0;
-    margin: 0;
-}
-
-#menu h4 {
-    font-size: 12px;
-    font-weight: 200;
-    padding: 0;
-    margin: 0;
-    margin-top: 10px;
-}
-
-#menu div {
-    padding-right:100px;
-}
-
-button {
-    padding: 0.5rem 2rem;
-    font-size: 20px;
-    background-color: crimson;
-    border: 1px solid crimson;
-    color: white;
-    border: none;
-    text-decoration: none;
-    text-align: center;
-    display: inline-block;
-    min-width: 250px;
-    min-height: 50px;
-}
-*/
 
 div#foro {
 	padding: 30px;

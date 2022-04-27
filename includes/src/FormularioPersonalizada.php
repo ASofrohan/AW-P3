@@ -15,7 +15,9 @@ class FormularioPersonalizada extends Form
         $pizzas = Pizzas::muestraPizzas();
         $pizzaString="";
         $i=1;
+        $pizzaString = $pizzaString . '<div class="row">';
         foreach ($pizzas as $val) {
+            $pizzaString = $pizzaString . '<div class="col-md-3">';
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
@@ -25,10 +27,10 @@ class FormularioPersonalizada extends Form
             $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>';
             $pizzaString = $pizzaString . '<form id="form" name="form" method="post" autocomplete="off">';
             if($pers==1){
-                $pizzaString = $pizzaString . '<a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250></a>';
+                $pizzaString = $pizzaString . '<a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250 class="img-fluid"></a>';
             }
             else{
-                $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
+                $pizzaString = $pizzaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250 class="img-fluid">';
                 $pizzaString = $pizzaString . $formulario;
                 //++$i;
             }
@@ -101,7 +103,9 @@ class FormularioPersonalizada extends Form
                 }
                 ++$i;
             }
+            $pizzaString = $pizzaString . '</div>';
         }
+        $pizzaString = $pizzaString . '</div>';
         return $pizzaString;
     }
 public function procesarPedido(){

@@ -12,15 +12,16 @@ class FormularioBebidas extends Form
         $bebidas = Bebidas::muestraBebidas();
         $bebidaString="";
         $i=1;
-
+        $bebidaString = $bebidaString . '<div class="row">';
         foreach ($bebidas as $val) {
+            $bebidaString = $bebidaString . '<div class="col-md-3">';
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
 
             $bebidaString = $bebidaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $bebidaString = $bebidaString . '<h2>' . $nombre . '</h2>';
-                $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250>';
+                $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250 class="img-fluid">';
                 $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
                 <p id="precio">  ' . $precio . '</p>';
                 $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
@@ -69,7 +70,9 @@ class FormularioBebidas extends Form
                 }
             }
             ++$i;
+            $bebidaString = $bebidaString . '</div>';
         }
+        $bebidaString = $bebidaString . '</div>';
         return $bebidaString;
     }
 }
