@@ -48,9 +48,11 @@ class Carrito{
         $array=array();
 
         $co=$_SESSION['correo'];
-        $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,a.Precio,s.Oferta FROM pizzas a
+        $query="SELECT p.ID_PizzaPedida as id ,a.Nombre,m.Tipo,t.Tamaño ,a.Precio,t.Precio as precioT ,s.Oferta FROM pizzas a
                 JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
                 JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
+                JOIN masas m ON m.ID_Masa=p.ID_Masa
+                JOIN tamaños t ON t.ID_Tamaño=p.ID_Tamaño
                 WHERE s.Estado=1 AND s.Usuario='$co'ORDER BY a.Nombre ASC";
               $resultado=$db->query($query);
               $row_cnt = mysqli_num_rows($resultado);  
@@ -67,17 +69,23 @@ class Carrito{
         if ($row_cnt+$row_cnt2==0){
             return null;
         }else{
-            while($row = $resultado->fetch_assoc()) {
-                $id=$row['id'];
-                array_push($array,$row['Nombre'],$row['Precio']);      
-                $oferta= $row['Oferta'];
+            if ($row_cnt!=0){
+                while($row = $resultado->fetch_assoc()) {
+                    $id=$row['id'];
+                    array_push($array,$row['Nombre'],$row['Tipo'],$row['Tamaño'],$row['Precio'],$row['precioT']);      
+                    $oferta= $row['Oferta'];
+                }
+                array_push($array,$oferta);
             }
-            while($row = $resultado2->fetch_assoc()) {
-                $id=$row['id'];
-                array_push($array,$row['Nombre'],$row['Precio']);      
-                $oferta= $row['Oferta'];
+            if ($row_cnt2!=0){
+                while($row = $resultado2->fetch_assoc()) {
+                    $id=$row['id'];
+                    array_push($array,$row['Nombre'],$row['Precio']);      
+                    $oferta= $row['Oferta'];
+                }
+                array_push($array,$oferta);
             }
-            array_push($array,$oferta);
+            
              return $array;
         }        
     }
@@ -102,8 +110,16 @@ class Carrito{
         $resultado2=$db->query($query2);
         if(	$row2 = $resultado2->fetch_assoc())
             $sum2=$row2['Precio2'];
-
-        $sumTot=$sum1+$sum2;
+       
+        $query="SELECT SUM(t.Precio) as Precio1 FROM pizzas a
+        JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
+        JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
+        JOIN tamaños t ON t.ID_Tamaño=p.ID_Tamaño
+        WHERE s.Estado=1 AND s.Usuario='$co'";
+        $resultado=$db->query($query);
+        if(	$row3 = $resultado->fetch_assoc())
+            $sum3=$row3['Precio1'];
+        $sumTot=$sum1+$sum2+$sum3;
         return $sumTot;
     }
     public  function consultaPersonalizada(){

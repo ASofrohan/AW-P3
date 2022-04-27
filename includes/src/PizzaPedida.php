@@ -17,20 +17,20 @@ class PizzaPedida{
     public static function getPizzas(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        
+        $idPedido=null;
         if(isset($_SESSION['login'])){
             $co=$_SESSION['correo'];
             $query1="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
             $resultado1=$conn->query($query1);//tiene pedidos activos
                 if(	$row = $resultado1->fetch_assoc())
                     $idPedido= $row['ID_Pedido'];
-                    
-            $query = "SELECT * FROM pedidos_pizzas p
-                        JOIN pizzas a ON  p.ID_Pizza=a.ID_Pizza
-                        WHERE ID_pedido='$idPedido' ORDER BY a.Nombre ASC";
-            $resultado=$conn->query($query);
-
-            return $resultado;
+            if($idPedido!=null){     
+                $query = "SELECT * FROM pedidos_pizzas p
+                            JOIN pizzas a ON  p.ID_Pizza=a.ID_Pizza
+                            WHERE ID_pedido='$idPedido' ORDER BY a.Nombre ASC";
+                $resultado=$conn->query($query);
+                return $resultado;
+            }else return null;
         }else return null;
     }
 

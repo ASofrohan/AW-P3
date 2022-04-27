@@ -46,12 +46,19 @@ function mostrar($nombre,$carrito){
 					if($arrayPyB[$x]=="Personalizada"){
 						$boolPersonalizada=true;
 						$x++;
-						$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-						if($x%2==1){
+						$carritoToString=$carritoToString.' masa '. $arrayPyB[$x].'  ';
+						$x++;
+						$carritoToString=$carritoToString.' tamaño '. $arrayPyB[$x].'  ';
+						$x++;
+						$precio1=$arrayPyB[$x];
+						$x++;
+						$carritoToString=$carritoToString. $arrayPyB[$x]+$precio1.'  ';
+						
+						
 							$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-							$carritoToString=$carritoToString.$idPizza;
+							//$carritoToString=$carritoToString.$idPizza;
 							$carritoToString=$carritoToString.'<br>';
-						}
+						
 						
 						if($arrayPP!=null){
 							$pizzaIngrediente = PizzaIngrediente::muestraIngredientes($idPizza);
@@ -88,12 +95,18 @@ function mostrar($nombre,$carrito){
 						
 					}else{
 						$x++;
-						$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-						if($x%2==1){
+						$carritoToString=$carritoToString.' masa '. $arrayPyB[$x].'  ';
+						$x++;
+						$carritoToString=$carritoToString.' tamaño '. $arrayPyB[$x].'  ';
+						$x++;
+						$precio1=$arrayPyB[$x];
+						$x++;
+						$carritoToString=$carritoToString. $arrayPyB[$x]+$precio1.'  ';
+						
 							$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-							$carritoToString=$carritoToString.$idPizza;
+							//$carritoToString=$carritoToString.$idPizza;
 							$carritoToString=$carritoToString.'<br>';
-						}
+						
 						$carritoToString=$carritoToString.'</form>';
 					}
 					if(isset($_POST[$i])){
@@ -115,6 +128,7 @@ function mostrar($nombre,$carrito){
 				}
 			}
 			if($bebidaPedida!=null){
+				$x++;//evitar oferta
 				foreach($bebidaPedida as $bebida) {
 					$pedido=$bebida->get_pedido();
 					$idBebida=$bebida->get_id();
@@ -122,11 +136,11 @@ function mostrar($nombre,$carrito){
 					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
 					$x++;
 					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-					if($x%2==1){
+					
 						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-						$carritoToString=$carritoToString.$idBebida;
+						//$carritoToString=$carritoToString.$idBebida;
 						$carritoToString=$carritoToString.'<br>';
-					}
+					
 					$carritoToString=$carritoToString.'</form>';
 					if(isset($_POST[$i])){
 						$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
@@ -138,7 +152,9 @@ function mostrar($nombre,$carrito){
 					
 				}
 			}
+			
 			$oferta=$arrayPyB[$arrlength-1];
+			
 			$carritoToString=$carritoToString.'<br>';
 		}else{
 			$carritoToString=$carritoToString.'No hay pedidos';
