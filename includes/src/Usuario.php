@@ -20,7 +20,7 @@ class Usuario
 
     private $postal;
 
-    private function __construct($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso,$postal)
+    private function __construct($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso)
     {
         $this->correo= $correo;
         $this->nombre = $nombre;
@@ -32,6 +32,26 @@ class Usuario
         $this->postal = $postal;
 
     }
+
+    public static function esAdmin($correo){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query=sprintf("SELECT * FROM usuarios where Correo='$correo'");
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            $fila = $rs->fetch_assoc();
+            $dom=$fila['Admin'];
+            $rs->free();
+            return $dom;  
+            
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return 0;
+    }
+
 
     public static function login($correo, $contraseña)
     {
