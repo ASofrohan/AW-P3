@@ -17,27 +17,6 @@ class Carrito{
         }
         return $nombre;
     }
-    public  function sesionCarrito($nombre){
-    
-        echo 'Pedidos por pagar por = '.$nombre.'<br>';
-        echo'<br>';
-        $oferta= self::consultaPedidosBebPiz();
-            echo'</br>';
-    
-        echo'</br>';
-        if($oferta!=null){
-            if($oferta==4){
-                echo 'Precio Total a pagar '.$sumTot.' €';
-                echo'</br>';
-                echo '<a>Tienes ofertas ¡Usalas!</a>';
-                echo'<a href=" oferta.php">Canjear  </a><br>';
-                echo'<a>¿Quieres editar el pedido?</a><a href=procesarEdit.php><button>EDITAR</button></a><br>';
-                echo '<a href=procesarCompra.php><button>Comprar</button></a>';
-            }else{
-                self::consultaDescuento();
-            }
-        }
-    }
         
     public function consultaPedidosBebPiz(){
         $nombre=$_SESSION["nombre"];
