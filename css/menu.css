@@ -1,0 +1,67 @@
+/*Damos estilos al menú*/
+.nav {
+    position:absolute;
+    width:200px;
+    height:100vh;
+    top:0;
+    left:-220px; /*Ocultamos el menú en la parte izquierda para que no se vea a menos que pulsemos sobre la hamburguesa*/
+    padding-top:47px;
+    background-color: rgb(255, 255, 255);
+    border-right:2px solid rgb(13, 12, 12);
+    transition:all .5s ease; /*Damos a la caja del menú una transición para que tenga un desplazamiento suave*/
+  }
+  /*Estilos de los li del menú*/
+  .nav__item {
+      display:block;
+      width:96%;
+      margin:0 auto;
+      line-height:2;
+      position:relative; /*Le damos una posición relativa para posteriormente añadirle el triangulo que indica que se está en la página actual del menú*/
+      border-bottom:.5px solid rgba(59, 62, 61, 1);
+      border-top:.5px solid rgba(59, 62, 61, 1);
+      background-color:transparent;
+      font-family: 'fantasy', impact;
+      font-size:25px;
+      text-align:center;
+      color: #aaaa;
+  }
+
+  /*Estos son los estilos de la hamburguesa del menú que abre y cierra el mismo*/
+  .menu-toogle {
+      position:absolute; /*Lo posicionamos absolutamente para poder darle una posición y poder moverlo según el menú esté abierto o cerrado*/
+      width: 35px;
+      line-height:1.1;
+      text-align:center;
+      top:30px; /*Le damos una posición top y left en donde queramos que se encuentre la hamburguesa del menú*/
+      left: 8px; 
+      border-radius:3px;
+      background-color: #aaaa;
+      transition: all .5s ease; /*Añadimos una transición para que realice un desplazamineto suave*/
+      z-index:10;
+  }
+  /*Añadimos la haburguesa y le damos unos estilos*/
+  .menu-toogle::before {
+      content:"☰";
+      font-size:32px;
+      color:white;
+  }
+  
+
+/*Estos son los estilos que le dan la funcionalidad al menú*/
+/*El checkbox según esté activado o no hará que el menú aparezca o desaparezca*/
+.checkbox {
+display:none; /*Ocultamos el checkbox pues no nos interesa que se vea*/
+}
+.checkbox:checked ~ .nav {
+left:0px; /*Le quitamos el left negativo para que el menú vuelva a su posición original*/
+position:fixed; /* Fijamos el menú lateral para que se desplace cuando hagamos scroll*/
+}
+.checkbox:checked ~ .main-w {
+margin-left:200px; /*Cuando el checkbox asigna un margen al contenedor principal para que se desplace junto con el menú*/
+}
+.checkbox:checked ~ .menu-toogle { 
+left:208px;
+position:fixed; /*Fijamos la hamburgues para que se desplace junto con el menú*/
+}
+  
+  
