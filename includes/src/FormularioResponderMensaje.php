@@ -16,16 +16,12 @@ class FormularioResponderMensaje extends Form
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
         $errorRespuesta = self::createMensajeError($errores, 'respuesta', 'span', array('class' => 'error'));
-        $errorId = self::createMensajeError($errores, 'id', 'span', array('class' => 'error'));
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
 
         $html = <<<EOF
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <div class="grupo-control">
-                <label>Id: </label><input class="control" type="text" name="id"/>$errorId
-                </div>
                 <div class="grupo-control">
                 <label>Respuesta:</label>
                 <br>
@@ -52,7 +48,7 @@ class FormularioResponderMensaje extends Form
             $result['respuesta'] = "La respuesta no puede estar vacia.";
         }
 
-        $id = $datos['id'] ?? null;
+        $id = $_SESSION["respuesta"];
 
         if ( empty($id) ) {
             $result['id'] = "Selecciona un Id valido.";
@@ -61,6 +57,7 @@ class FormularioResponderMensaje extends Form
         
         if (count($result) === 0) {
             $mensaje = Mensaje_respuesta::crea($user,$respuesta,$id);
+            unset($_SESSION["respuesta"]);
             $result = 'foro.php';
         }
         return $result;

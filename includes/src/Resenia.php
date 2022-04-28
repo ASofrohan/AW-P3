@@ -34,8 +34,26 @@ class Reseña
                     $user->getApellidos() . " [Fecha: ". $res->getFecha() ."]<br>Respuesta: " . $res->getRespuesta();
                 }
             }
-            $foroToString=$foroToString . "<br><br>";
+            $foroToString=$foroToString . "<br>";
+            if(!isset($_SESSION["login"])){
+                $foroToString=$foroToString . "<br>";
+            }
+            else{
+                $id=$val->getId();
+                $foroToString=$foroToString .  "
+                <a href='borrarMensajeForo.php?id=$id'><input type='button' value='Borrar'></a>
+                <a href='actualizarMensajeForo.php?id=$id'><input type='button' value='Editar'></a>
+                <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
+                $foroToString=$foroToString . "<br><br>";
+            }
+        }
 
+        if(!isset($_SESSION["login"])){
+            $foroToString=$foroToString . "<br><br>";
+        }
+        else{
+            $foroToString=$foroToString .
+            "<a href='enviarMensajeForo.php'><input type='button' value='Enviar nuevo mensaje'></a><br><br>";
         }
         return $foroToString;
     }

@@ -16,16 +16,12 @@ class FormularioActualizarMensaje extends Form
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
         $errorComentario = self::createMensajeError($errores, 'comentario', 'span', array('class' => 'error'));
-        $errorId = self::createMensajeError($errores, 'id', 'span', array('class' => 'error'));
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
 
         $html = <<<EOF
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <div class="grupo-control">
-                <label>Id: </label><input class="control" type="text" name="id"/>$errorId
-                </div>
                 <div class="grupo-control">
                 <label>Mensaje:</label>
                 <br>
@@ -63,21 +59,22 @@ class FormularioActualizarMensaje extends Form
             $result['comentario'] = "El mensaje no puede estar vacio.";
         }
 
-        $id = $datos['id'] ?? null;
+        $id = $_SESSION["editar"];
 
         if ( empty($id) ) {
             $result['id'] = "Selecciona un Id valido.";
         }
 
-        
+        $mensaje = Mensaje::edita($id,$user,$mensaje,$puntuacion);
+
+        if($mensaje==null){
+            $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti.";
+        }
         if (count($result) === 0) {
-            $mensaje = Mensaje::edita($id,$user,$mensaje,$puntuacion);
-            if($mensaje==null){
-                $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti.";
-                return $result;
-            }
+            unset($_SESSION["editar"]);
             $result = 'foro.php';
         }
+        
         return $result;
     }
 

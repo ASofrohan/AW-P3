@@ -14,17 +14,13 @@ class FormularioBorrarMensaje extends Form
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
-        $errorId = self::createMensajeError($errores, 'id', 'span', array('class' => 'error'));
         $htmlErroresGlobales = self::generaListaErroresGlobales($errores);
 
         $html = <<<EOF
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <div class="grupo-control">
-                <label>Id: </label><input class="control" type="text" name="id"/>$errorId
-                </div>
-                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button>
+                <div class="grupo-control"><button type="submit" name="Enviar">Aceptar</button>
                 </div>
             </fieldset>
             <div>
@@ -35,9 +31,10 @@ class FormularioBorrarMensaje extends Form
 
     protected function procesaFormulario($datos)
     {
+
         $result = array();
 
-        $id = $datos['id'] ?? null;
+        $id = $_SESSION["borrar"];
 
         if ( empty($id) ) {
             $result['id'] = "Selecciona un Id valido.";
@@ -47,12 +44,14 @@ class FormularioBorrarMensaje extends Form
         if (count($result) === 0) {
             $mensaje = Mensaje::borra($id);
             if($mensaje==null){
+                unset($_SESSION["borrar"]);
                 $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti o el mensaje ha sido respondido 
                 y no puede ser eliminado.";
                 return $result;
             }
-            $result = 'foro.php';
+            unset($_SESSION["borrar"]);
         }
+        $result = 'foro.php';
         return $result;
     }
 
