@@ -5,7 +5,12 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/FormularioBorrarMensaje.php';
 require_once __DIR__.'/includes/src/Resenia.php';
 
+if(!isset($_SESSION["borrar"])){
+	$id=$_GET["id"];
+	$_SESSION["borrar"]=$id;
+}
 $form = new FormularioBorrarMensaje();
+
 $reseña=new Reseña();
 if(!isset($_SESSION["login"])){
 	$htmlFormMensaje="";

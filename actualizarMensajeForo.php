@@ -5,6 +5,10 @@ require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/FormularioActualizarMensaje.php';
 require_once __DIR__.'/includes/src/Resenia.php';
 
+if(!isset($_SESSION["editar"])){
+	$id=$_GET["id"];
+	$_SESSION["editar"]=$id;
+}
 $form = new FormularioActualizarMensaje();
 $reseña=new Reseña();
 if(!isset($_SESSION["login"])){
