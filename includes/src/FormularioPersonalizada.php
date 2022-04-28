@@ -187,10 +187,14 @@ public function procesarPedido(){
 
         $html = $html . '<h3>Precio: </h3>';
         $html = $html . '<p id= "precio">4.99</p>';
+        $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
         $html = $html . '<input name="pers" type="submit" id="3"value="Añadir"/>';
         /////////////////////////////////////////////////////////
-
-
+        if(isset($_POST["pers"])){
+            //modificar esto, los valores de las masasa, tamaños
+            $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 3, 1,1)";
+            $resultado=$db->query($query);
+        }
 
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
@@ -218,12 +222,7 @@ public function procesarPedido(){
                 $idPedido=$row_cnt3+1;
             }
             //echo'<p>fuera</p>';
-            if(isset($_POST["pers"])){
-                echo'<p>dentro</p>';
-                //modificar esto, los valores de las masasa, tamaños
-                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 3, 1,1)";
-                $resultado=$db->query($query);
-            }
+            
 
         }
 
