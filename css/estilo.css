@@ -3,8 +3,10 @@ body {
 }
 
 header {
-	padding: 30px;
-	height: 100px;
+	padding-left: 10px;
+	padding-right: 5px;
+	padding-top: 10px;
+	height: 115px;
 	background-color: #aaaaaa;
 	color: white;
 }
