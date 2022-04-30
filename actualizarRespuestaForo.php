@@ -2,15 +2,14 @@
 
 //Inicio del procesamiento
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/src/FormularioResponderMensaje.php';
+require_once __DIR__.'/includes/src/FormularioActualizarRespuesta.php';
 require_once __DIR__.'/includes/src/Resenia.php';
 
-if(!isset($_SESSION["respuesta"])){
+if(!isset($_SESSION["editarRespuesta"])){
 	$id=$_GET["id"];
-	$_SESSION["respuesta"]=$id;
+	$_SESSION["editarRespuesta"]=$id;
 }
-
-$form = new FormularioResponderMensaje();
+$form = new FormularioActualizarRespuesta();
 $reseña=new Reseña();
 if(!isset($_SESSION["login"])){
 	$htmlFormMensaje="";
@@ -19,7 +18,7 @@ else{
 	$htmlFormMensaje = $form->gestiona();
 }
 
-$tituloPagina = 'Responder mensaje foro';
+$tituloPagina = 'Editar respuesta foro';
 $array=$reseña->mostrarReseñas();
 //$com=$array[0]->getComentario();
 
