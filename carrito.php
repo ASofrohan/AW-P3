@@ -21,17 +21,19 @@ function mostrar($nombre,$carrito){
 	$db = $app->conexionBd();
 	$pizzaPedida = PizzaPedida::muestraPizzas();
 	$bebidaPedida= BebidaPedida::muestraBebidas();
-	$length=count($pizzaPedida);
+	if($pizzaPedida!=null)
+	$length=count($pizzaPedida);else $length=0;
 	$insert=0;
 	for($Q=0;$Q<$length;$Q++){
 		if($insert<$pizzaPedida[$Q]->get_id())
 		$insert=$pizzaPedida[$Q]->get_id();
 		
 	}
-	$length=count($bebidaPedida);
+	if($bebidaPedida!=null)
+	$length=count($bebidaPedida);else $length=0;
 	$insert2=0;
 	for($Q=0;$Q<$length;$Q++){
-		if($insert<$bebidaPedida[$Q]->get_id())
+		if($insert2<$bebidaPedida[$Q]->get_id())
 		$insert2=$bebidaPedida[$Q]->get_id();
 		
 	}
@@ -204,7 +206,7 @@ function mostrar($nombre,$carrito){
 				}
 				
 				if(isset($_POST[$j] )){
-					$query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($insert2, $pedido, $Bebida)";
+					$query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($insert2+1, $pedido, $Bebida)";
 					$resultado=$db->query($query);
 					$iter++;
 					header("Location:carrito.php");
