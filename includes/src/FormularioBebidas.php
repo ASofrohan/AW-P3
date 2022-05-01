@@ -22,11 +22,19 @@ class FormularioBebidas extends Form
             $bebidaString = $bebidaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $bebidaString = $bebidaString . '<h2>' . $nombre . '</h2>';
                 $bebidaString = $bebidaString . '<img src="' . $image . '" WIDTH=250 HEIGHT=250 class="img-fluid">';
+                ////
+                $bebidaString = $bebidaString . '<input type="number" name="'.$nombre.'" id="control" min="0" step="1" value="1">';
+                ////
                 $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
                 <p id="precio">  ' . $precio . '</p>';
                 $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
+                if(isset($_SESSION["esAdmin"])){
+                    $admin="admin".$i;
+                    $bebidaString = $bebidaString . '<input name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
+                }
             $bebidaString = $bebidaString . '</form>';
             //++$i;
+            
 
             ////////////////////////////77
             $app = Aplicacion::getInstancia();
@@ -65,15 +73,66 @@ class FormularioBebidas extends Form
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
-                    $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($idPP+1, $idPedido, $i)";
+                    for($j=1; $j<=$_POST[$nombre]; $j++){
+                        $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($idPP+$j, $idPedido, $i)";
+                        $resultado=$db->query($query);
+                    }
+                }
+
+                if(isset($_POST[$admin])){
+                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
                 }
             }
             ++$i;
             $bebidaString = $bebidaString . '</div>';
         }
+        if(isset($_SESSION["esAdmin"])){
+           // $html=self::añadirBebidaAdmin();
+            $bebidaString = $bebidaString . '<div class="col-md-3">';
+            $bebidaString = $bebidaString . '
+            <form>
+                <label for="bebida">Nombre:</label><br>
+                <input type="text" id="bebida" name="bebida"><br>
+                <label for="precio">Precio:</label><br>
+                <input type="number" step="any" id="precio" name="precio"><br>
+                <label for="imagen">Nombre imagen:</label><br>
+                <input type="text" id="imagen" name="imagen"><br><br>
+                <input name="add" type="submit" id="add" value="Añadir"/>
+            </form>
+            ';
+            $bebidaString = $bebidaString . '</div>';
+
+            if(isset($_POST['add'])){
+                $nombre = $_POST["bebida"];
+                $precio = $_POST["precio"];
+                $image = "images/bebidas/" . $_POST["imagen"];
+
+                echo'<p>hooooola</p>';
+
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Image) VALUES($i, $nombre, $precio, $image)";
+                $resultado=$db->query($query);
+            }
+        }
         $bebidaString = $bebidaString . '</div>';
         return $bebidaString;
     }
+
+    
+   /* public static function añadirBebidaAdmin(){
+        $formulario='<h2>Añadir nueva bebida</h2>';
+        $formulario=$formulario.'
+            <form>
+                <label for="bebida">Nombre:</label><br>
+                <input type="text" id="bebida" name="bebida"><br>
+                <label for="precio">Precio:</label><br>
+                <input type="number" step="any" id="precio" name="precio"><br>
+                <label for="imagen">Nombre imagen:</label><br>
+                <input type="text" id="imagen" name="imagen"><br><br>
+                <input name="add" type="submit" id="add" value="Añadir"/>
+            </form>
+        ';
+        return $formulario;
+    }*/
 }
 ?>

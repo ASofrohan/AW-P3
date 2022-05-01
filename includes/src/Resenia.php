@@ -30,8 +30,28 @@ class Reseña
                 foreach ($respuestas as $res) {
                     $correo=$res->getUser();
                     $user = Usuario::buscaUsuario($correo);
-                    $foroToString=$foroToString. "<br>[Id respuesta: " . $res->getId() . "] Usuario: " . $user->getNombre() . " " .
+                    if($res->getEditado()){
+                        $respuesta="SI";
+                    }
+                    else{
+                        $respuesta="NO";
+                    }
+                    $foroToString=$foroToString. "<br>[Id respuesta: " . $res->getId() . "] (Editado: " . $respuesta . ") Usuario: " . $user->getNombre() . " " .
                     $user->getApellidos() . " [Fecha: ". $res->getFecha() ."]<br>Respuesta: " . $res->getRespuesta();
+                    $foroToString=$foroToString . "<br>";
+
+                     if(!isset($_SESSION["login"])){
+                      $foroToString=$foroToString . "<br>";
+                     }
+                     else{
+                       $id=$res->getId();
+                       if(Mensaje_respuesta::respuestaPerteneceUsuario($id)||isset($_SESSION["esAdmin"])){
+                        $foroToString=$foroToString .  "
+                        <a href='borrarRespuestaForo.php?id=$id'><input type='button' value='Borrar respuesta'></a>
+                        <a href='actualizarRespuestaForo.php?id=$id'><input type='button' value='Editar respuesta'></a>";
+                        $foroToString=$foroToString . "<br>";
+                        }
+                    }
                 }
             }
             $foroToString=$foroToString . "<br>";
@@ -40,10 +60,19 @@ class Reseña
             }
             else{
                 $id=$val->getId();
-                $foroToString=$foroToString .  "
-                <a href='borrarMensajeForo.php?id=$id'><input type='button' value='Borrar'></a>
-                <a href='actualizarMensajeForo.php?id=$id'><input type='button' value='Editar'></a>
-                <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
+                if(Mensaje::mensajePerteneceUsuario($id)||isset($_SESSION["esAdmin"])){
+                    $foroToString=$foroToString .  "
+                    <a href='borrarMensajeForo.php?id=$id'><input type='button' value='Borrar'></a>
+                    <a href='actualizarMensajeForo.php?id=$id'><input type='button' value='Editar'></a>
+                    <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
+                    $foroToString=$foroToString . "<br><br>";
+                }
+                else{
+                    $foroToString=$foroToString .  "
+                    <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
+                    $foroToString=$foroToString . "<br><br>";
+                }
+                
                 $foroToString=$foroToString . "<br><br>";
             }
         }

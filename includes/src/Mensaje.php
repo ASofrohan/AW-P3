@@ -90,7 +90,7 @@ class Mensaje
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
-        if($user==$correo){
+        if($user==$correo || isset($_SESSION["esAdmin"])){
             $editado=true;
             $query=sprintf("UPDATE foro SET Comentario='%s',Puntuacion='%s',Editado=$editado where 
             ID_Comentario=$id", $conn->real_escape_string($mensaje->comentario)
@@ -120,7 +120,7 @@ class Mensaje
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
         $respuestas=$row['Respuestas'];
-        if($user==$correo && $respuestas==0){
+        if(($user==$correo && $respuestas==0)||isset($_SESSION["esAdmin"])){
             $query=sprintf("DELETE FROM foro where ID_Comentario=$id");
             if ( !$conn->query($query) ) {
                 echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -165,6 +165,24 @@ class Mensaje
 
         return $arrayForo;
     }
+
+   public function mensajePerteneceUsuario($id){
+    $app = Aplicacion::getInstancia();
+    $conn = $app->conexionBd();
+    $query=sprintf("SELECT * FROM foro where ID_Comentario=$id");
+    $result = $conn->query($query);
+        if($result){
+           if(mysqli_num_rows($result)>0){   
+                $row = mysqli_fetch_assoc($result);
+                $idUsuario=$row['ID_Usuario'];
+                if($idUsuario==$_SESSION['correo']){
+                    return true;
+                }
+            }
+        }
+
+    return false;
+   }
 
     public function getUser()
     {
