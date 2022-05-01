@@ -7,7 +7,7 @@ class Tamaños
     private $tamaño;
     private $precio;
 
-    private function __construct($id_tamaño, $tamaño, $precio)
+    public function __construct($id_tamaño, $tamaño, $precio)
     {
         $this->id_tamaño = $id_tamaño;
         $this->tamaño = $tamaño;

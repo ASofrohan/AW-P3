@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
+require_once __DIR__.'/Pizzas.php';
+require_once __DIR__.'/Tamanios.php';
+require_once __DIR__.'/Masas.php';
 class PizzaPedida{
     private $id_pizzapedida;
     private $pedido;
@@ -57,7 +60,63 @@ class PizzaPedida{
         else return null;
        
     }
+  
+    public function get_precio(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT * FROM Pizzas WHERE ID_Pizza='$this->pizza'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+        $name=$row['Nombre'];
+        if($name=="Personalizada")
+        $t=new Pizzas($this->pizza,$row['Precio'],1,$name,null);
+        else
+        $t=new Pizzas($this->pizza,$row['Precio'],0,$name,null);
+        return $t->get_precio();
+    } 
+    public function get_nombre(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT * FROM Pizzas WHERE ID_Pizza='$this->pizza'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+        $name=$row['Nombre'];
+        if($name=="Personalizada")
+        $t=new Pizzas($this->pizza,$row['Precio'],1,$name,null);
+        else
+        $t=new Pizzas($this->pizza,$row['Precio'],0,$name,null);
+        return $t->get_nombre();
+    }
+    public function get_masa(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT Tipo FROM masas WHERE ID_Masa='$this->masa'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+           $m=new Masas($this->masa,$row['Tipo']);
+           return $m->get_tipo();
+    } 
+    public function get_tamaño(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT Tamaño,Precio FROM tamaños WHERE ID_Tamaño='$this->tamaño'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+           $t=new Tamaños($this->tamaño,$row['Tamaño'],$row['Precio']);
+           return $t->get_tamaño();
+    }
+    public function get_tamañoPrecio(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT Tamaño,Precio FROM tamaños WHERE ID_Tamaño='$this->tamaño'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+           $t=new Tamaños($this->tamaño,$row['Tamaño'],$row['Precio']);
+           return $t->get_precio();
+    }
     public function get_id(){ return $this->id_pizzapedida;}
     public function get_pedido(){ return $this->pedido;}
     public function get_idPizza(){ return $this->pizza;}
+    public function get_idMasa(){ return $this->masa;}
+    public function get_idTamaño(){ return $this->tamaño;}
 }

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
+require_once __DIR__.'/Ingredientes.php';
 class PizzaIngrediente{
     private $id_ingredientepizza;
     private $id_pizzapedida;
@@ -50,4 +51,22 @@ class PizzaIngrediente{
     public function get_id(){ return $this->id_pizzapedida;}
     public function get_idIngredientePizza(){ return $this->id_ingredientepizza;}
     public function get_idIngre(){ return $this->ingrediente;}
+    public function get_nombreIng(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT Nombre FROM Ingredientes WHERE ID_Ingrediente='$this->ingrediente'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+        $t=new Ingredientes($this->ingrediente,$row['Nombre'],$row['Precio'],null);
+        return $t->get_nombre();
+    }
+    public function get_precioIng(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT Nombre,Precio FROM Ingredientes WHERE ID_Ingrediente='$this->ingrediente'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+           $t=new Ingredientes($this->ingrediente,$row['Nombre'],$row['Precio'],null);
+           return $t->get_precio();
+    }
 }

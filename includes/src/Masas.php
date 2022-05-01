@@ -6,7 +6,7 @@ class Masas
     private $id_masa;
     private $tipo;
 
-    private function __construct($id_masa, $tipo)
+    public function __construct($id_masa, $tipo)
     {
         $this->id_masa = $id_masa;
         $this->tipo = $tipo;

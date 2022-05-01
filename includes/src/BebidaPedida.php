@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
+require_once __DIR__.'/Bebidas.php';
 class BebidaPedida{
     private $id_bebidapedida;
     private $pedido;
@@ -57,4 +58,22 @@ class BebidaPedida{
     public function get_id(){ return $this->id_bebidapedida;}
     public function get_pedido(){ return $this->pedido;}
     public function get_idBebida(){ return $this->bebida;}
+    public function get_nombre(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT * FROM Bebidas WHERE ID_Bebida='$this->bebida'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+        $t=new Bebidas($this->bebida,$row['Nombre'],$row['Precio'],null);
+        return $t->get_nombre();
+    }
+    public function get_precio(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query="SELECT * FROM Bebidas WHERE ID_Bebida='$this->bebida'";
+        $resultado=$conn->query($query);
+        $row = $resultado->fetch_assoc();
+        $t=new Bebidas($this->bebida,$row['Nombre'],$row['Precio'],null);
+        return $t->get_precio();
+    }
 }

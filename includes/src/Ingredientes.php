@@ -9,7 +9,7 @@ class Ingredientes
     private $image;
 
 
-    private function __construct($id_ingrediente, $nombre, $precio, $image)
+    public function __construct($id_ingrediente, $nombre, $precio, $image)
     {
         $this->id_ingrediente = $id_ingrediente;
         $this->nombre = $nombre;

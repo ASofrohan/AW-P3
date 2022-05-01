@@ -20,146 +20,206 @@ function mostrar($nombre,$carrito){
 	$app = Aplicacion::getInstancia();
 	$db = $app->conexionBd();
 	$pizzaPedida = PizzaPedida::muestraPizzas();
-	$bebidaPedida = BebidaPedida::muestraBebidas();
+	$bebidaPedida= BebidaPedida::muestraBebidas();
+	$length=count($pizzaPedida);
+	$insert=0;
+	for($Q=0;$Q<$length;$Q++){
+		if($insert<$pizzaPedida[$Q]->get_id())
+		$insert=$pizzaPedida[$Q]->get_id();
+		
+	}
+	$length=count($bebidaPedida);
+	$insert2=0;
+	for($Q=0;$Q<$length;$Q++){
+		if($insert<$bebidaPedida[$Q]->get_id())
+		$insert2=$bebidaPedida[$Q]->get_id();
+		
+	}
 	$carritoToString="";
 	if($nombre!=null){
-		$arrayPyB= $carrito->consultaPedidosBebPiz();
 		$precio=$carrito->consultaPrecio();
 		$precioP=$carrito->precioPerso();
 		$arrayPP=$carrito->consultaPersonalizada();
 		$descuento=$carrito->consultaDescuento();
 		$oferta=null;
 		$i=0;
+		$j=1000;
 		$boolPersonalizada=false;
-		if($arrayPyB!=null){
-			$arrlength = count($arrayPyB);
-			$carritoToString=$carritoToString.'Pedidos por pagar por = '.$nombre.' </a>'.'<br></br>';
-			$x = 0;
-			if($pizzaPedida!=null){
-				
-				foreach($pizzaPedida as $pizza) {
-					$pedido=$pizza->get_pedido();
-					$idPizza=$pizza->get_id();
-					$tipo=$pizza->get_idPizza();
-					$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-					if($arrayPyB[$x]=="Personalizada"){
-						$boolPersonalizada=true;
-						$x++;
-						$carritoToString=$carritoToString.' masa '. $arrayPyB[$x].'  ';
-						$x++;
-						$carritoToString=$carritoToString.' tamaño '. $arrayPyB[$x].'  ';
-						$x++;
-						$precio1=$arrayPyB[$x];
-						$x++;
-						$carritoToString=$carritoToString. $arrayPyB[$x]+$precio1.'  ';
-						
-						
-							$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-							//$carritoToString=$carritoToString.$idPizza;
-							$carritoToString=$carritoToString.'<br>';
-						
-						
-						if($arrayPP!=null){
-							$pizzaIngrediente = PizzaIngrediente::muestraIngredientes($idPizza);
+		$boolRepetido=false;
+		$repetidor=1;
+		$controlmasa=null;
+		$controlpiza=null;
+		$controltamaño=null;
+		$carritoToString=$carritoToString.'Pedidos por pagar por = '.$nombre.' </a>'.'<br></br>';
+		if($pizzaPedida!=null){
+			$controlmasa=null;
+			$controlpiza=null;
+			$controltamaño=null;
+			foreach($pizzaPedida as $pizza) {
+				$pedido=$pizza->get_pedido();
+				$idPizzaPedida=$pizza->get_id();
+				$idPizza=$pizza->get_idPizza();
+				$idMasa=$pizza->get_idMasa();
+				$idTamaño=$pizza->get_idTamaño();
+				$nombre=$pizza->get_nombre();
+				$tamaño=$pizza->get_tamaño();
+				$masa=$pizza->get_masa();
+				$precio1=$pizza->get_precio();
 
-							$arrlength1 = count($arrayPP);
-							if($pizzaIngrediente!=null){
-								$j=0;
-								foreach($pizzaIngrediente as $ing) {
-									$idPizzaIngre=$ing->get_idIngredientePizza();
-									$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-									$carritoToString=$carritoToString.' &nbsp '.$arrayPP[$j].'  ';
-									$carritoToString = $carritoToString .'  ';
-									$j++;
-									$carritoToString=$carritoToString.$arrayPP[$j].'  ';
-									if($j%2==1){
-										$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="BASURA"/>';
-										$carritoToString=$carritoToString.'<br>';
-									}
-									$carritoToString=$carritoToString.'</form>';
-									if(isset($_POST[$j])){
-										//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
-										$query="DELETE FROM pizza_ingredientes WHERE ID_IngredientePizza='$idPizzaIngre'";
-										$resultado=$db->query($query);
-										header("Location:carrito.php");
-										
-									}
-									$j++;
+				$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+				if($idPizza==3){
+					$boolPersonalizada=true;
+					$carritoToString=$carritoToString. $nombre.'  ';
+					$carritoToString=$carritoToString.' masa '. $masa.'  ';
+					$carritoToString=$carritoToString.' tamaño '. $tamaño.'  ';
+					$carritoToString=$carritoToString. $pizza->get_tamañoPrecio()+$precio1.'  ';
+						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="-"/>';
+						//$carritoToString=$carritoToString.$idPizza;
+						$carritoToString=$carritoToString.'<br>';
+					
+						$pizzaIngrediente = PizzaIngrediente::muestraIngredientes($idPizzaPedida);
+						if($pizzaIngrediente!=null){
+							$j=0;
+							foreach($pizzaIngrediente as $ing) {
+								$idPizzaIngre=$ing->get_idIngredientePizza();
+								$nombreIng=$ing->get_nombreIng();
+								$precioIng=$ing->get_precioIng();
+								$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+								$carritoToString=$carritoToString.' &nbsp '.$nombreIng.'  ';
+								$carritoToString = $carritoToString .'  ';
+								$carritoToString=$carritoToString.$precioIng.'  ';
+							
+									$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="-"/>';
+									$carritoToString=$carritoToString.'<br>';
+								
+								$carritoToString=$carritoToString.'</form>';
+								if(isset($_POST[$j])){
+									//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
+									$query="DELETE FROM pizza_ingredientes WHERE ID_IngredientePizza='$idPizzaIngre'";
+									$resultado=$db->query($query);
+									header("Location:carrito.php");
+									
 								}
+								$j++;
 							}
-							$carritoToString=$carritoToString."<br>";
-							$sumTot=$precio+$precioP;
+						}
+						else{$carritoToString=$carritoToString.'No has elegido ingredientes';}
+					
+						$carritoToString=$carritoToString."<br>";
+						$sumTot=$precio+$precioP;
+						$carritoToString=$carritoToString.'</form>';
+				}else{
+					$query=" SELECT * FROM pedidos_pizzas WHERE ID_Pizza='$idPizza' AND ID_Masa='$idMasa' AND ID_Tamaño='$idTamaño' AND ID_Pedido='$pedido'";
+					$resultado=$db->query($query);
+					$row_cnt = mysqli_num_rows($resultado);
+					$repetidor=$row_cnt;
+					if($controlmasa!=$idMasa||$controlpiza!=$idPizza||$controltamaño!=$idTamaño){
+						
+						$controlmasa=null;
+						$controlpiza=null;
+						$controltamaño=null;
+					}
+					if(($controlmasa==$idMasa&&$controlpiza==$idPizza&&$controltamaño==$idTamaño&&$repetidor!=1&&$repetidor!=0&&$boolRepetido==false)
+					||$controlmasa==null&&$controlpiza==null&&$controltamaño==null){
+							$carritoToString=$carritoToString. $nombre.'  ';
+							$carritoToString=$carritoToString.' masa '. $masa.'  ';
+							$carritoToString=$carritoToString.' tamaño '. $tamaño.'  ';
+							$carritoToString=$carritoToString. $row_cnt*($pizza->get_tamañoPrecio()+$precio1).'  ';
+							$carritoToString=$carritoToString.' &nbsp '.' &nbsp '.'x'.$row_cnt;
+								$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="-"/>';
+								$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="+"/>';
+								//$carritoToString=$carritoToString.$idPizza;
+								$carritoToString=$carritoToString.'<br>';
+							
 							$carritoToString=$carritoToString.'</form>';
-						}else{$carritoToString=$carritoToString.'No has elegido ingredientes'."<br>";}
+							$boolRepetido=true;
+					}
+					$controlmasa=$idMasa;
+					$controlpiza=$idPizza;
+					$controltamaño=$idTamaño;
+					
+				}
+				if(isset($_POST[$i])){
+					if($idPizza!=3){
 						
+						$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizzaPedida'";
+						$resultado=$db->query($query);
+						header("Location:carrito.php");
 					}else{
-						$x++;
-						$carritoToString=$carritoToString.' masa '. $arrayPyB[$x].'  ';
-						$x++;
-						$carritoToString=$carritoToString.' tamaño '. $arrayPyB[$x].'  ';
-						$x++;
-						$precio1=$arrayPyB[$x];
-						$x++;
-						$carritoToString=$carritoToString. $arrayPyB[$x]+$precio1.'  ';
+						$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizzaPedida'";
+						$resultado=$db->query($query);
+						$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizzaPedida'";
+						$resultado1=$db->query($query1);
+						header("Location:carrito.php");
+					}
+				}
+				
+				if(isset($_POST[$j] )){
+					$query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($insert+1, $pedido, $idPizza, $idMasa,$idTamaño)";
+					$resultado=$db->query($query);
+					header("Location:carrito.php");
+				}
+				$i++;
+				$j--;
+			}
+		}
+		else{
+			$carritoToString=$carritoToString.'No hay pizzas';
+			$carritoToString=$carritoToString.'<br>';
+		}
+		if($bebidaPedida!=null){
+			$boolRepetido=false;
+			$controlbebida=null;
+			foreach($bebidaPedida as $bebida) {
+				$pedido=$bebida->get_pedido();
+				$idBebida=$bebida->get_id();
+				$Bebida=$bebida->get_idBebida();
+				$nombre=$bebida->get_nombre();
+				$precioB=$bebida->get_precio();
+				$query=" SELECT * FROM pedidos_bebidas WHERE ID_Bebida='$Bebida' AND ID_Pedido='$pedido'";
+					$resultado=$db->query($query);
+					$row_cnt = mysqli_num_rows($resultado);
+					$repetidor=$row_cnt;
+						if($controlbebida!=$Bebida)	
+						$controlbebida=null;		
+					if(($controlbebida==null)||($controlbebida==$Bebida&&$repetidor!=1&&$repetidor!=0&&$boolRepetido==false)){
+							
+						$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
+						$carritoToString=$carritoToString. $nombre.' &nbsp '.'x'.$row_cnt.'  ';
+						$carritoToString=$carritoToString. $row_cnt*$precioB.'  ';
 						
-							$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-							//$carritoToString=$carritoToString.$idPizza;
+							$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="-"/>';
+							$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="+"/>';
+							//$carritoToString=$carritoToString.$idBebida;
 							$carritoToString=$carritoToString.'<br>';
 						
 						$carritoToString=$carritoToString.'</form>';
+						$boolRepetido=true;
 					}
-					if(isset($_POST[$i])){
-						if($tipo!=3){
-							
-							$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
-							$resultado=$db->query($query);
-							header("Location:carrito.php");
-						}else{
-							$query="DELETE FROM pizza_ingredientes WHERE  ID_PizzaPedida='$idPizza'";
-							$resultado=$db->query($query);
-							$query1="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizza'";
-							$resultado1=$db->query($query1);
-							header("Location:carrito.php");
-						}
-					}
-					$i++;
-					$x++;
+					$controlbebida=$Bebida;
+				if(isset($_POST[$i])){
+					$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
+					$resultado=$db->query($query);
+					header("Location:carrito.php");
 				}
-			}
-			if($bebidaPedida!=null){
-				$x++;//evitar oferta
-				foreach($bebidaPedida as $bebida) {
-					$pedido=$bebida->get_pedido();
-					$idBebida=$bebida->get_id();
-					$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
-					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-					$x++;
-					$carritoToString=$carritoToString. $arrayPyB[$x].'  ';
-					
-						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="basura"/>';
-						//$carritoToString=$carritoToString.$idBebida;
-						$carritoToString=$carritoToString.'<br>';
-					
-					$carritoToString=$carritoToString.'</form>';
-					if(isset($_POST[$i])){
-						$query="DELETE FROM pedidos_bebidas WHERE ID_Pedido='$pedido' AND ID_BebidaPedida='$idBebida'";
-						$resultado=$db->query($query);
-						header("Location:carrito.php");
-					}
-					$i++;
-					$x++;
-					
+				
+				if(isset($_POST[$j] )){
+					$query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($insert2, $pedido, $Bebida)";
+					$resultado=$db->query($query);
+					$iter++;
+					header("Location:carrito.php");
 				}
+				$i++;
+				$j--;
 			}
-			
-			$oferta=$arrayPyB[$arrlength-1];
-			
-			$carritoToString=$carritoToString.'<br>';
-		}else{
-			$carritoToString=$carritoToString.'No hay pedidos';
+		}
+		else{
+			$carritoToString=$carritoToString.'No hay bebidas';
 			$carritoToString=$carritoToString.'<br>';
 		}
+		$oferta=$carrito->consultaOferta();
+		$carritoToString=$carritoToString.'<br>';
+	
 		if($boolPersonalizada==false)
 			$carritoToString=$carritoToString.'No hay pizzas personalizadas'.'<br>';
 		if($arrayPP==null){

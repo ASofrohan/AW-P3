@@ -9,7 +9,7 @@ class Pizzas
     private $nombre;
     private $image;
 
-    private function __construct($id_pizza, $precio, $personalizada, $nombre, $image)
+    public function __construct($id_pizza, $precio, $personalizada, $nombre, $image)
     {
         $this->id_pizza = $id_pizza;
         $this->precio = $precio;

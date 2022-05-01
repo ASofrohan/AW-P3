@@ -8,7 +8,7 @@ class Bebidas
     private $precio;
     private $image;
 
-    private function __construct($id_bebida, $nombre, $precio, $image)
+    public function __construct($id_bebida, $nombre, $precio, $image)
     {
         $this->id_bebida= $id_bebida;
         $this->nombre = $nombre;
