@@ -20,7 +20,7 @@ class Usuario
 
     private $postal;
 
-    private function __construct($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso)
+    private function __construct($correo, $nombre, $apellidos, $contraseña, $calle,$ciudad,$piso, $postal)
     {
         $this->correo= $correo;
         $this->nombre = $nombre;
