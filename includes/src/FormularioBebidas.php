@@ -28,7 +28,7 @@ class FormularioBebidas extends Form
                 $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
                 <p id="precio">  ' . $precio . '</p>';
                 $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
-                if($_SESSION["esAdmin"]){
+                if(isset($_SESSION["esAdmin"])){
                     $admin="admin".$i;
                     $bebidaString = $bebidaString . '<input name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
                 }
@@ -87,7 +87,7 @@ class FormularioBebidas extends Form
             ++$i;
             $bebidaString = $bebidaString . '</div>';
         }
-        if($_SESSION["esAdmin"]){
+        if(isset($_SESSION["esAdmin"])){
            // $html=self::añadirBebidaAdmin();
             $bebidaString = $bebidaString . '<div class="col-md-3">';
             $bebidaString = $bebidaString . '
