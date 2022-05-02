@@ -82,7 +82,9 @@ class Reseña
         }
         else{
             $foroToString=$foroToString .
-            "<a href='enviarMensajeForo.php'><input type='button' value='Enviar nuevo mensaje'></a><br><br>";
+            "<div class=mensajeforo 
+            <a href='enviarMensajeForo.php'><input type='button' value='Enviar nuevo mensaje'></a><br><br>
+            </div>";
         }
         return $foroToString;
     }

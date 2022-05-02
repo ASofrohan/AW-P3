@@ -30,6 +30,7 @@ footer	 {
 div.saludo {
 	width: 100%;
 	text-align: right;
+	color: #ffffff;
 }
 
 fieldset {
@@ -51,20 +52,41 @@ body {
     font-size: 16px;
 }
 div#contenido {
-	padding: 10px;
+	padding-left: 10px;
 	float: right;
 	min-height: 100px;
 	width: 200px;
 	background-color:  #ffffff;
 }
-
-/*
-div#foro {
-	padding: 30px;
-	position:absolute;
-	width: 10em;
-	height: 10em;
-	top: 15em;
-  	right: 20em;
+div.bebidas{
+	padding-left: 10px;
+	float: right;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
 }
-*/
+
+div.carrito{
+	padding-left: 10px;
+	float: right;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+}
+div.foro{
+	float: right;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+}
+ p.mensaje{
+	padding-top: 5px;
+	text-align: center;
+	font-size: x-large;
+ }
+div.mensajeforo{
+	padding-left: 5px;
+	padding-top: 5px;
+	width: 200px;
+	background-color:  rebeccapurple;
+}

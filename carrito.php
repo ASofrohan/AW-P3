@@ -12,7 +12,9 @@ $string=mostrar($nombre,$carrito);
 
 $tituloPagina = 'Carrito';
 $contenidoPrincipal=<<<EOF
+	<div class="carrito">
 	$string
+	</div>
 EOF;
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
 
@@ -250,7 +252,7 @@ function mostrar($nombre,$carrito){
 		
 	}
 	else{
-		$carritoToString=$carritoToString.'No estas registrado';
+		$carritoToString=$carritoToString.'<p class ="mensaje">Debes <a href=login.php>iniciar sesión</a> para acceder al carrito.</p>';
 	}
 	return $carritoToString;
 }	
