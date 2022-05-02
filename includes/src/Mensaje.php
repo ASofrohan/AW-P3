@@ -120,11 +120,10 @@ class Mensaje
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
         $respuestas=$row['Respuestas'];
-        if(($user==$correo && $respuestas==0)||isset($_SESSION["esAdmin"])){
+        if($user==$correo||isset($_SESSION["esAdmin"])){
             $query=sprintf("DELETE FROM foro where ID_Comentario=$id");
             if ( !$conn->query($query) ) {
-                echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-                exit();
+                $mensaje=null;
             } 
         }
         else{

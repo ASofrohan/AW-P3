@@ -45,8 +45,7 @@ class FormularioBorrarMensaje extends Form
             $mensaje = Mensaje::borra($id);
             if($mensaje==null){
                 unset($_SESSION["borrar"]);
-                $result['id'] = "El Id no corresponde a ningun mensaje enviado por ti o el mensaje ha sido respondido 
-                y no puede ser eliminado.";
+                $result['id'] = "El mensaje ha sido respondido y no puede ser eliminado.";
                 return $result;
             }
             unset($_SESSION["borrar"]);
