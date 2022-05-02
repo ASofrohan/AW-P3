@@ -31,7 +31,7 @@ class FormularioBebidas extends Form
                 if(isset($_SESSION["esAdmin"])){
                     $admin="admin".$i;
                     $bebidaString = $bebidaString . '<input name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
-                }
+                }else $admin=null;
             $bebidaString = $bebidaString . '</form>';
             //++$i;
             

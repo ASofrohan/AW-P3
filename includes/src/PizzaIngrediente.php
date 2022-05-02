@@ -54,7 +54,7 @@ class PizzaIngrediente{
     public function get_nombreIng(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query="SELECT Nombre FROM Ingredientes WHERE ID_Ingrediente='$this->ingrediente'";
+        $query="SELECT * FROM Ingredientes WHERE ID_Ingrediente='$this->ingrediente'";
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $t=new Ingredientes($this->ingrediente,$row['Nombre'],$row['Precio'],null);
