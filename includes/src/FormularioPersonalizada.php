@@ -105,6 +105,22 @@ class FormularioPersonalizada extends Form
             }
             $pizzaString = $pizzaString . '</div>';
         }
+        if(isset($_SESSION["esAdmin"])){
+            // $html=self::añadirBebidaAdmin();
+             $pizzaString = $pizzaString . '<div class="col-md-3">';
+             $pizzaString = $pizzaString . '
+             <form>
+                 <label for="pizza">Nombre pizza:</label><br>
+                 <input type="text" id="bebida" name="bebida"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="imagen">Nombre imagen:</label><br>
+                 <input type="text" id="imagen" name="imagen"><br><br>
+                 <input name="add" type="submit" id="add" value="Añadir"/>
+             </form>
+             ';
+             $pizzaString = $pizzaString . '</div>';
+        } 
         $pizzaString = $pizzaString . '</div>';
         return $pizzaString;
     }
