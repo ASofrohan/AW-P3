@@ -140,7 +140,6 @@ class Mensaje
         $conn = $app->conexionBd();
         $query=sprintf("SELECT * FROM foro");
         $result = $conn->query($query);
-        //echo "<div  style='overflow: auto; width: 400px; height: 300px'>";
         $arrayForo=array();
 
         if($result){

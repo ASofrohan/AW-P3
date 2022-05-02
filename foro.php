@@ -12,7 +12,7 @@ $array=$reseña->mostrarReseñas();
 
 $contenidoPrincipal =
 <<<EOF
-	<div  style="overflow: auto; width: 800px; height: 400px">
+	<div  style="width: 800px">
 		$array
 	</div>
 EOF;

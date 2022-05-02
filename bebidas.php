@@ -10,7 +10,7 @@ $tituloPagina = 'Bebidas';
 
 $contenidoPrincipal =<<<EOF
 		<h1>$tituloPagina</h1>
-		<div  style="overflow: auto; width: 100%; height: 300px">
+		<div  style="width: 100%">
 			$bebidas
 		</div>
 EOF;

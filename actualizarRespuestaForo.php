@@ -23,9 +23,8 @@ $array=$reseña->mostrarReseñas();
 //$com=$array[0]->getComentario();
 
 $contenidoPrincipal =
-
 <<<EOF
-    <div  style="overflow: auto; width: 800px; height: 400px">
+    <div width: 800px;>
 		$array
 	</div>
 		$htmlFormMensaje
