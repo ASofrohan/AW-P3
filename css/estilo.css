@@ -6,8 +6,8 @@ header {
 	padding-left: 10px;
 	padding-right: 5px;
 	padding-top: 10px;
-	height: 132px;
-	background-color: #f8f9fa;
+	height: 155px;
+	background-color: #faf9f8;
 	color: white;
 }
 
@@ -79,6 +79,20 @@ div.foro{
 	width: 100%;
 	background-color:  #ffffff;
 }
+div.pizzas{
+	padding:10px;
+	float: right;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+}
+div.ofertas{
+	padding:10px;
+	float: right;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+}
  p.mensaje{
 	padding-top: 5px;
 	text-align: center;
@@ -103,4 +117,8 @@ div.btnenviar{
 
 div.grupo-control{
 	padding: 5px;
+}
+
+div.saludo{
+	color: black;
 }

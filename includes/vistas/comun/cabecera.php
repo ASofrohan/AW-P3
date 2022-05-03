@@ -47,7 +47,7 @@ function mostrarSaludo(){
 		<a href="carrito.php">CARRITO</a></div>';
 	}
 	else{
-		echo '<div class="saludo">Hola ' . $_SESSION["nombre"] .' <a href="logout.php">(salir)</a><a href="actualizar.php">Editar perfil</a>
+		echo '<div class="saludo">Hola ' . $_SESSION["nombre"] .' <a href="logout.php">(salir)</a>'. " " .'<a href="actualizar.php">Editar perfil</a>
 		<a href="carrito.php">CARRITO</a></div>';
 	}
 }
