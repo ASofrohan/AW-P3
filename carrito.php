@@ -46,7 +46,7 @@ function mostrar($nombre,$carrito){
 		$arrayPP=$carrito->consultaPersonalizada();
 		$descuento=$carrito->consultaDescuento();
 		$oferta=null;
-		$i=0;
+		$i=2000;
 		$j=1000;
 		$boolPersonalizada=false;
 		$boolRepetido=false;
@@ -83,7 +83,7 @@ function mostrar($nombre,$carrito){
 					
 						$pizzaIngrediente = PizzaIngrediente::muestraIngredientes($idPizzaPedida);
 						if($pizzaIngrediente!=null){
-							$j=0;
+							$q=0;
 							foreach($pizzaIngrediente as $ing) {
 								$idPizzaIngre=$ing->get_idIngredientePizza();
 								$nombreIng=$ing->get_nombreIng();
@@ -93,21 +93,24 @@ function mostrar($nombre,$carrito){
 								$carritoToString = $carritoToString .'  ';
 								$carritoToString=$carritoToString.$precioIng.'  ';
 							
-									$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="-"/>';
+									$carritoToString = $carritoToString . '<input name="'.$q.'" type="submit" id="'.$q.'"value="-"/>';
 									$carritoToString=$carritoToString.'<br>';
 								
 								$carritoToString=$carritoToString.'</form>';
-								if(isset($_POST[$j])){
+								if(isset($_POST[$q])){
 									//FALTA METER UNA NUEVA CLASE PARA OBTENER LOS IDS DE LOS INGREDIENTES
-									$query="DELETE FROM pizza_ingredientes WHERE ID_IngredientePizza='$idPizzaIngre'";
-									$resultado=$db->query($query);
+									
+									$query4="DELETE FROM pizza_ingredientes WHERE ID_IngredientePizza='$idPizzaIngre'";
+									$resultado4=$db->query($query4);
 									header("Location:carrito.php");
 									
 								}
-								$j++;
+								$q++;
 							}
 						}
-						else{$carritoToString=$carritoToString.'No has elegido ingredientes';}
+						else{
+							$carritoToString=$carritoToString.'No has elegido ingredientes';
+						}
 					
 						$carritoToString=$carritoToString."<br>";
 						$sumTot=$precio+$precioP;
@@ -130,7 +133,7 @@ function mostrar($nombre,$carrito){
 							$carritoToString=$carritoToString.' tamaño '. $tamaño.'  ';
 							$carritoToString=$carritoToString. $row_cnt*($pizza->get_tamañoPrecio()+$precio1).'  ';
 							$carritoToString=$carritoToString.' &nbsp '.' &nbsp '.'x'.$row_cnt;
-								$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="-"/>';
+								$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="borrar"value="-"/>';
 								$carritoToString = $carritoToString . '<input name="'.$j.'" type="submit" id="'.$j.'"value="+"/>';
 								//$carritoToString=$carritoToString.$idPizza;
 								$carritoToString=$carritoToString.'<br>';
@@ -145,7 +148,6 @@ function mostrar($nombre,$carrito){
 				}
 				if(isset($_POST[$i])){
 					if($idPizza!=3){
-						
 						$query="DELETE FROM pedidos_pizzas WHERE ID_Pedido='$pedido' AND ID_PizzaPedida='$idPizzaPedida'";
 						$resultado=$db->query($query);
 						header("Location:carrito.php");
@@ -159,6 +161,7 @@ function mostrar($nombre,$carrito){
 				}
 				
 				if(isset($_POST[$j] )){
+					
 					$query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($insert+1, $pedido, $idPizza, $idMasa,$idTamaño)";
 					$resultado=$db->query($query);
 					header("Location:carrito.php");
