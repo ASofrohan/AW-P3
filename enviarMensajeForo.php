@@ -21,10 +21,12 @@ $array=$reseña->mostrarReseñas();
 $contenidoPrincipal =
 
 <<<EOF
-    <div  style="width: 800px">
+    <div class="reseñas">
 		$array
 	</div>
+	
 		$htmlFormMensaje
+	
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';

@@ -82,8 +82,8 @@ class Reseña
         }
         else{
             $foroToString=$foroToString .
-            "<div class=mensajeforo 
-            <a href='enviarMensajeForo.php'><input type='button' value='Enviar nuevo mensaje'></a><br><br>
+            "<div class=nuevomensaje> 
+            <a href='enviarMensajeForo.php' class='btn btn-secondary active' role='button' aria-pressed='true'>Enviar nuevo mensaje</a><br><br>
             </div>";
         }
         return $foroToString;
