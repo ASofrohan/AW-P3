@@ -13,7 +13,11 @@ session_destroy();
 session_start();
 $tituloPagina = 'Logout';
 $contenidoPrincipal = <<<EOF
-		<h1>Hasta pronto!</h1>
+		<div class="logout">
+		<h2>¡Hasta pronto!</h2>
+		<p>Gracias por visitar página nuestra web. Esperamos que haya disfutado de nuestras pizzas.</p>
+		<a href=index.php><img src="images/pizza-saludo.jpg" class="img-fluid rounded" alt="Banner logout" width="700" height="300"></a>
+		</div>
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';

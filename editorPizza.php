@@ -10,7 +10,7 @@ $tituloPagina = 'Pizza Personalizada';
 
 $contenidoPrincipal =<<<EOF
 		<h1>$tituloPagina</h1>
-		<div  style="width: 100%">
+		<div class="pizzapersonalizada">
 		$formulario
 		</div>
 EOF;

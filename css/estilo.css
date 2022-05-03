@@ -58,6 +58,31 @@ div#contenido {
 	width: 200px;
 	background-color:  #ffffff;
 }
+
+div.inicio{
+	text-align: center;
+	padding-left: 10px;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+	font-size: large;
+}
+
+div.logout{
+	text-align: center;
+	padding-left: 10px;
+	min-height: 525px;
+	width: 100%;
+	background-color:  #ffffff;
+	font-size: large;
+}
+
+div.login{
+	padding: 10px;
+	width: 100%;
+	background-color:  #ffffff;
+}
+
 div.bebidas{
 	padding-left: 10px;
 	float: right;
@@ -101,6 +126,13 @@ div.ofertas{
 div.nuevomensaje{
 	padding-top: 5px;
 	padding-left: 5px;
+}
+
+div.pizzapersonalizada{
+	padding:10px;
+	min-height: 100%;
+	width: 100%;
+	background-color:  #ffffff;
 }
 
 div.enviarmensaje{
