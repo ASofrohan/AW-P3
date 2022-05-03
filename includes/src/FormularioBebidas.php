@@ -91,6 +91,7 @@ class FormularioBebidas extends Form
            // $html=self::añadirBebidaAdmin();
             $bebidaString = $bebidaString . '<div class="col-md-3">';
             $bebidaString = $bebidaString . '
+            <h2>Nueva Bebida</h2>
             <form>
                 <label for="bebida">Nombre:</label><br>
                 <input type="text" id="bebida" name="bebida"><br>
@@ -103,15 +104,15 @@ class FormularioBebidas extends Form
             ';
             $bebidaString = $bebidaString . '</div>';
 
-            if(isset($_POST['add'])){
-                $nombre = $_POST["bebida"];
-                $precio = $_POST["precio"];
-                $image = "images/bebidas/" . $_POST["imagen"];
+            $añadida=0;
+            if(isset($_GET['add']) && $añadida==0){
+                $nombre = $_GET["bebida"];
+                $precio = $_GET["precio"];
+                $image = "images/bebidas/" . $_GET["imagen"];
 
-                echo'<p>hooooola</p>';
-
-                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Image) VALUES($i, $nombre, $precio, $image)";
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i, '$nombre', $precio, '$image')";
                 $resultado=$db->query($query);
+                $añadida=1;
             }
         }
         $bebidaString = $bebidaString . '</div>';
