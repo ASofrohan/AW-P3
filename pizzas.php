@@ -10,7 +10,7 @@ $tituloPagina = 'Pizzas';
 
 $contenidoPrincipal =<<<EOF
 		<h1>$tituloPagina</h1>
-		<div  style="width: 100%">
+		<div class="pizzas">
 			$pizzas
 		</div>
 EOF;
