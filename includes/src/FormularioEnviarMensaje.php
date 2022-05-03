@@ -22,25 +22,26 @@ class FormularioEnviarMensaje extends Form
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <form>
                 <div class="grupo-control">
-                    <label for="exampleFormControlTextarea1">Mensaje</label>
-                    <textarea class="form-control" id="mensaje" rows="3"></textarea>
+                <label>Mensaje:
+                <br>
+                <textarea name='mensaje'></textarea>$errorComentario
+                <br>
                 </div>
                 <div class="grupo-control">
-                  <label for="exampleFormControlSelect1">Estrellas</label>
-                  <select class="form-control" id="estrellas">
+                <label>Estrellas:</label>
+                <select name="estrellas">
                   <option value="1">*</option>
                   <option value="2">**</option>
                   <option value="3">***</option>
                   <option value="4">****</option>
                   <option value="5" selected>*****</option>
-                  </select>
+                </select>
                 </div>
-                <div class="btnenviar">
-                <input class="btn btn-secondary btn-sm" type="submit" value="Enviar">
+                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button>
                 </div>
-              </form>
+            </fieldset>
+            <div>
         EOF;
         return $html;
     }
