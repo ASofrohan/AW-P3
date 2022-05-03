@@ -161,7 +161,7 @@ class Mensaje_respuesta
         return $respuesta;
     }
 
-    public function respuestaPerteneceUsuario($id){
+    public static function respuestaPerteneceUsuario($id){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
         $query=sprintf("SELECT * FROM foro_respuestas where ID_Respuesta=$id");

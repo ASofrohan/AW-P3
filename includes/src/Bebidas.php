@@ -36,7 +36,7 @@ class Bebidas
                 $id_bebida=$row['ID_Bebida'];
                 $precio=$row['Precio'];
                 $nombre=$row['Nombre'];
-                $image=$row['Imagen'];
+                $image=$row['Image'];
                 $b = new Bebidas($id_bebida, $nombre, $precio, $image);
                 $arrayBebidas[$i] = $b;
                 $i += 1;
