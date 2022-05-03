@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
-
+require_once __DIR__.'/Mensaje_Respuesta.php';
 class Mensaje
 {
     private $id;
@@ -113,18 +113,20 @@ class Mensaje
         $conn = $app->conexionBd();
         $estrellas=$mensaje->puntuacion;
         $id=$mensaje->id;
+        $array=Mensaje_respuesta::mostrarRespuestas($id);
         $correo=$_SESSION['correo'];
-
+       $numRespuestas=count($array);
         $query=sprintf("SELECT * FROM foro WHERE ID_Comentario=$id");
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $user=$row['ID_Usuario'];
         $respuestas=$row['Respuestas'];
-        if($user==$correo||isset($_SESSION["esAdmin"])){
+       
+        if($user==$correo||isset($_SESSION["esAdmin"])){ 
+            if($numRespuestas!=0) $mensaje=null;  
+            else
             $query=sprintf("DELETE FROM foro where ID_Comentario=$id");
-            if ( !$conn->query($query) ) {
-                $mensaje=null;
-            } 
+            $resultado=$conn->query($query);
         }
         else{
             $mensaje=null;
@@ -164,7 +166,7 @@ class Mensaje
         return $arrayForo;
     }
 
-   public function mensajePerteneceUsuario($id){
+   public static function mensajePerteneceUsuario($id){
     $app = Aplicacion::getInstancia();
     $conn = $app->conexionBd();
     $query=sprintf("SELECT * FROM foro where ID_Comentario=$id");

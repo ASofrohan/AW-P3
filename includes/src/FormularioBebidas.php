@@ -103,8 +103,8 @@ class FormularioBebidas extends Form
             </form>
             ';
             $bebidaString = $bebidaString . '</div>';
-
-            if(isset($_GET['add']){
+        }
+            if(isset($_GET['add'])){
                 $nombre = $_GET["bebida"];
                 $precio = $_GET["precio"];
                 $image = "images/bebidas/" . $_GET["imagen"];
@@ -112,7 +112,7 @@ class FormularioBebidas extends Form
                 $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i, '$nombre', $precio, '$image')";
                 $resultado=$db->query($query);
             }
-        }
+        
         $bebidaString = $bebidaString . '</div>';
         return $bebidaString;
     }
