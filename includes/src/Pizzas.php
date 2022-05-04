@@ -39,7 +39,7 @@ class Pizzas
                 $precio=$row['Precio'];
                 $personalizada=$row['Personalizada'];
                 $nombre=$row['Nombre'];
-                $image=$row['Image'];
+                $image=$row['Imagen'];
                 $p = new Pizzas($id_pizza, $precio, $personalizada, $nombre, $image);
                 $arrayPizzas[$i] = $p;
                 $i += 1;

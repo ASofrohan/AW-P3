@@ -111,7 +111,7 @@ class FormularioPersonalizada extends Form
              $pizzaString = $pizzaString . '
              <form>
                  <label for="pizza">Nombre pizza:</label><br>
-                 <input type="text" id="bebida" name="bebida"><br>
+                 <input type="text" id="pizza" name="pizza"><br>
                  <label for="precio">Precio:</label><br>
                  <input type="number" step="any" id="precio" name="precio"><br>
                  <label for="imagen">Nombre imagen:</label><br>
@@ -120,6 +120,15 @@ class FormularioPersonalizada extends Form
              </form>
              ';
              $pizzaString = $pizzaString . '</div>';
+
+             if(isset($_GET['add'])){
+                $nombre = $_GET["pizza"];
+                $precio = $_GET["precio"];
+                $image = "images/pizzas/" . $_GET["imagen"];
+
+                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                $resultado=$db->query($query);
+            }
         } 
         $pizzaString = $pizzaString . '</div>';
         return $pizzaString;
