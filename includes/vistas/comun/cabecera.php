@@ -7,7 +7,7 @@
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse" id="navbarNav">
+					<div class="collapse navbar-collapse justify-content-between" id="navbarNav">
 						<ul class="navbar-nav">
 							<li class="nav-item">
 								<a class="nav-link active" aria-current="page" href="index.php">INICIO</a>
@@ -27,15 +27,16 @@
 							if (isset($_SESSION["esAdmin"])) {
 								echo'<li class="nav-item"> <a class="nav-link" href="administrar.php">ADMINISTRAR</a> </li>';
 							}
-		echo'
-					</ul>
-				</div>
-			</div>
-		</nav>
-		';
-		?>
-		<?php
+		echo'		
+						</ul>
+						<ul class="navbar-nav">';
 		mostrarSaludo();
+		echo'
+						</ul>
+					</div>
+				</div>
+			</nav>
+		';
 		?>
 </header>
 
@@ -43,12 +44,31 @@
 
 function mostrarSaludo(){
 	if(!isset($_SESSION["login"])){
-		echo '<div class="saludo">Usuario desconocido<a href="login.php">Login</a>
-		<a href="carrito.php">CARRITO</a></div>';
+		echo '
+			<li class="nav-item">
+				<a class="nav-link" href="#">Usuario desconocido</a>
+			</li>
+			<li class="nav-item">
+				<button class="btn btn-outline-secondary" onclick="location.href=\'carrito.php\'" type="button">Carrito</button>
+			</li>&nbsp;
+			<li class="nav-item">
+				<button class="btn btn-outline-success" onclick="location.href=\'login.php\'" type="button">LOGIN</button>
+			</li>';
 	}
 	else{
-		echo '<div class="saludo">Hola ' . $_SESSION["nombre"] .' <a href="logout.php">(salir)</a>'. " " .'<a href="actualizar.php">Editar perfil</a>
-		<a href="carrito.php">CARRITO</a></div>';
+		echo '
+			<li class="nav-item">
+				<a class="nav-link" href="#">Hola ' . $_SESSION["nombre"] . '</a>
+			</li>&nbsp;
+			<li class="nav-item">
+				<button class="btn btn-outline-secondary" onclick="location.href=\'carrito.php\'" type="button">Carrito</button>
+			</li>&nbsp;
+			<li class="nav-item">
+				<button class="btn btn-outline-info" onclick="location.href=\'actualizar.php\'" type="button">Editar perfil</button>
+			</li>&nbsp;
+			<li class="nav-item">
+				<button class="btn btn-outline-danger" onclick="location.href=\'logout.php\'" type="button">Cerrar sesión</button>
+			</li>';
 	}
 }
 ?>
