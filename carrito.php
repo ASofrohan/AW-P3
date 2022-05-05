@@ -69,7 +69,6 @@ function mostrar($nombre,$carrito){
 				$tamaño=$pizza->get_tamaño();
 				$masa=$pizza->get_masa();
 				$precio1=$pizza->get_precio();
-
 				$carritoToString=$carritoToString.'<form id="form" name="form" method="post" autocomplete="off">';
 				if($idPizza==3){
 					$boolPersonalizada=true;

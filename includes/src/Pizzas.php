@@ -67,13 +67,18 @@ class Pizzas
                 if(	$row = $resultado2->fetch_assoc())
                     $idPedido= $row['ID_Pedido']; 
             }else{//no tiene pedidos, hay que meterle
-                $query3="SELECT * FROM pedidos ";
-                $resultado3=$db->query($query3);
-                $row_cnt3 = mysqli_num_rows($resultado3);
-
-                $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado) VALUES($row_cnt3+1,'$co',4,0000-00-00,1)";
+                $query1="SELECT * FROM pedidos";
+                $resultado1=$db->query($query1);
+                $row_cnt = mysqli_num_rows($resultado1);
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($obtencionIdPedido,$row['ID_Pedido']);
+                }
+                for($j=0;$j<$row_cnt;$j++){
+                    $idpedido=$obtencionIdPizzaPedida[$j];
+                }
+                $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
                 $resultado4=$db->query($query4);
-                $idPedido=$row_cnt3+1;
+                $idPedido=$idpedido+1;
             }
             //modificar esto, los valores de las masasa, tamaños
             $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($row_cnt+1, $idPedido, 1, 1,1)";

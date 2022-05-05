@@ -4,9 +4,9 @@ $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
         
         $co=$_SESSION['correo'];
-
+       
         $query="UPDATE pedidos
-        SET Estado=0
+        SET Estado=0 ,FechaC=CURDATE()
         WHERE Usuario ='$co' AND Estado=1";//cambiar id pedido
         $resultado=$db->query($query);
        

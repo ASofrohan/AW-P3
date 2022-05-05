@@ -47,13 +47,19 @@ class FormularioOfertas extends Form{
                     if(	$row = $resultado2->fetch_assoc())
                         $idPedido= $row['ID_Pedido']; 
                 }else{//no tiene pedidos, hay que meterle
-                    $query3="SELECT * FROM pedidos ";
-                    $resultado3=$db->query($query3);
-                    $row_cnt3 = mysqli_num_rows($resultado3);
-
-                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado) VALUES($row_cnt3+1,'$co',$i,0000-00-00,1)";
+                    $query1="SELECT * FROM pedidos";
+                    $resultado1=$db->query($query1);
+                    $row_cnt = mysqli_num_rows($resultado1);
+                    while($row = $resultado1->fetch_assoc()) {
+                        array_push($obtencionIdPedido,$row['ID_Pedido']);
+                    }
+                    for($j=0;$j<$row_cnt;$j++){
+                        $idpedido=$obtencionIdPizzaPedida[$j];
+                    }
+                  
+                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',$i,CURDATE(),1,0000-00-00)";
                     $resultado4=$db->query($query4);
-                    $idPedido=$row_cnt3+1;
+                    $idPedido=$idpedido+1;
                 }
                 if(isset($_POST[$i])){
                     $query="UPDATE pedidos SET Oferta='$i' WHERE Usuario ='$co' AND ID_Pedido='$idPedido'";
