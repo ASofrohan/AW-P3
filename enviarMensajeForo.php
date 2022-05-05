@@ -21,11 +21,20 @@ $array=$reseña->mostrarReseñas();
 $contenidoPrincipal =
 
 <<<EOF
-    <div class="reseñas">
-		$array
+<div class="container-fluid">
+<div class="row" id="prueba2">
+		<div class="col-5">
+			$array
+		</div>
+		<div class="col align-self-center">
+
+			$htmlFormMensaje
+		</div>
 	</div>
-	
-		$htmlFormMensaje
+</div>
+</div>
+
+
 	
 EOF;
 

@@ -12,8 +12,13 @@ $tituloPagina = 'Foro';
 
 $contenidoPrincipal =
 <<<EOF
-	<div class="foro">
-		$array
+ <div class="container-fluid">
+		<div class="row" >
+				<div class="col-5" id="prueba">
+					$array
+				</div>
+			</div>
+		</div>
 	</div>
 EOF;
 
