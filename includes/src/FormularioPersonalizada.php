@@ -115,18 +115,70 @@ class FormularioPersonalizada extends Form
         if(isset($_SESSION["esAdmin"])){
             // $html=self::añadirBebidaAdmin();
              $pizzaString = $pizzaString . '<div class="col-md-3">';
-             $pizzaString = $pizzaString . '
+             /*$pizzaString = $pizzaString . '
              <form>
                  <label for="pizza">Nombre pizza:</label><br>
-                 <input type="text" id="bebida" name="bebida"><br>
+                 <input type="text" id="pizza" name="pizza"><br>
                  <label for="precio">Precio:</label><br>
                  <input type="number" step="any" id="precio" name="precio"><br>
                  <label for="imagen">Nombre imagen:</label><br>
                  <input type="text" id="imagen" name="imagen"><br><br>
                  <input name="add" type="submit" id="add" value="Añadir"/>
+             </form>*/
+             $pizzaString = $pizzaString . '
+             <form action="" enctype="multipart/form-data">
+                 <label for="pizza">Nombre pizza:</label><br>
+                 <input type="text" id="pizza" name="pizza"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="img">Nombre imagen:</label><br>
+                 <input type="file" id="imagen" name="imagen"><br><br>
+                 <input name="add" type="submit" id="add" value="Añadir"/>
              </form>
              ';
              $pizzaString = $pizzaString . '</div>';
+
+             if(isset($_GET['add'])){
+                /*$nombre = $_GET["pizza"];
+                $precio = $_GET["precio"];
+                $image = "images/pizzas/" . $_GET["imagen"];
+
+                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                $resultado=$db->query($query);*/
+
+                if(isset($_FILES['imagen'])){
+                    $errors= array();
+                    $file_name = $_FILES['imagen']['name'];
+                    $file_size = $_FILES['imagen']['size'];
+                    $file_tmp = $_FILES['imagen']['tmp_name'];
+                    $file_type = $_FILES['imagen']['type'];
+                    $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                   
+                    $expensions= array("jpeg","jpg","png");
+                   
+                    if(in_array($file_ext,$expensions)=== false){
+                       $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+                    }
+                   
+                    if($file_size > 2097152) {
+                       $errors[]='File size must be excately 2 MB';
+                    }
+                   
+                    if(empty($errors)==true) {
+                       move_uploaded_file($file_tmp,"images/pizzas".$file_name);
+                       echo "Success";
+                    }else{
+                       print_r($errors);
+                    }
+
+                    $nombre = $_GET["pizza"];
+                    $precio = $_GET["precio"];
+                    $image = "images/pizzas/" . $file_name;
+
+                    $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                    $resultado=$db->query($query);
+                }
+            }
         } 
         $pizzaString = $pizzaString . '</div>';
         return $pizzaString;
@@ -135,7 +187,6 @@ public function procesarPedido(){
 
 }
     public function formularioPersonalizada(){
-      
         $masas = Masas::muestraMasas();
         $html= '<h4>MASAS: </h4>';
         $html= $html . '<select name="masas">
@@ -171,49 +222,68 @@ public function procesarPedido(){
         $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
         $masas = Ingredientes::muestraIngredientes();
-        $html = '<img src="images/pizzas/pers.jpg" ALIGN=left WIDTH=300 HEIGHT=300>';
-        $html = $html . '<h4>INGREDIENTES: </h4>';
-        $html = $html . '<form action="#" method="post" id=ingredientes>';
+        //////////
+        $html='<div class="row">';
+            /////////
+            $html=$html . '<div class="col-md-3">';
+                $html = $html . '<img src="images/pizzas/pers.jpg" ALIGN=left WIDTH=300 HEIGHT=300>';
+            $html=$html . '</div>';
 
-        foreach ($masas as $val) {
-            $nombre=$val->get_nombre();
-            $precio=$val->get_precio();
-            $id=$val->get_id();
-            $image=$val->get_image();
+            $html=$html . '<div class="col-md-3">';
+  
+                $html = $html . '<h4>INGREDIENTES: </h4>';
+                $html = $html . '<form action="#" method="post" id=ingredientes>';
 
-            $html = $html . '<input type="checkbox" name="ingredientes[]" value="' . $precio . '" id="' . $id . '" onClick=recalcularPrecio(this) /> ' . $nombre;
-            $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
-        }
-        $html = $html . '</form>';
+                foreach ($masas as $val) {
+                    $nombre=$val->get_nombre();
+                    $precio=$val->get_precio();
+                    $id=$val->get_id();
+                    $image=$val->get_image();
 
-        $masas = Masas::muestraMasas();
-        $html= $html . '<h4>MASAS: </h4>';
-        $html= $html . '<select name="masas">
-        <option disabled selected>seleccione una opción</option>';
+                    $html = $html . '<input type="checkbox" name="ingredientes[]" value="' . $precio . '" id="' . $id . '" onClick=recalcularPrecio(this) /> ' . $nombre;
+                    $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
+                }
+                $html = $html . '</form>';
+            $html=$html . '</div>';
 
-        foreach ($masas as $val) {
-            $tipo=$val->get_tipo();
+            $html=$html . '<div class="col-md-3">';
 
-            $html = $html . '<option> ' . $tipo . ' </option>';
-        }
-        $html = $html . '</select></br>';
+                $masas = Masas::muestraMasas();
+                $html= $html . '<h4>MASAS: </h4>';
+                $html= $html . '<select name="masas">
+                <option disabled selected>seleccione una opción</option>';
 
-        $tamaños = Tamaños::muestraTamaños();
-        $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
-        <option disabled selected>seleccione una opción</option>';
+                foreach ($masas as $val) {
+                    $tipo=$val->get_tipo();
 
-        foreach ($tamaños as $val) {
-            $tamaño=$val->get_tamaño();
-            $precio=$val->get_precio();
-            $html = $html . '<option value="'.$precio.'"> ' . $tamaño . ' </option>';
-        }
-        $html = $html . '</select>';
+                    $html = $html . '<option> ' . $tipo . ' </option>';
+                }
+                $html = $html . '</select></br>';
 
-        $html = $html . '<h3>Precio: </h3>';
-        $html = $html . '<p id= "precio">4.99</p>';
-        $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
-        $html = $html . '<input name="pers" type="submit" id="3"value="Añadir"/>';
+                $tamaños = Tamaños::muestraTamaños();
+                $html= $html . '<h4>TAMAÑOS: </h4>';
+                $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
+                <option disabled selected>seleccione una opción</option>';
+
+                foreach ($tamaños as $val) {
+                    $tamaño=$val->get_tamaño();
+                    $precio=$val->get_precio();
+                    $html = $html . '<option value="'.$precio.'"> ' . $tamaño . ' </option>';
+                }
+                $html = $html . '</select>';
+            
+            $html=$html.'</div>';
+
+            $html=$html . '<div class="col-md-3">';
+
+                $html = $html . '<h3>Precio: </h3>';
+                $html = $html . '<p id= "precio">4.99</p>';
+                $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
+                $html = $html . '<input name="pers" type="submit" id="3"value="Añadir"/>';
+
+            $html=$html.'</div>';
+
+        $html=$html.'</div>';
         /////////////////////////////////////////////////////////
         if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
             //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione

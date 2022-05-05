@@ -24,10 +24,17 @@ $array=$reseña->mostrarReseñas();
 
 $contenidoPrincipal =
 <<<EOF
-    <div width: 800px;>
-		$array
+   <div class="container-fluid">
+		<div class="row" >
+				<div class="col-5" id="prueba">
+					$array
+				</div>
+				<div class="col align-self-center" id="prueba3">
+					$htmlFormMensaje
+				</div>
+			</div>
+		</div>
 	</div>
-		$htmlFormMensaje
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';

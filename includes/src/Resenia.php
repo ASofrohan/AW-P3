@@ -47,8 +47,8 @@ class Reseña
                        $id=$res->getId();
                        if(Mensaje_respuesta::respuestaPerteneceUsuario($id)||isset($_SESSION["esAdmin"])){
                         $foroToString=$foroToString .  "
-                        <a href='borrarRespuestaForo.php?id=$id'><input type='button' value='Borrar respuesta'></a>
-                        <a href='actualizarRespuestaForo.php?id=$id'><input type='button' value='Editar respuesta'></a>";
+                        <a href='borrarRespuestaForo.php?id=$id'><input class='btn btn-outline-danger btn-sm' type='button' value='Borrar respuesta'></a>
+                        <a href='actualizarRespuestaForo.php?id=$id'><input class='btn btn-outline-warning btn-sm' type='button' value='Editar respuesta'></a>";
                         $foroToString=$foroToString . "<br>";
                         }
                     }
@@ -62,9 +62,9 @@ class Reseña
                 $id=$val->getId();
                 if(Mensaje::mensajePerteneceUsuario($id)||isset($_SESSION["esAdmin"])){
                     $foroToString=$foroToString .  "
-                    <a href='borrarMensajeForo.php?id=$id'><input type='button' value='Borrar'></a>
-                    <a href='actualizarMensajeForo.php?id=$id'><input type='button' value='Editar'></a>
-                    <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
+                    <a href='borrarMensajeForo.php?id=$id'><button type='button' class='btn btn-danger btn-sm'>Borrar</button></a>
+                    <a href='actualizarMensajeForo.php?id=$id'><button type='button' class='btn btn-warning btn-sm'>Editar</button></a>
+                    <a href='responderMensajeForo.php?id=$id'><button type='button' class='btn btn-info btn-sm'>Responder</button></a>";
                     $foroToString=$foroToString . "<br><br>";
                 }
                 else{

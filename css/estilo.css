@@ -138,8 +138,8 @@ div.ofertas{
 	font-size: x-large;
  }
 div.nuevomensaje{
-	padding-top: 5px;
-	padding-left: 5px;
+	padding-top: 0px;
+	padding-left: 0px;
 }
 
 div.pizzapersonalizada{
@@ -168,3 +168,16 @@ div.grupo-control{
 div.saludo{
 	color: black;
 }
+
+
+#prueba{
+	background-color: rgb(255, 255, 255);
+}
+#prueba2{
+	background-color: rgb(255, 255, 255);
+}
+
+#prueba3{
+	background-color: rgb(255, 255, 255);
+}
+
