@@ -10,9 +10,6 @@
 					<div class="collapse navbar-collapse justify-content-between" id="navbarNav">
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="index.php">INICIO</a>
-							</li>
-							<li class="nav-item">
 								<a class="nav-link" href="pizzas.php">PIZZAS</a>
 							</li>
 							<li class="nav-item">
