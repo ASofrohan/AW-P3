@@ -119,12 +119,12 @@ class FormularioPersonalizada extends Form
                  <input name="add" type="submit" id="add" value="Añadir"/>
              </form>*/
              $pizzaString = $pizzaString . '
-             <form enctype="multipart/form-data">
+             <form action="" enctype="multipart/form-data">
                  <label for="pizza">Nombre pizza:</label><br>
                  <input type="text" id="pizza" name="pizza"><br>
                  <label for="precio">Precio:</label><br>
                  <input type="number" step="any" id="precio" name="precio"><br>
-                 <label for="imagen">Nombre imagen:</label><br>
+                 <label for="img">Nombre imagen:</label><br>
                  <input type="file" id="imagen" name="imagen"><br><br>
                  <input name="add" type="submit" id="add" value="Añadir"/>
              </form>
@@ -139,39 +139,38 @@ class FormularioPersonalizada extends Form
                 $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
                 $resultado=$db->query($query);*/
 
-
-                $archivo = basename($_FILES['imagen']['name']);
-                //Si el archivo contiene algo y es diferente de vacio
-                if (isset($archivo) && $archivo != "") {
-                    //Obtenemos algunos datos necesarios sobre el archivo
-                    $tipo = $_FILES['imagen']['type'];
-                    $tamano = $_FILES['imagen']['size'];
-                    $temp = $_FILES['imagen']['tmp_name'];
-                    //Se comprueba si el archivo a cargar es correcto observando su extensión y tamaño
-                    if (!((strpos($tipo, "gif") || strpos($tipo, "jpeg") || strpos($tipo, "jpg") || strpos($tipo, "png")) && ($tamano < 2000000))) {
-                        echo '<div><b>Error. La extensión o el tamaño de los archivos no es correcta.<br/>
-                        - Se permiten archivos .gif, .jpg, .png. y de 200 kb como máximo.</b></div>';
+                if(isset($_FILES['imagen'])){
+                    $errors= array();
+                    $file_name = $_FILES['imagen']['name'];
+                    $file_size = $_FILES['imagen']['size'];
+                    $file_tmp = $_FILES['imagen']['tmp_name'];
+                    $file_type = $_FILES['imagen']['type'];
+                    $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                   
+                    $expensions= array("jpeg","jpg","png");
+                   
+                    if(in_array($file_ext,$expensions)=== false){
+                       $errors[]="extension not allowed, please choose a JPEG or PNG file.";
                     }
+                   
+                    if($file_size > 2097152) {
+                       $errors[]='File size must be excately 2 MB';
+                    }
+                   
+                    if(empty($errors)==true) {
+                       move_uploaded_file($file_tmp,"images/pizzas".$file_name);
+                       echo "Success";
+                    }else{
+                       print_r($errors);
+                    }
+
+                    $nombre = $_GET["pizza"];
+                    $precio = $_GET["precio"];
+                    $image = "images/pizzas/" . $file_name;
+
+                    $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                    $resultado=$db->query($query);
                 }
-                else {
-                    //Si la imagen es correcta en tamaño y tipo
-                    //Se intenta subir al servidor
-                    if (move_uploaded_file($temp, 'images/pizzas'.$archivo)) {
-                        //Cambiamos los permisos del archivo a 777 para poder modificarlo posteriormente
-                        chmod('images/pizzas'.$archivo, 0777);
-
-                        $nombre = $_GET["pizza"];
-                        $precio = $_GET["precio"];
-                        $image = "images/pizzas/" . $archivo;
-
-                        $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
-                        $resultado=$db->query($query);
-                    }
-                    else {
-                       echo '<div><b>Ocurrió algún error al subir el fichero. No pudo guardarse.</b></div>';
-                    }
-                }
-                
             }
         } 
         $pizzaString = $pizzaString . '</div>';
