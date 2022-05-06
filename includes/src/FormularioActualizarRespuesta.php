@@ -29,7 +29,7 @@ class FormularioActualizarRespuesta extends Form
                 <br>
                 </div>
                 </div>
-                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button>
+                <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
                 </div>
             </fieldset>
             <div>

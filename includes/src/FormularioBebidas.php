@@ -27,10 +27,10 @@ class FormularioBebidas extends Form
                 ////
                 $bebidaString = $bebidaString . ' <h3>Precio:</h3> 
                 <p id="precio">  ' . $precio . '</p>';
-                $bebidaString = $bebidaString . '<input name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
+                $bebidaString = $bebidaString . '<input class="btn btn-outline-success" name="'.$i.'" type="submit" id="'.$i.'" value="Añadir"/>';
                 if(isset($_SESSION["esAdmin"])){
                     $admin="admin".$i;
-                    $bebidaString = $bebidaString . '<input name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
+                    $bebidaString = $bebidaString . '&nbsp;<input class="btn btn-outline-danger" name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
                 }else $admin=null;
             $bebidaString = $bebidaString . '</form>';
             //++$i;
@@ -108,7 +108,7 @@ class FormularioBebidas extends Form
                 <input type="number" step="any" id="precio" name="precio"><br>
                 <label for="imagen">Nombre imagen:</label><br>
                 <input type="text" id="imagen" name="imagen"><br><br>
-                <input name="add" type="submit" id="add" value="Añadir"/>
+                <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
             </form>
             ';
             $bebidaString = $bebidaString . '</div>';

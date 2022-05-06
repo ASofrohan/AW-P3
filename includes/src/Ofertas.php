@@ -6,11 +6,13 @@ class Ofertas{
     private $codigo;
     private $tipo;
     private $descuento;
+    private $info;
 
-    public function __construct($codigo, $tipo, $descuento){
+    public function __construct($codigo, $tipo, $descuento, $info){
         $this->codigo = $codigo;
         $this->tipo = $tipo;
         $this->descuento = $descuento;
+        $this->info = $info;
     }
 
     public static function getOfertas(){
@@ -33,7 +35,8 @@ class Ofertas{
                 $codigo = $row['Codigo'];
                 $tipo = $row['Tipo'];
                 $descuento = $row['Descuento'];
-                $of = new Ofertas($codigo, $tipo, $descuento);
+                $info = $row['Info'];
+                $of = new Ofertas($codigo, $tipo, $descuento, $info);
                 $arrayOfertas[$i] = $of;
                 $i++;
             }
@@ -49,6 +52,9 @@ class Ofertas{
     }
     public function get_descuento(){
         return $this->descuento;
+    }
+    public function get_info(){
+        return $this->info;
     }
 
 

@@ -56,7 +56,7 @@ class FormularioActualizarPerfil extends Form
                 <div class="grupo-control">
                     <label>Codigo postal:</label> <input class="control" type="text" name="postal" />$errorPostal
                 </div>
-                <div class="grupo-control"><button type="submit" name="editar">Actualizar perfil</button></div>
+                <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="editar">Actualizar perfil</button></div>
             </fieldset>
         EOF;
         return $html;

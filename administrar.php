@@ -56,9 +56,9 @@ function mostrar(){
         $string=$string.'<td><center>'.$fechaC.'</td>';
         $string=$string.'<td></td>';
        
-        $string = $string . '<td><input name="'.$q.'" type="submit" id="'.$q.'"value="Eliminar"/></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$q.'" type="submit" id="'.$q.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
-        $string = $string . '<td><input name="'.$p.'" type="submit" id="'.$p.'"value="Editar Estado"/>';
+        $string = $string . '<td><input class="btn btn-outline-info" name="'.$p.'" type="submit" id="'.$p.'"value="Editar Estado"/>';
         $string = $string .'&nbsp';
         if($estado==0)$string=$string.'pagado';else $string=$string.'pendiente';
         $string = $string .'</td>';

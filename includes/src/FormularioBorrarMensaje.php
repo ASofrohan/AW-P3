@@ -20,7 +20,7 @@ class FormularioBorrarMensaje extends Form
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <div class="grupo-control"><button type="submit" name="Enviar">Aceptar</button>
+                <div class="grupo-control"><button class="btn btn-outline-danger" type="submit" name="Enviar">Aceptar</button>
                 </div>
             </fieldset>
             <div>

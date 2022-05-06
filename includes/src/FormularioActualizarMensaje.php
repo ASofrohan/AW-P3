@@ -38,7 +38,7 @@ class FormularioActualizarMensaje extends Form
                   <option value="5" selected>*****</option>
                 </select>
                 </div>
-                <div class="grupo-control"><button type="submit" name="Enviar">Enviar</button>
+                <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
                 </div>
             </fieldset>
             <div>

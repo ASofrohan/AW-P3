@@ -16,16 +16,19 @@ class FormularioOfertas extends Form{
             $tipo=$val->get_tipo();
             $codigo=$val->get_codigo();
             $descuento=$val->get_descuento();
-              
+            $info=$val->get_info();
+            
             if($tipo != 3){
                 $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
-                $ofertaString = $ofertaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Aplicar"/>';
+                $ofertaString = $ofertaString . '<p>' . $info . '</p>';
+                $ofertaString = $ofertaString . '<input class="btn btn-outline-success" name="'.$i.'" type="submit" id="'.$i.'"value="Aplicar"/>';
                 $ofertaString = $ofertaString . '</form>';
             }else{
                 $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $ofertaString = $ofertaString . '<h2>Eliminar oferta</h2>';
-                $ofertaString = $ofertaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Aplicar"/>';
+                $ofertaString = $ofertaString . '<p>' . $info . '</p>';
+                $ofertaString = $ofertaString . '<input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/>';
                 $ofertaString = $ofertaString . '</form>';
             }
 

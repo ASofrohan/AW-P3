@@ -13,10 +13,10 @@
 								<a class="nav-link" href="pizzas.php">PIZZAS</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="ofertas.php">OFERTAS</a>
+								<a class="nav-link" href="bebidas.php">BEBIDAS</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="bebidas.php">BEBIDAS</a>
+								<a class="nav-link" href="ofertas.php">OFERTAS</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="foro.php">RESEÑAS</a>

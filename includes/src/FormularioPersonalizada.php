@@ -42,7 +42,7 @@ class FormularioPersonalizada extends Form
             <p id="'.$id_precio.'">  ' . $precio . '</p>';*/
 
             if($pers!=1){
-                $pizzaString = $pizzaString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
+                $pizzaString = $pizzaString . '<input class="btn btn-outline-success" name="'.$i.'" type="submit" id="'.$i.'"value="Añadir"/>';
             }
             
             $pizzaString = $pizzaString . '</form>';
@@ -133,7 +133,7 @@ class FormularioPersonalizada extends Form
                  <input type="number" step="any" id="precio" name="precio"><br>
                  <label for="img">Nombre imagen:</label><br>
                  <input type="file" id="imagen" name="imagen"><br><br>
-                 <input name="add" type="submit" id="add" value="Añadir"/>
+                 <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
              </form>
              ';
              $pizzaString = $pizzaString . '</div>';
@@ -279,7 +279,7 @@ public function procesarPedido(){
                 $html = $html . '<h3>Precio: </h3>';
                 $html = $html . '<p id= "precio">4.99</p>';
                 $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
-                $html = $html . '<input name="pers" type="submit" id="3"value="Añadir"/>';
+                $html = $html . '<input class="btn btn-outline-success" name="pers" type="submit" id="3"value="Añadir"/>';
 
             $html=$html.'</div>';
 
