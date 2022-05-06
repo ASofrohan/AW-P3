@@ -126,7 +126,8 @@ class FormularioPersonalizada extends Form
                  <input name="add" type="submit" id="add" value="Añadir"/>
              </form>*/
              $pizzaString = $pizzaString . '
-             <form action="" enctype="multipart/form-data">
+             <h2>Añadir Pizza</h2>
+             <form action="" enctype="multipart/form-data" method="post">
                  <label for="pizza">Nombre pizza:</label><br>
                  <input type="text" id="pizza" name="pizza"><br>
                  <label for="precio">Precio:</label><br>
@@ -138,46 +139,43 @@ class FormularioPersonalizada extends Form
              ';
              $pizzaString = $pizzaString . '</div>';
 
-             if(isset($_GET['add'])){
+             if(isset($_POST['add'])){
                 /*$nombre = $_GET["pizza"];
                 $precio = $_GET["precio"];
                 $image = "images/pizzas/" . $_GET["imagen"];
 
                 $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
                 $resultado=$db->query($query);*/
-
-                if(isset($_FILES['imagen'])){
-                    $errors= array();
-                    $file_name = $_FILES['imagen']['name'];
-                    $file_size = $_FILES['imagen']['size'];
-                    $file_tmp = $_FILES['imagen']['tmp_name'];
-                    $file_type = $_FILES['imagen']['type'];
-                    $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
-                   
-                    $expensions= array("jpeg","jpg","png");
-                   
-                    if(in_array($file_ext,$expensions)=== false){
-                       $errors[]="extension not allowed, please choose a JPEG or PNG file.";
-                    }
-                   
-                    if($file_size > 2097152) {
-                       $errors[]='File size must be excately 2 MB';
-                    }
-                   
-                    if(empty($errors)==true) {
-                       move_uploaded_file($file_tmp,"images/pizzas".$file_name);
-                       echo "Success";
-                    }else{
-                       print_r($errors);
-                    }
-
-                    $nombre = $_GET["pizza"];
-                    $precio = $_GET["precio"];
-                    $image = "images/pizzas/" . $file_name;
-
-                    $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
-                    $resultado=$db->query($query);
+                $errors= array();
+                $file_name = $_FILES['imagen']['name'];
+                $file_size = $_FILES['imagen']['size'];
+                $file_tmp = $_FILES['imagen']['tmp_name'];
+                $file_type = $_FILES['imagen']['type'];
+                $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                
+                $expensions= array("jpeg","jpg","png");
+                
+                if(in_array($file_ext,$expensions)=== false){
+                    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
                 }
+                
+                if($file_size > 2097152) {
+                    $errors[]='File size must be excately 2 MB';
+                }
+                
+                if(empty($errors)==true) {
+                    move_uploaded_file($file_tmp,"images/pizzas/".$file_name);
+                    echo "Success";
+                }else{
+                    print_r($errors);
+                }
+
+                $nombre = $_POST["pizza"];
+                $precio = $_POST["precio"];
+                $image = "images/pizzas/" . $file_name;
+
+                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                $resultado=$db->query($query);
             }
         } 
         $pizzaString = $pizzaString . '</div>';
