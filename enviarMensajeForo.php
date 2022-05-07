@@ -22,7 +22,7 @@ $contenidoPrincipal =
 
 <<<EOF
 <div class="container-fluid">
-<div class="row" id="prueba2">
+<div class="row" id="mensaje">
 		<div class="col-5">
 			$array
 		</div>
