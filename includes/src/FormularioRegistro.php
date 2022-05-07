@@ -56,7 +56,7 @@ class FormularioRegistro extends Form
                 <div class="grupo-control">
                     <label>Codigo postal:</label> <input class="control" type="text" name="postal" />$errorPostal
                 </div>
-                <div class="grupo-control"><button type="submit" name="registro">Registrar</button></div>
+                <div class="grupo-control"><button class="btn btn-primary btn-sm" type="submit" name="registro">Registrar</button></div>
             </fieldset>
         EOF;
         return $html;

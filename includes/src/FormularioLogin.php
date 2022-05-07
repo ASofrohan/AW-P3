@@ -25,7 +25,7 @@ class FormularioLogin extends Form
             $htmlErroresGlobales
             <p><label>Nombre de usuario:</label> <input type="text" name="user" value="$nombreUsuario"/>$errorNombreUsuario</p>
             <p><label>Password:</label> <input type="password" name="pass" />$errorPassword</p>
-            <button type="submit" name="login">Entrar</button>
+            <button class="btn btn-primary btn-sm" type="submit" name="login">Entrar</button>
         </fieldset>
         <p style="text-align:center">¿No estás registado? <a href='registro.php'>Regístrate.</a></p> 
         EOF;
