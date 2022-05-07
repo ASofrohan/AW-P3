@@ -60,7 +60,7 @@ function mostrar(){
         $string = $string .'&nbsp';
         $string = $string . '<td><input class="btn btn-outline-info" name="'.$p.'" type="submit" id="'.$p.'"value="Editar Estado"/>';
         $string = $string .'&nbsp';
-        if($estado==0)$string=$string.'pagado';else $string=$string.'pendiente';
+        if($estado==0)$string=$string.'Pagado';else $string=$string.'Pendiente';
         $string = $string .'</td>';
         $string=$string.'</form>';
         $string=$string.'</tr>';
