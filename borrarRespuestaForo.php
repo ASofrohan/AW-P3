@@ -28,10 +28,10 @@ $contenidoPrincipal =
 <<<EOF
   <div class="container-fluid">
 		<div class="row" >
-				<div class="col-5" id="prueba">
+				<div class="col-5">
 					$array
 				</div>
-				<div class="col align-self-center" id="prueba3">
+				<div class="col align-self-center">
 					$htmlFormMensaje
 				</div>
 			</div>

@@ -249,7 +249,7 @@ function mostrar($nombre,$carrito){
 			}
 			$carritoToString=$carritoToString.'<br>';
 			
-			$carritoToString=$carritoToString.'<a href=procesarCompra.php><button>Comprar</button></a>';
+			$carritoToString=$carritoToString.'<a href="procesarCompra.php"><button type="button" class="btn btn-primary btn-sm">Comprar</button></a>';
 		}
 		
 	}
