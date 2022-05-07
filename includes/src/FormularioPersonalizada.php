@@ -219,31 +219,13 @@ public function procesarPedido(){
     public function formulario(){
         $app = Aplicacion::getInstancia();
             $db = $app->conexionBd();
-        $masas = Ingredientes::muestraIngredientes();
+       
         //////////
         $html='<div class="row">';
             /////////
             $html=$html . '<div class="col-md-3">';
-                $html = $html . '<img src="images/pizzas/pers.jpg" ALIGN=left WIDTH=300 HEIGHT=300>';
-            $html=$html . '</div>';
-
-            $html=$html . '<div class="col-md-3">';
-  
-                $html = $html . '<h4>INGREDIENTES: </h4>';
-                $html = $html . '<form action="#" method="post" id=ingredientes>';
-
-                foreach ($masas as $val) {
-                    $nombre=$val->get_nombre();
-                    $precio=$val->get_precio();
-                    $id=$val->get_id();
-                    $image=$val->get_image();
-
-                    $html = $html . '<input type="checkbox" name="ingredientes[]" value="' . $precio . '" id="' . $id . '" onClick=recalcularPrecio(this) /> ' . $nombre;
-                    $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
-                }
-                $html = $html . '</form>';
-            $html=$html . '</div>';
-
+            $html = $html . '<img src="images/pizzas/pers.jpg" ALIGN=left WIDTH=300 HEIGHT=300>';
+        $html=$html . '</div>';
             $html=$html . '<div class="col-md-3">';
 
                 $masas = Masas::muestraMasas();
@@ -269,19 +251,6 @@ public function procesarPedido(){
                     $html = $html . '<option value="'.$precio.'"> ' . $tamaño . ' </option>';
                 }
                 $html = $html . '</select>';
-            
-            $html=$html.'</div>';
-
-            $html=$html . '<div class="col-md-3">';
-
-                $html = $html . '<h3>Precio: </h3>';
-                $html = $html . '<p id= "precio">4.99</p>';
-                $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
-                $html = $html . '<input class="btn btn-outline-success" name="pers" type="submit" id="3"value="Añadir"/>';
-
-            $html=$html.'</div>';
-
-        $html=$html.'</div>';
         /////////////////////////////////////////////////////////
         if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
             //basicamente que si no esta registrado vea las pizzas pero lo de pedir no funcione
@@ -320,13 +289,51 @@ public function procesarPedido(){
                 $resultado4=$db->query($query4);
                 $idPedido=$idpedido+1;
             }
+          
         }
+        $html=$html.'</div>';
+        $html=$html . '<div class="col-md-3">';
+        $masas = Ingredientes::muestraIngredientes();
+        $arrayIngre=array();
+            $html = $html . '<h4>INGREDIENTES: </h4>';
+            $html = $html . '<form action="#" method="post" id=ingredientes>';
+            foreach ($masas as $val) {
+                $nombre=$val->get_nombre();
+                $precio=$val->get_precio();
+                $id=$val->get_id();
+                $image=$val->get_image();
+                $html = $html . '<input type="checkbox" value="' . $precio . '"  id="' . $id . '" name="'.$nombre.'" onClick=recalcularPrecio(this) /> ' . $nombre;
+                $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
+                
+            }
+            $html = $html. '<input type="submit" value="Enviar">';
+            $html = $html . '</form>';
+        $html=$html . '</div>';
+        $html=$html . '<div class="col-md-3">';
+
+            $html = $html . '<h3>Precio: </h3>';
+            $html = $html . '<p id= "precio">4.99</p>';
+            $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
+            $html = $html . '<input class="btn btn-outline-success" name="pers" type="submit" id="3"value="Añadir"/>';
+
+        $html=$html.'</div>';
+            $html=$html.'</div>';
+      
+            //modificar esto, los valores de las masasa, tamaño
+            foreach ($masas as $val) {
+                $nombre=$val->get_nombre();
+                $id=$val->get_id();
+                if(isset($_REQUEST[$nombre])){
+            
+                array_push($arrayIngre,$id);
+                }
+            }
         if(isset($_POST['pers'])){
-            //modificar esto, los valores de las masasa, tamaños
+         $y=0;
             $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
             $resultado=$db->query($query);
         }
-
+    
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
         if(isset($_SESSION['login'])){//resolver esto, que sale un mensaje arriba
