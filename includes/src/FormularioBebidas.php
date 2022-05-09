@@ -97,30 +97,65 @@ class FormularioBebidas extends Form
             $bebidaString = $bebidaString . '</div>';
         }
         if(isset($_SESSION["esAdmin"])){
-           // $html=self::añadirBebidaAdmin();
-            $bebidaString = $bebidaString . '<div class="col-md-3">';
-            $bebidaString = $bebidaString . '
-            <h2>Nueva Bebida</h2>
-            <form>
-                <label for="bebida">Nombre:</label><br>
-                <input type="text" id="bebida" name="bebida"><br>
-                <label for="precio">Precio:</label><br>
-                <input type="number" step="any" id="precio" name="precio"><br>
-                <label for="imagen">Nombre imagen:</label><br>
-                <input type="text" id="imagen" name="imagen"><br><br>
-                <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
-            </form>
-            ';
-            $bebidaString = $bebidaString . '</div>';
-        }
-            if(isset($_GET['add'])){
-                $nombre = $_GET["bebida"];
-                $precio = $_GET["precio"];
-                $image = "images/bebidas/" . $_GET["imagen"];
+            // $html=self::añadirBebidaAdmin();
+             $bebidaString = $bebidaString . '<div class="col-md-3">';
+             /*$pizzaString = $pizzaString . '
+             <form>
+                 <label for="pizza">Nombre bebida:</label><br>
+                 <input type="text" id="pizza" name="pizza"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="imagen">Nombre imagen:</label><br>
+                 <input type="text" id="imagen" name="imagen"><br><br>
+                 <input name="add" type="submit" id="add" value="Añadir"/>
+             </form>*/
+             $bebidaString = $bebidaString . '
+             <h2>Añadir Bebida</h2>
+             <form action="" enctype="multipart/form-data" method="post">
+                 <label for="bebida">Nombre bebida:</label><br>
+                 <input type="text" id="bebida" name="bebida"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="img">Imagen:</label><br>
+                 <input type="file" id="imagen" name="imagen"><br><br>
+                 <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
+             </form>
+             ';
+             $bebidaString = $bebidaString . '</div>';
 
-                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i, '$nombre', $precio, '$image')";
+             if(isset($_POST['add'])){
+                $errors= array();
+                $file_name = $_FILES['imagen']['name'];
+                $file_size = $_FILES['imagen']['size'];
+                $file_tmp = $_FILES['imagen']['tmp_name'];
+                $file_type = $_FILES['imagen']['type'];
+                $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                
+                $expensions= array("jpeg","jpg","png");
+                
+                if(in_array($file_ext,$expensions)=== false){
+                    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+                }
+                
+                if($file_size > 2097152) {
+                    $errors[]='File size must be excately 2 MB';
+                }
+                
+                if(empty($errors)==true) {
+                    move_uploaded_file($file_tmp,"images/bebidas/".$file_name);
+                    echo "Success";
+                }else{
+                    print_r($errors);
+                }
+
+                $nombre = $_POST["bebida"];
+                $precio = $_POST["precio"];
+                $image = "images/bebidas/" . $file_name;
+
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i,'$nombre','$precio', '$image')";
                 $resultado=$db->query($query);
             }
+        } 
         
         $bebidaString = $bebidaString . '</div>';
         return $bebidaString;
