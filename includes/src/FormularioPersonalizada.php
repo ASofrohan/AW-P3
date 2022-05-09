@@ -294,7 +294,7 @@ public function procesarPedido(){
         $html=$html.'</div>';
         $html=$html . '<div class="col-md-3">';
         $masas = Ingredientes::muestraIngredientes();
-        $arrayIngre=array();
+       
             $html = $html . '<h4>INGREDIENTES: </h4>';
             $html = $html . '<form action="#" method="post" id=ingredientes>';
             foreach ($masas as $val) {
@@ -306,33 +306,55 @@ public function procesarPedido(){
                 $html = $html . '<img src="' . $image . '"WIDTH=30 HEIGHT=30></br>';
                 
             }
-            $html = $html. '<input type="submit" value="Enviar">';
-            $html = $html . '</form>';
+            
+            
         $html=$html . '</div>';
         $html=$html . '<div class="col-md-3">';
 
             $html = $html . '<h3>Precio: </h3>';
             $html = $html . '<p id= "precio">4.99</p>';
             $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
-            $html = $html . '<input class="btn btn-outline-success" name="pers" type="submit" id="3"value="Añadir"/>';
+            $html = $html . '<input class="btn btn-outline-success" name="PERS" type="submit" id="3"value="Añadir"/>';
 
         $html=$html.'</div>';
             $html=$html.'</div>';
       
             //modificar esto, los valores de las masasa, tamaño
+            $arrayIngre=array();
+            $lengt=count($masas);
+           $e=0;
             foreach ($masas as $val) {
+                
                 $nombre=$val->get_nombre();
                 $id=$val->get_id();
-                if(isset($_REQUEST[$nombre])){
-            
-                array_push($arrayIngre,$id);
+
+                $query1="SELECT * FROM pizza_ingredientes";
+                $resultado1=$db->query($query1);
+                $row_cnt = mysqli_num_rows($resultado1);
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($obtencionIdPizzaPedida,$row['ID_PizzaPedida']);
                 }
+                if($row_cnt==0)$idIP=0;
+                else{
+                    for($j=0;$j<$row_cnt;$j++){
+                        $idIP=$obtencionIdPizzaPedida[$j];
+                    }
+                } echo $e;
+               //cuando se pulsa en la imagen personalizada , como llama a esta funcion, se mete una pizza y luego cuando elegimos un ingreiente, se mete otra vez, entonces se meten 2.
+                if($e==0){
+                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
+                    $resultado=$db->query($query);
+                }
+                $e++;
+                    if(isset($_POST["$nombre"])){
+                       
+                        $query="INSERT INTO pizza_ingredientes(ID_IngredientePizza,ID_PizzaPedida,ID_Ingrediente) VALUES($idIP+1,$idPP+1, $id)";
+                        $resultado=$db->query($query);
+
+                    }
+                
             }
-        if(isset($_POST['pers'])){
-         $y=0;
-            $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
-            $resultado=$db->query($query);
-        }
+        
     
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();
