@@ -81,9 +81,8 @@ class FormularioPersonalizada extends Form
                         array_push($obtencionIdPedido,$row['ID_Pedido']);
                     }
                     for($j=0;$j<$row_cnt;$j++){
-                        $idpedido=$obtencionIdPizzaPedida[$j];
-                    }
-                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
+                        $idpedido=$obtencionIdPizzaPedida[$j];}
+                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES('$idpedido','$co',4,CURDATE(),1, 0000-00-00)";
                     $resultado4=$db->query($query4);
                     $idPedido=$idpedido+1;
                 }
