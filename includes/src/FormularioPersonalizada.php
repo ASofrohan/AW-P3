@@ -321,7 +321,10 @@ public function procesarPedido(){
             //modificar esto, los valores de las masasa, tamaño
             $arrayIngre=array();
             $lengt=count($masas);
-           $e=0;
+            if(isset($_POST["PERS"])){
+                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
+                $resultado=$db->query($query);
+            }
             foreach ($masas as $val) {
                 
                 $nombre=$val->get_nombre();
@@ -338,20 +341,17 @@ public function procesarPedido(){
                     for($j=0;$j<$row_cnt;$j++){
                         $idIP=$obtencionIdPizzaPedida[$j];
                     }
-                } echo $e;
-               //cuando se pulsa en la imagen personalizada , como llama a esta funcion, se mete una pizza y luego cuando elegimos un ingreiente, se mete otra vez, entonces se meten 2.
-                if($e==0){
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
-                    $resultado=$db->query($query);
                 }
-                $e++;
+               //cuando se pulsa en la imagen personalizada , como llama a esta funcion, se mete una pizza y luego cuando elegimos un ingreiente, se mete otra vez, entonces se meten 2.
+                   
                     if(isset($_POST["$nombre"])){
                        
                         $query="INSERT INTO pizza_ingredientes(ID_IngredientePizza,ID_PizzaPedida,ID_Ingrediente) VALUES($idIP+1,$idPP+1, $id)";
                         $resultado=$db->query($query);
 
                     }
-                
+                   
+                    
             }
         
     
