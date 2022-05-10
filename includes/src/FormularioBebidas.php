@@ -64,18 +64,19 @@ class FormularioBebidas extends Form
                         $idPedido= $row['ID_Pedido']; 
                 }else{//no tiene pedidos, hay que meterle
                     $obtencionIdPedido=array();
-                $query1="SELECT * FROM pedidos";
-                $resultado1=$db->query($query1);
-                $row_cnt = mysqli_num_rows($resultado1);
-                while($row = $resultado1->fetch_assoc()) {
-                    array_push($obtencionIdPedido,$row['ID_Pedido']);
-                }
-                for($j=0;$j<$row_cnt;$j++){
-                    $idpedido=$obtencionIdPizzaPedida[$j];
-                }
-                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,SC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
-                    $resultado4=$db->query($query4);
-                    $idPedido=$idpedido+1;
+                    $query1="SELECT * FROM pedidos";
+                    $resultado1=$db->query($query1);
+                    $row_cnt = mysqli_num_rows($resultado1);
+                    while($row = $resultado1->fetch_assoc()) {
+                        array_push($obtencionIdPedido,$row['ID_Pedido']);
+                    }
+                    $obtencionIdPizzaPedida=array();
+                    for($j=0;$j<$row_cnt;$j++){
+                        $idpedido=$obtencionIdPizzaPedida[$j];
+                    }
+                        $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,SC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
+                        $resultado4=$db->query($query4);
+                        $idPedido=$idpedido+1;
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
