@@ -3,11 +3,14 @@
 require_once __DIR__.'/includes/config.php';
 require_once __DIR__.'/includes/src/Aplicacion.php';
 require_once __DIR__.'/includes/src/Pedidos.php';
+require_once __DIR__.'/includes/src/Usuario.php';
 
 $tituloPagina = 'Administracion';
 $string=mostrar();
+$stringUsuarios=mostrarUsuarios();
 $contenidoPrincipal =<<<EOF
     $string
+    $stringUsuarios
 EOF;
 
 $string=$string.'Hola administrador!!'.'<Br>';
@@ -93,6 +96,103 @@ function mostrar(){
     $string=$string.'</table>';
     return $string;
 }
+
+function mostrarUsuarios(){
+    $string='';
+    $app = Aplicacion::getInstancia();
+    $db = $app->conexionBd();
+
+    $usuarios = Usuario::muestraUsuarios();
+    $string=$string.'<table>';
+    $string=$string.'<tr>';
+    $string=$string.'<th><center>Correo</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Nombre</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Apellidos</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Calle</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Ciudad</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Piso</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Codigo postal</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'</tr>';
+    $i=0;
+    $j=0;
+    foreach($usuarios as $val){
+        $correo =$val->getCorreo();
+        $nombre=$val->getNombre();
+        $apellidos=$val->getApellidos();
+        $calle=$val->getCalle();
+        $ciudad=$val->getCiudad();
+        $piso=$val->getPiso();
+        $codPostal=$val->getPostal();
+
+        $query="SELECT * FROM usuarios WHERE Correo='$correo'";
+        $resultado=$db->query($query);
+        $row = $resultado->fetch_assoc();
+        $admin=$row['Admin'];
+
+        $string=$string.'<form id="form" name="form" method="post" autocomplete="off">';
+        $string=$string.'<tr>';
+        $string=$string.'<td><center>'.$correo.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$nombre .'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$apellidos.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$calle.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$ciudad.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$piso.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$codPostal.'</td>';
+        $string=$string.'<td></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
+        $string = $string .'&nbsp';
+        $string = $string . '<td><input class="btn btn-outline-info" name="'.$j.'" type="submit" id="'.$j.'"value="Editar administrador"/>';
+        $string = $string .'&nbsp';
+            if($admin==0)$string=$string.'Cliente';else $string=$string.'Administrador';
+        $string = $string .'</td>';
+        $string=$string.'</form>';
+        $string=$string.'</tr>';
+
+        if(isset($_POST[$i])){
+            if($admin==0){
+                $query="UPDATE usuarios SET Admin=1 WHERE Correo='$correo'";
+                $resultado=$db->query($query);
+            }
+            else{
+                $query="UPDATE usuarios SET Admin=0 WHERE Correo='$correo'";
+                $resultado=$db->query($query);
+            }
+            header("Location:administrar.php");
+            
+        }    
+        $i++;
+
+        if(isset($_POST[$j])){
+            $query="SELECT * FROM usuarios WHERE Correo='$correo'";
+            $resultado=$db->query($query);
+            $row = $resultado->fetch_assoc();
+            $id=$row['Domicilio'];
+            $query="DELETE FROM usuarios WHERE Correo='$correo'";
+            $resultado=$db->query($query);
+            $query="DELETE FROM domicilios WHERE ID_Domicilio='$id'";
+            $resultado=$db->query($query);
+            header("Location:administrar.php");
+            
+        }
+        $j++;
+    }
+    $string=$string.'</table>';
+    return $string;
+}
+
 
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
