@@ -202,6 +202,26 @@ class Usuario
         return $this->apellidos;
     }
 
+    public function getCalle()
+    {
+        return $this->calle;
+    }
+
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    public function getPiso()
+    {
+        return $this->piso;
+    }
+
+    public function getPostal()
+    {
+        return $this->postal;
+    }
+
     private static function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
@@ -210,6 +230,29 @@ class Usuario
     public function compruebaPassword($password)
     {
         return password_verify($password, $this->contraseña);
+    }
+
+    public static function muestraUsuarios(){
+        $app = Aplicacion::getInstancia();
+        $conn = $app->conexionBd();
+        $query = "SELECT * FROM usuarios";
+        $usuarios = $conn->query($query);
+        $arrayUsuarios = array();
+
+        if(mysqli_num_rows($usuarios)>0){
+            $i=0;
+            while($fila = mysqli_fetch_assoc($usuarios)) {
+                $dom=$fila['Domicilio'];
+                $query = sprintf("SELECT * FROM domicilios WHERE ID_Domicilio = '$dom'");
+                $resultado=$conn->query($query);
+                $row = $resultado->fetch_assoc();
+                $p = new Usuario($fila['Correo'], $fila['Nombre'], $fila['Apellidos'], $fila['Contraseña'], $row['Calle'],$row['Ciudad'],$row['Piso'],$row['CodigoPostal']);
+                $arrayPedidos[$i] = $p;
+                $i += 1;
+            }
+        }
+
+        return $arrayPedidos;
     }
 }
 
