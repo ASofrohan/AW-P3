@@ -52,6 +52,7 @@ class FormularioOfertas extends Form{
                     if(	$row = $resultado2->fetch_assoc())
                         $idPedido= $row['ID_Pedido']; 
                 }else{//no tiene pedidos, hay que meterle
+                    $obtencionIdPedido=array();
                     $query1="SELECT * FROM pedidos";
                     $resultado1=$db->query($query1);
                     $row_cnt = mysqli_num_rows($resultado1);
@@ -59,7 +60,7 @@ class FormularioOfertas extends Form{
                         array_push($obtencionIdPedido,$row['ID_Pedido']);
                     }
                     for($j=0;$j<$row_cnt;$j++){
-                        $idpedido=$obtencionIdPizzaPedida[$j];
+                        $idpedido=$obtencionIdPedido[$j];
                     }
                   
                     $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',$i,CURDATE(),1,0000-00-00)";
@@ -96,13 +97,24 @@ class FormularioOfertas extends Form{
              $ofertaString = $ofertaString . '</div>';
 
              if(isset($_POST['add'])){
+                $arrofer=array();
+                $query1="SELECT * FROM ofertas";
+                        $resultado1=$db->query($query1);
+                        $row_cnt = mysqli_num_rows($resultado1);
+                        while($row = $resultado1->fetch_assoc()) {
+                            array_push($arrofer,$row['ID_Oferta']);
+                        }
+                $length=count($arrofer);
+                $resultado1->free();
+                for($Q=0;$Q<$length;$Q++){
+                    $insert=$arrofer[$Q];}
 
                 $oferta = $_POST["oferta"];
                 $Tipo = $_POST["Tipo"];
                 $Descuento = $_POST["Descuento"];
                 $Info = $_POST["Info"];
 
-                $query="INSERT INTO ofertas(ID_Oferta,Codigo,Tipo,Descuento,Info) VALUES ($i,'$oferta','$Tipo', '$Descuento, '$Info'')";
+                $query="INSERT INTO ofertas(ID_Oferta,Codigo,Tipo,Descuento,Info) VALUES ($insert+1,$oferta,$Tipo, $Descuento, '$Info')";
                 $resultado=$db->query($query);
             }
             $ofertaString = $ofertaString . '</div></div></div></div>';
