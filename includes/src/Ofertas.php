@@ -3,12 +3,14 @@ require_once __DIR__.'/Aplicacion.php';
 
 class Ofertas{
 
+    private $id_Oferta;
     private $codigo;
     private $tipo;
     private $descuento;
     private $info;
 
-    public function __construct($codigo, $tipo, $descuento, $info){
+    public function __construct($id_Oferta, $codigo, $tipo, $descuento, $info){
+        $this->id_Oferta = $id_Oferta;
         $this->codigo = $codigo;
         $this->tipo = $tipo;
         $this->descuento = $descuento;
@@ -32,11 +34,12 @@ class Ofertas{
         if(mysqli_num_rows($ofertas)>0){
             $i=0;
             while($row = mysqli_fetch_assoc($ofertas)){
+                $id_Oferta = $row['ID_Oferta'];
                 $codigo = $row['Codigo'];
                 $tipo = $row['Tipo'];
                 $descuento = $row['Descuento'];
                 $info = $row['Info'];
-                $of = new Ofertas($codigo, $tipo, $descuento, $info);
+                $of = new Ofertas($id_Oferta, $codigo, $tipo, $descuento, $info);
                 $arrayOfertas[$i] = $of;
                 $i++;
             }
@@ -46,6 +49,9 @@ class Ofertas{
 
     public function get_codigo(){
         return $this->codigo;
+    }
+    public function get_id(){
+        return $this->id_Oferta;
     }
     public function get_tipo(){
         return $this->tipo;

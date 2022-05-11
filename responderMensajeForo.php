@@ -19,7 +19,7 @@ else{
 	$htmlFormMensaje = $form->gestiona();
 }
 
-$tituloPagina = 'Foro';
+$tituloPagina = 'Reseñas';
 $array=$reseña->mostrarReseñas();
 //$com=$array[0]->getComentario();
 

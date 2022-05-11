@@ -6,12 +6,14 @@ require_once __DIR__.'/includes/src/Pedidos.php';
 require_once __DIR__.'/includes/src/Usuario.php';
 require_once __DIR__.'/includes/src/Pizzas.php';
 require_once __DIR__.'/includes/src/Bebidas.php';
+require_once __DIR__.'/includes/src/Ofertas.php';
 
 $tituloPagina = 'Administración';
 $string=mostrar();
 $stringUsuarios=mostrarUsuarios();
 $stringPizzas=mostrarPizzas();
 $stringBebidas=mostrarBebidas();
+$stringOfertas=mostrarOfertas();
 $contenidoPrincipal =<<<EOF
     </br>
     <div class="center">
@@ -33,6 +35,10 @@ $contenidoPrincipal =<<<EOF
     <div class="col-md-12">
 	<div class="container"><div class="card" style="width: 30rem;"><div class="card-header">
     $stringBebidas
+    </div></div>
+    <div class="col-md-12">
+	<div class="container"><div class="card" style="width: 50rem;"><div class="card-header">
+    $stringOfertas
     </div></div>
     </div>
 EOF;
@@ -341,30 +347,80 @@ function mostrarBebidas(){
 
         $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
-        //$string = $string . '<td><input class="btn btn-outline-info" name="'.$j.'" type="submit" id="'.$j.'"value="Editar Pizza"/>';
-        //$string = $string .'&nbsp';
-           // if($pers==0)$string=$string.'Normal';else $string=$string.'Personalizada';
         $string = $string .'</td>';
         $string=$string.'</form>';
         $string=$string.'</tr>';
 
-        /*if(isset($_POST[$i])){
-            if($admin==0){
-                $query="UPDATE usuarios SET Admin=1 WHERE Correo='$correo'";
-                $resultado=$db->query($query);
-            }
-            else{
-                $query="UPDATE usuarios SET Admin=0 WHERE Correo='$correo'";
-                $resultado=$db->query($query);
-            }
-            header("Location:administrar.php");
-            
-        }  */  
         if(isset($_POST[$i])){
             $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
             $resultado=$db->query($query);
             
             $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
+            $resultado=$db->query($query);
+
+            header("Location:administrar.php");
+        }
+        $i++;
+        $j++;
+    }
+    $string=$string.'</table>';
+    return $string;
+}
+
+function mostrarOfertas(){
+    $string='';
+    $app = Aplicacion::getInstancia();
+    $db = $app->conexionBd();
+
+    $ofertas = Ofertas::muestraOfertas();
+    $string=$string.'<table>';
+    $string=$string.'<tr>';
+    $string=$string.'<th><center>Id</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Codigo</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Tipo</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Descuento</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'<th><center>Info</th>';
+    $string=$string.'<th></th>';
+    $string=$string.'</tr>';
+    $i=0;
+    $j=0;
+    foreach($ofertas as $val){
+        $id =$val->get_id();
+        $codigo=$val->get_codigo();
+        $tipo=$val->get_tipo();
+        $descuento=$val->get_descuento();
+        $info=$val->get_info();
+
+        $query="SELECT * FROM ofertas WHERE ID_Oferta='$id'";
+        $resultado=$db->query($query);
+        $row = $resultado->fetch_assoc();
+
+        $string=$string.'<form id="form" name="form" method="post" autocomplete="off">';
+        $string=$string.'<tr>';
+        $string=$string.'<td><center>'.$id.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$codigo .'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$tipo.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$descuento.'</td>';
+        $string=$string.'<td></td>';
+        $string=$string.'<td><center>'.$info.'</td>';
+        $string=$string.'<td></td>';
+
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
+        $string = $string .'&nbsp';
+        $string = $string .'</td>';
+        $string=$string.'</form>';
+        $string=$string.'</tr>';
+
+        if(isset($_POST[$i])){
+            
+            $query="DELETE FROM ofertas WHERE ID_Bebida=$i";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");

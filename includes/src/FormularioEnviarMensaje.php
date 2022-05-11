@@ -22,6 +22,7 @@ class FormularioEnviarMensaje extends Form
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
+                <div class="container"><div class="card" style="width: 17rem;"><div class="card-header">
                 <div class="grupo-control">
                 <label>Mensaje:
                 <br>
@@ -39,6 +40,7 @@ class FormularioEnviarMensaje extends Form
                 </select>
                 </div>
                 <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
+                </div></div></div></div>
                 </div>
             </fieldset>
             <div>

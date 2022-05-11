@@ -9,7 +9,11 @@ $formulario = $form->formulario();
 $tituloPagina = 'Pizza Personalizada';
 
 $contenidoPrincipal =<<<EOF
-		<h1>$tituloPagina</h1>
+</br>
+<div class="center">
+<h1>$tituloPagina</h1>
+</br>
+</div>
 		<div class="pizzapersonalizada">
 		$formulario
 		</div>

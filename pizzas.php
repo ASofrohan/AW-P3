@@ -9,7 +9,11 @@ $pizzas = $form->pizzas();
 $tituloPagina = 'Pizzas';
 
 $contenidoPrincipal =<<<EOF
-		<h1>$tituloPagina</h1>
+</br>
+<div class="center">
+<h1>$tituloPagina</h1>
+</br>
+</div>
 		<div class="pizzas">
 			$pizzas
 		</div>
