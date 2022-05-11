@@ -12,12 +12,13 @@ class FormularioOfertas extends Form{
         $ofertas = Ofertas::muestraOfertas();
         $ofertaString="";
         $i=1;
+        $ofertaString = $ofertaString . '<div class="row">';
         foreach ($ofertas as $val){
             $tipo=$val->get_tipo();
             $codigo=$val->get_codigo();
             $descuento=$val->get_descuento();
             $info=$val->get_info();
-            
+            $ofertaString = $ofertaString . '<div class="col-md-3">';
             if($tipo != 3){
                 $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
@@ -71,7 +72,9 @@ class FormularioOfertas extends Form{
             }
 
             $i++;
+            $ofertaString = $ofertaString . '</div>';
         }
+        $ofertaString = $ofertaString . '</div>';
         return $ofertaString;
     }
 }
