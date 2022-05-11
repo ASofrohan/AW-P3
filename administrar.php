@@ -386,7 +386,7 @@ function mostrarOfertas(){
     $string=$string.'<th><center>Info</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $i=0;
+    $i=1;
     $j=0;
     foreach($ofertas as $val){
         $id =$val->get_id();
