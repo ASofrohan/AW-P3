@@ -21,11 +21,13 @@ class FormularioLogin extends Form
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         <fieldset>
+            <div class="center">
             <legend>Usuario y contraseña</legend>
             $htmlErroresGlobales
             <p><label>Nombre de usuario:</label> <input type="text" name="user" value="$nombreUsuario"/>$errorNombreUsuario</p>
             <p><label>Password:</label> <input type="password" name="pass" />$errorPassword</p>
             <button class="btn btn-primary btn-sm" type="submit" name="login">Entrar</button>
+            </div>
         </fieldset>
         <p style="text-align:center">¿No estás registado? <a href='registro.php'>Regístrate.</a></p> 
         EOF;

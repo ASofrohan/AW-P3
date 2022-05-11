@@ -10,13 +10,17 @@ $htmlFormLogin = $form->gestiona();
 $tituloPagina = 'Login';
 
 $contenidoPrincipal = <<<EOF
-		<div class="row">
-		<div class="col-md-10 mx-auto">
+		<div class="center">
 		<h1>Acceso al sistema</h1>
 		</div>
-		</div>
 		<div class="login">
+		<div class="container">
+		<div class="card" style="width: 18rem;">
+  		<div class="card-header">
 		$htmlFormLogin
+		</div>
+		</div>
+		</div>
 		</div>
 		
 EOF;
