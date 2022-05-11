@@ -23,20 +23,38 @@ function mostrar($nombre,$carrito){
 	$db = $app->conexionBd();
 	$pizzaPedida = PizzaPedida::muestraPizzas();
 	$bebidaPedida= BebidaPedida::muestraBebidas();
-	if($pizzaPedida!=null)
-	$length=count($pizzaPedida);else $length=0;
-	$insert=0;
+	if($pizzaPedida!=null){
+		$arrpizzaaPedida=array();
+		$query1="SELECT * FROM pedidos_pizzas";
+                $resultado1=$db->query($query1);
+                $row_cnt = mysqli_num_rows($resultado1);
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($arrpizzaaPedida,$row['ID_PizzaPedida']);
+                }
+		$length=count($arrpizzaaPedida);
+		$resultado1->free();
+	}
+	else $length=0;
+		$insert=0;
 	for($Q=0;$Q<$length;$Q++){
-		if($insert<$pizzaPedida[$Q]->get_id())
-		$insert=$pizzaPedida[$Q]->get_id();
+		$insert=$arrpizzaaPedida[$Q];
 		
 	}
-	if($bebidaPedida!=null)
-	$length=count($bebidaPedida);else $length=0;
-	$insert2=0;
+	if($bebidaPedida!=null){
+		$arrbebidaPedida=array();
+		$query1="SELECT * FROM pedidos_bebidas";
+                $resultado1=$db->query($query1);
+                $row_cnt = mysqli_num_rows($resultado1);
+                while($row = $resultado1->fetch_assoc()) {
+                    array_push($arrbebidaPedida,$row['ID_BebidaPedida']);
+                }
+		$length=count($arrbebidaPedida);
+		$resultado1->free();
+	}
+	else $length=0;
+		$insert2=0;
 	for($Q=0;$Q<$length;$Q++){
-		if($insert2<$bebidaPedida[$Q]->get_id())
-		$insert2=$bebidaPedida[$Q]->get_id();
+		$insert2=$arrbebidaPedida[$Q];
 		
 	}
 	$carritoToString="";
@@ -75,6 +93,7 @@ function mostrar($nombre,$carrito){
 					$carritoToString=$carritoToString. $nombre.'  ';
 					$carritoToString=$carritoToString.' masa '. $masa.'  ';
 					$carritoToString=$carritoToString.' tamaño '. $tamaño.'  ';
+					if($precio1<0)$precio1=0;
 					$carritoToString=$carritoToString. $pizza->get_tamañoPrecio()+$precio1.'  ';
 						$carritoToString = $carritoToString . '<input name="'.$i.'" type="submit" id="'.$i.'"value="-"/>';
 						//$carritoToString=$carritoToString.$idPizza;
@@ -119,6 +138,7 @@ function mostrar($nombre,$carrito){
 					$resultado=$db->query($query);
 					$row_cnt = mysqli_num_rows($resultado);
 					$repetidor=$row_cnt;
+					$resultado->free();
 					if($controlmasa!=$idMasa||$controlpiza!=$idPizza||$controltamaño!=$idTamaño){
 						
 						$controlmasa=null;
@@ -186,6 +206,7 @@ function mostrar($nombre,$carrito){
 					$resultado=$db->query($query);
 					$row_cnt = mysqli_num_rows($resultado);
 					$repetidor=$row_cnt;
+					$resultado->free();
 						if($controlbebida!=$Bebida)	
 						$controlbebida=null;		
 					if(($controlbebida==null)||($controlbebida==$Bebida&&$repetidor!=1&&$repetidor!=0&&$boolRepetido==false)){

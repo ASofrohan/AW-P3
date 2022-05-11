@@ -29,6 +29,7 @@ class Carrito{
               $resultado=$db->query($query);
               $row_cnt = mysqli_num_rows($resultado);  
         $row = $resultado->fetch_assoc();
+        $resultado->free();
         if ($row_cnt==0){
             return null;
         }else
@@ -48,7 +49,7 @@ class Carrito{
         $resultado1=$db->query($query1);
         if(	$row1 = $resultado1->fetch_assoc())
             $sum1=$row1['Precio1'];
-
+        $resultado1->free();
         $query2="SELECT SUM(b.Precio) AS Precio2 FROM bebidas b
         JOIN pedidos_bebidas q ON q.ID_Bebida=b.ID_Bebida
         JOIN pedidos i ON i.ID_Pedido=q.ID_Pedido
@@ -57,15 +58,18 @@ class Carrito{
         if(	$row2 = $resultado2->fetch_assoc())
             $sum2=$row2['Precio2'];
        
+            $resultado2->free();
         $query="SELECT SUM(t.Precio) as Precio1 FROM pizzas a
         JOIN pedidos_pizzas p ON p.ID_Pizza=a.ID_Pizza
         JOIN pedidos s ON p.ID_Pedido=s.ID_Pedido
         JOIN tamaños t ON t.ID_Tamaño=p.ID_Tamaño
         WHERE s.Estado=1 AND s.Usuario='$co'";
         $resultado=$db->query($query);
+       
         if(	$row3 = $resultado->fetch_assoc())
             $sum3=$row3['Precio1'];
         $sumTot=$sum1+$sum2+$sum3;
+        $resultado->free();
         return $sumTot;
     }
     public  function consultaPersonalizada(){

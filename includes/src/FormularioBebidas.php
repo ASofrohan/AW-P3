@@ -64,18 +64,19 @@ class FormularioBebidas extends Form
                         $idPedido= $row['ID_Pedido']; 
                 }else{//no tiene pedidos, hay que meterle
                     $obtencionIdPedido=array();
-                $query1="SELECT * FROM pedidos";
-                $resultado1=$db->query($query1);
-                $row_cnt = mysqli_num_rows($resultado1);
-                while($row = $resultado1->fetch_assoc()) {
-                    array_push($obtencionIdPedido,$row['ID_Pedido']);
-                }
-                for($j=0;$j<$row_cnt;$j++){
-                    $idpedido=$obtencionIdPizzaPedida[$j];
-                }
-                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,SC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
-                    $resultado4=$db->query($query4);
-                    $idPedido=$idpedido+1;
+                    $query1="SELECT * FROM pedidos";
+                    $resultado1=$db->query($query1);
+                    $row_cnt = mysqli_num_rows($resultado1);
+                    while($row = $resultado1->fetch_assoc()) {
+                        array_push($obtencionIdPedido,$row['ID_Pedido']);
+                    }
+                    $obtencionIdPizzaPedida=array();
+                    for($j=0;$j<$row_cnt;$j++){
+                        $idpedido=$obtencionIdPizzaPedida[$j];
+                    }
+                        $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,SC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
+                        $resultado4=$db->query($query4);
+                        $idPedido=$idpedido+1;
                 }
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
@@ -86,10 +87,10 @@ class FormularioBebidas extends Form
                 }
 
                 if(isset($_POST[$admin])){
-                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
+                    $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
 
-                    $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
+                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
                 }
             }
@@ -97,30 +98,65 @@ class FormularioBebidas extends Form
             $bebidaString = $bebidaString . '</div>';
         }
         if(isset($_SESSION["esAdmin"])){
-           // $html=self::añadirBebidaAdmin();
-            $bebidaString = $bebidaString . '<div class="col-md-3">';
-            $bebidaString = $bebidaString . '
-            <h2>Nueva Bebida</h2>
-            <form>
-                <label for="bebida">Nombre:</label><br>
-                <input type="text" id="bebida" name="bebida"><br>
-                <label for="precio">Precio:</label><br>
-                <input type="number" step="any" id="precio" name="precio"><br>
-                <label for="imagen">Nombre imagen:</label><br>
-                <input type="text" id="imagen" name="imagen"><br><br>
-                <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
-            </form>
-            ';
-            $bebidaString = $bebidaString . '</div>';
-        }
-            if(isset($_GET['add'])){
-                $nombre = $_GET["bebida"];
-                $precio = $_GET["precio"];
-                $image = "images/bebidas/" . $_GET["imagen"];
+            // $html=self::añadirBebidaAdmin();
+             $bebidaString = $bebidaString . '<div class="col-md-3">';
+             /*$pizzaString = $pizzaString . '
+             <form>
+                 <label for="pizza">Nombre bebida:</label><br>
+                 <input type="text" id="pizza" name="pizza"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="imagen">Nombre imagen:</label><br>
+                 <input type="text" id="imagen" name="imagen"><br><br>
+                 <input name="add" type="submit" id="add" value="Añadir"/>
+             </form>*/
+             $bebidaString = $bebidaString . '
+             <h2>Añadir Bebida</h2>
+             <form action="" enctype="multipart/form-data" method="post">
+                 <label for="bebida">Nombre bebida:</label><br>
+                 <input type="text" id="bebida" name="bebida"><br>
+                 <label for="precio">Precio:</label><br>
+                 <input type="number" step="any" id="precio" name="precio"><br>
+                 <label for="img">Imagen:</label><br>
+                 <input type="file" id="imagen" name="imagen"><br><br>
+                 <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
+             </form>
+             ';
+             $bebidaString = $bebidaString . '</div>';
 
-                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i, '$nombre', $precio, '$image')";
+             if(isset($_POST['add'])){
+                $errors= array();
+                $file_name = $_FILES['imagen']['name'];
+                $file_size = $_FILES['imagen']['size'];
+                $file_tmp = $_FILES['imagen']['tmp_name'];
+                $file_type = $_FILES['imagen']['type'];
+               // $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                $file_ext=pathinfo($file_name, PATHINFO_EXTENSION);
+
+                $extensions= array("jpeg","jpg","png");
+                
+                if(in_array($file_ext,$extensions)=== false){
+                    $errors[]="Extension de fichero no permitida. Solo jpeg,jpg y png.";
+                }
+                
+                if($file_size > 2097152) {
+                    $errors[]='Tamaño maximo de imagen superado';
+                }
+                
+                if(empty($errors)==true) {
+                    move_uploaded_file($file_tmp,"images/bebidas/".$file_name);
+                }else{
+                    $pizzaString = $pizzaString . $errors;
+                }
+
+                $nombre = $_POST["bebida"];
+                $precio = $_POST["precio"];
+                $image = "images/bebidas/" . $file_name;
+
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i,'$nombre','$precio', '$image')";
                 $resultado=$db->query($query);
             }
+        } 
         
         $bebidaString = $bebidaString . '</div>';
         return $bebidaString;

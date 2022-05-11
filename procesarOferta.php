@@ -15,7 +15,7 @@
     if(	$row1 = $resultado1->fetch_assoc()){
     $user=$row1['ID_Pedido'];
     }
-
+    $resultado1->free();
 ////////
     $query="SELECT ID_Oferta
             FROM ofertas 
@@ -35,5 +35,5 @@
                 echo 'Esa oferta no existe';
                 header("Location:oferta.php");
             }
-
+            $resultado->free();
 ?>

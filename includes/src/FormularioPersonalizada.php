@@ -37,6 +37,10 @@ class FormularioPersonalizada extends Form
 
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
             <p id="precio">  ' . $precio . '</p>';
+            if(isset($_SESSION["esAdmin"])){
+                $admin="admin".$i;
+                $pizzaString = $pizzaString . '&nbsp;<input class="btn btn-outline-danger" name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
+            }else $admin=null;
             /*$id_precio = "precio" . $val.get_id();
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
             <p id="'.$id_precio.'">  ' . $precio . '</p>';*/
@@ -107,6 +111,15 @@ class FormularioPersonalizada extends Form
                     $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, $id_masa, $id_tamanio)";
                     $resultado=$db->query($query);
                 }
+
+                if(isset($_POST[$admin])){
+                    $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$i";
+                    $resultado=$db->query($query);
+                    
+                    $query="DELETE FROM pizzas WHERE ID_Pizza=$i";
+                    $resultado=$db->query($query);
+                }
+
                 ++$i;
             }
             $pizzaString = $pizzaString . '</div>';
@@ -150,23 +163,24 @@ class FormularioPersonalizada extends Form
                 $file_size = $_FILES['imagen']['size'];
                 $file_tmp = $_FILES['imagen']['tmp_name'];
                 $file_type = $_FILES['imagen']['type'];
-                $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                //$file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                $file_ext=pathinfo($file_name, PATHINFO_EXTENSION);
+
+                $extensions= array("jpeg","jpg","png");
                 
-                $expensions= array("jpeg","jpg","png");
-                
-                if(in_array($file_ext,$expensions)=== false){
-                    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+                if(in_array($file_ext,$extensions) == false){
+                    $errors[]="Extension de fichero no permitida. Solo jpeg,jpg y png.";
                 }
                 
                 if($file_size > 2097152) {
-                    $errors[]='File size must be excately 2 MB';
+                    $errors[]='Tamaño maximo de imagen superado';
                 }
                 
                 if(empty($errors)==true) {
                     move_uploaded_file($file_tmp,"images/pizzas/".$file_name);
-                    echo "Success";
                 }else{
-                    print_r($errors);
+                   // print_r($errors);
+                   $pizzaString = $pizzaString . $errors;
                 }
 
                 $nombre = $_POST["pizza"];
@@ -186,8 +200,8 @@ public function procesarPedido(){
     public function formularioPersonalizada(){
         $masas = Masas::muestraMasas();
         $html= '<h4>MASAS: </h4>';
-        $html= $html . '<select name="masas">
-        <option disabled selected>seleccione una opción</option>';
+        $html= $html . '<select name="masas">';
+        //<option disabled selected>seleccione una opción</option>';
 
         foreach ($masas as $val) {
             $tipo=$val->get_tipo();
@@ -198,8 +212,8 @@ public function procesarPedido(){
 
         $tamaños = Tamaños::muestraTamaños();
         $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="tamaño" onchange="precioTam(this)">
-        <option disabled selected>seleccione una opción</option>';
+        $html = $html . '<select name="tamaño" onchange="precioTam(this)">';
+        //<option disabled selected>seleccione una opción</option>';
 
         foreach ($tamaños as $val) {
             $tamaño=$val->get_tamaño();
@@ -229,8 +243,8 @@ public function procesarPedido(){
 
                 $masas = Masas::muestraMasas();
                 $html= $html . '<h4>MASAS: </h4>';
-                $html= $html . '<select name="masas">
-                <option disabled selected>seleccione una opción</option>';
+                $html= $html . '<select name="masas">';
+                //<option disabled selected>seleccione una opción</option>';
 
                 foreach ($masas as $val) {
                     $tipo=$val->get_tipo();
@@ -241,8 +255,8 @@ public function procesarPedido(){
 
                 $tamaños = Tamaños::muestraTamaños();
                 $html= $html . '<h4>TAMAÑOS: </h4>';
-                $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
-                <option disabled selected>seleccione una opción</option>';
+                $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>';
+                //<option disabled selected>seleccione una opción</option>';
 
                 foreach ($tamaños as $val) {
                     $tamaño=$val->get_tamaño();
@@ -321,7 +335,25 @@ public function procesarPedido(){
             //modificar esto, los valores de las masasa, tamaño
             $arrayIngre=array();
             $lengt=count($masas);
-           $e=0;
+            if(isset($_POST["PERS"])){
+                echo'<p>holaa</p>';
+                $masa = $_GET['masas'];
+                $tamanio = $_GET['t_personalizada'];
+                echo'<p>'.$tamanio.'</p>';
+
+               /* $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
+                $res_masa=$db->query($query_masa);
+                $row_masa=$res_masa->fetch_assoc();
+                $id_masa=$row_masa['ID_Masa'];
+
+                $query_tam="SELECT ID_Tamaño FROM tamaños WHERE Precio='$tamanio'";
+                $res_tam=$db->query($query_tam);
+                $row_tam=$res_tam->fetch_assoc();
+                $id_tamanio=$row_tam['ID_Tamaño'];*/
+
+                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";   
+                $resultado=$db->query($query);
+            }
             foreach ($masas as $val) {
                 
                 $nombre=$val->get_nombre();
@@ -338,20 +370,17 @@ public function procesarPedido(){
                     for($j=0;$j<$row_cnt;$j++){
                         $idIP=$obtencionIdPizzaPedida[$j];
                     }
-                } echo $e;
-               //cuando se pulsa en la imagen personalizada , como llama a esta funcion, se mete una pizza y luego cuando elegimos un ingreiente, se mete otra vez, entonces se meten 2.
-                if($e==0){
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
-                    $resultado=$db->query($query);
                 }
-                $e++;
+               //cuando se pulsa en la imagen personalizada , como llama a esta funcion, se mete una pizza y luego cuando elegimos un ingreiente, se mete otra vez, entonces se meten 2.
+                   
                     if(isset($_POST["$nombre"])){
                        
                         $query="INSERT INTO pizza_ingredientes(ID_IngredientePizza,ID_PizzaPedida,ID_Ingrediente) VALUES($idIP+1,$idPP+1, $id)";
                         $resultado=$db->query($query);
 
                     }
-                
+                   
+                    
             }
         
     
