@@ -89,7 +89,7 @@ class FormularioBebidas extends Form
                 if(isset($_POST[$admin])){
                     $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
-                    
+
                     $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
                 }
@@ -130,23 +130,23 @@ class FormularioBebidas extends Form
                 $file_size = $_FILES['imagen']['size'];
                 $file_tmp = $_FILES['imagen']['tmp_name'];
                 $file_type = $_FILES['imagen']['type'];
-                $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+               // $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                $file_ext=pathinfo($file_name, PATHINFO_EXTENSION);
+
+                $extensions= array("jpeg","jpg","png");
                 
-                $expensions= array("jpeg","jpg","png");
-                
-                if(in_array($file_ext,$expensions)=== false){
-                    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+                if(in_array($file_ext,$extensions)=== false){
+                    $errors[]="Extension de fichero no permitida. Solo jpeg,jpg y png.";
                 }
                 
                 if($file_size > 2097152) {
-                    $errors[]='File size must be excately 2 MB';
+                    $errors[]='Tamaño maximo de imagen superado';
                 }
                 
                 if(empty($errors)==true) {
                     move_uploaded_file($file_tmp,"images/bebidas/".$file_name);
-                    echo "Success";
                 }else{
-                    print_r($errors);
+                    $pizzaString = $pizzaString . $errors;
                 }
 
                 $nombre = $_POST["bebida"];

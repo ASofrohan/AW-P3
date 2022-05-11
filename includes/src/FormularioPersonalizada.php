@@ -163,23 +163,24 @@ class FormularioPersonalizada extends Form
                 $file_size = $_FILES['imagen']['size'];
                 $file_tmp = $_FILES['imagen']['tmp_name'];
                 $file_type = $_FILES['imagen']['type'];
-                $file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                //$file_ext=strtolower(end(explode('.',$_FILES['imagen']['name'])));
+                $file_ext=pathinfo($file_name, PATHINFO_EXTENSION);
+
+                $extensions= array("jpeg","jpg","png");
                 
-                $expensions= array("jpeg","jpg","png");
-                
-                if(in_array($file_ext,$expensions)=== false){
-                    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+                if(in_array($file_ext,$extensions) == false){
+                    $errors[]="Extension de fichero no permitida. Solo jpeg,jpg y png.";
                 }
                 
                 if($file_size > 2097152) {
-                    $errors[]='File size must be excately 2 MB';
+                    $errors[]='Tamaño maximo de imagen superado';
                 }
                 
                 if(empty($errors)==true) {
                     move_uploaded_file($file_tmp,"images/pizzas/".$file_name);
-                    echo "Success";
                 }else{
-                    print_r($errors);
+                   // print_r($errors);
+                   $pizzaString = $pizzaString . $errors;
                 }
 
                 $nombre = $_POST["pizza"];
@@ -199,8 +200,8 @@ public function procesarPedido(){
     public function formularioPersonalizada(){
         $masas = Masas::muestraMasas();
         $html= '<h4>MASAS: </h4>';
-        $html= $html . '<select name="masas">
-        <option disabled selected>seleccione una opción</option>';
+        $html= $html . '<select name="masas">';
+        //<option disabled selected>seleccione una opción</option>';
 
         foreach ($masas as $val) {
             $tipo=$val->get_tipo();
@@ -211,8 +212,8 @@ public function procesarPedido(){
 
         $tamaños = Tamaños::muestraTamaños();
         $html= $html . '<h4>TAMAÑOS: </h4>';
-        $html = $html . '<select name="tamaño" onchange="precioTam(this)">
-        <option disabled selected>seleccione una opción</option>';
+        $html = $html . '<select name="tamaño" onchange="precioTam(this)">';
+        //<option disabled selected>seleccione una opción</option>';
 
         foreach ($tamaños as $val) {
             $tamaño=$val->get_tamaño();
@@ -335,11 +336,12 @@ public function procesarPedido(){
             $arrayIngre=array();
             $lengt=count($masas);
             if(isset($_POST["PERS"])){
-                /*$masa = $_POST['masas'];
-                $tamanio = $_POST['t_personalizada'];
-                //echo'<p>'.$tamanio.'</p>';
+                echo'<p>holaa</p>';
+                $masa = $_GET['masas'];
+                $tamanio = $_GET['t_personalizada'];
+                echo'<p>'.$tamanio.'</p>';
 
-                $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
+               /* $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
                 $res_masa=$db->query($query_masa);
                 $row_masa=$res_masa->fetch_assoc();
                 $id_masa=$row_masa['ID_Masa'];
