@@ -29,21 +29,20 @@ $contenidoPrincipal =
 	</br>
 	<div class="center">
 	<h1>$tituloPagina</h1>
+	</div>
 	</br>
     <div class="container-fluid">
 		<div class="row" >
+		<div class="col-md-9">
 		<div class="container"><div class="card" style="width: 50rem;"><div class="card-header">
-				<div class="col-5">
-					$array
-				</div></div></div></div>
-				<div class="col align-self-center">
-					$htmlFormMensaje
-				</div>
-			</div>
+			$array
+		</div></div></div></div>
+		<div class="col-md-3">
+			$htmlFormMensaje
+		</div></div>
 		</div>
 	</div>
-
-
+	</br>
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';

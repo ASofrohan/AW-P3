@@ -12,6 +12,7 @@ $contenidoPrincipal =<<<EOF
 		<div class="center">
 		<h1>$tituloPagina</h1>
 		</br>
+		</div>
 		<div class="ofertas">
 			$ofertas
 		</div>

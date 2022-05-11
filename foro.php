@@ -15,6 +15,7 @@ $contenidoPrincipal =
 </br>
 <div class="center">
 <h1>$tituloPagina</h1>
+</div>
 </br>
  <div class="container-fluid">
 		<div class="row" >

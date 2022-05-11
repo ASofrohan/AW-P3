@@ -13,8 +13,12 @@ $string=mostrar($nombre,$carrito);
 $tituloPagina = 'Carrito';
 $contenidoPrincipal=<<<EOF
 	</br>
+	<div class="center">
+	<h1>$tituloPagina</h1>
+	</div>
+	</br>
 	<div class="container">
-	<div class="card" style="width: 30rem;">
+	<div class="card" style="width: 35rem;">
  	<div class="card-header">
 	<div class="carrito">
 	$string
