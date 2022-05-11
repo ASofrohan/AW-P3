@@ -8,7 +8,10 @@ $ofertas = $form->ofertas();
 $tituloPagina = 'Ofertas';
 
 $contenidoPrincipal =<<<EOF
+		</br>
+		<div class="center">
 		<h1>$tituloPagina</h1>
+		</br>
 		<div class="ofertas">
 			$ofertas
 		</div>
