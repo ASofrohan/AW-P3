@@ -420,7 +420,10 @@ function mostrarOfertas(){
 
         if(isset($_POST[$i])){
             
-            $query="DELETE FROM ofertas WHERE ID_Bebida=$i";
+            $query="UPDATE pedidos SET Oferta='4' WHERE Oferta =$i";
+            $resultado=$db->query($query);
+
+            $query="DELETE FROM ofertas WHERE ID_Oferta=$i";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");
