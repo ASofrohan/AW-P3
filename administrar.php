@@ -7,16 +7,34 @@ require_once __DIR__.'/includes/src/Usuario.php';
 require_once __DIR__.'/includes/src/Pizzas.php';
 require_once __DIR__.'/includes/src/Bebidas.php';
 
-$tituloPagina = 'Administracion';
+$tituloPagina = 'Administración';
 $string=mostrar();
 $stringUsuarios=mostrarUsuarios();
 $stringPizzas=mostrarPizzas();
 $stringBebidas=mostrarBebidas();
 $contenidoPrincipal =<<<EOF
+    </br>
+    <div class="center">
+    <h1>$tituloPagina</h1>
+    </div>
+    <div class="row">
+    <div class="col-md-12">
+	<div class="container"><div class="card" style="width: 59rem;"><div class="card-header">
     $string
+    </div></div>
+    <div class="col-md-12">
+	<div class="container"><div class="card" style="width: 70rem;"><div class="card-header">
     $stringUsuarios
+    </div></div>
+    <div class="col-md-12">
+	<div class="container"><div class="card" style="width: 40rem;"><div class="card-header">
     $stringPizzas
+    </div></div>
+    <div class="col-md-12">
+	<div class="container"><div class="card" style="width: 30rem;"><div class="card-header">
     $stringBebidas
+    </div></div>
+    </div>
 EOF;
 
 $string=$string.'Hola administrador!!'.'<Br>';
