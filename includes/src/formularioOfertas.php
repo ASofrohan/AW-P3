@@ -75,6 +75,39 @@ class FormularioOfertas extends Form{
             $i++;
             $ofertaString = $ofertaString . '</div></div></div></div>';
         }
+
+        if(isset($_SESSION["esAdmin"])){
+            $ofertaString = $ofertaString . '<div class="col-md-12">';
+            $ofertaString = $ofertaString . '<div class="container"><div class="card" style="width: 17rem;"><div class="card-header">';
+             $ofertaString = $ofertaString . '
+             <h2>Añadir Oferta</h2>
+             <form action="" enctype="multipart/form-data" method="post">
+                 <label for="oferta">Código de oferta:</label><br>
+                 <input type="text" id="oferta" name="oferta"><br>
+                 <label for="Descuento">Descuento:</label><br>
+                 <input type="number" step="any" id="Descuento" name="Descuento"><br>
+                 <label for="img">Tipo</label><br>
+                 <input type="number" step="any" id="Tipo" name="Tipo"><br><br>
+                 <label for="Info">Información:</label><br>
+                 <input type="text" id="Info" name="Info"><br>
+                 <input class="btn btn-outline-success" name="add" type="submit" id="add" value="Añadir"/>
+             </form>
+             ';
+             $ofertaString = $ofertaString . '</div>';
+
+             if(isset($_POST['add'])){
+
+                $oferta = $_POST["oferta"];
+                $Tipo = $_POST["Tipo"];
+                $Descuento = $_POST["Descuento"];
+                $Info = $_POST["Info"];
+
+                $query="INSERT INTO ofertas(ID_Oferta,Codigo,Tipo,Descuento,Info) VALUES ($i,'$oferta','$Tipo', '$Descuento, '$Info'')";
+                $resultado=$db->query($query);
+            }
+            $ofertaString = $ofertaString . '</div></div></div></div>';
+        } 
+
         $ofertaString = $ofertaString . '</div>';
         return $ofertaString;
     }
