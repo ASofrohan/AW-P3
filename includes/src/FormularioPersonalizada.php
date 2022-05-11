@@ -310,13 +310,13 @@ public function procesarPedido(){
         $html=$html . '</div>';
         $html=$html . '<div class="col-md-3">';
 
-            $html = $html . '<h3>Precio: </h3>';
-            $html = $html . '<p id= "precio">4.99</p>';
-            $html=$html.'<form id="form" name="form" method="post" autocomplete="off">';
-            $html = $html . '<input class="btn btn-outline-success" name="PERS" type="submit" id="3"value="Añadir"/>';
+        $html = $html . '<h3>Precio: </h3>';
+        $html = $html . '<p id= "precio">4.99</p>';
+        $html = $html . '<form id="form" name="form" method="post" autocomplete="off">';
+        $html = $html . '<input class="btn btn-outline-success" name="PERS" type="submit" id="3"value="Añadir"/>';
 
         $html=$html.'</div>';
-            $html=$html.'</div>';
+        $html=$html.'</div>';
       
             //modificar esto, los valores de las masasa, tamaño
             $arrayIngre=array();
