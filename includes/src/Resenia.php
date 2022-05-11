@@ -72,7 +72,6 @@ class Reseña
                     <a href='responderMensajeForo.php?id=$id'><input type='button' value='Responder'></a>";
                     $foroToString=$foroToString . "<br><br>";
                 }
-                
                 $foroToString=$foroToString . "<br><br>";
             }
         }

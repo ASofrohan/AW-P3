@@ -19,18 +19,23 @@ else{
 	$htmlFormMensaje = $form->gestiona();
 }
 
-$tituloPagina = 'Responder mensaje foro';
+$tituloPagina = 'Foro';
 $array=$reseña->mostrarReseñas();
 //$com=$array[0]->getComentario();
 
 $contenidoPrincipal =
 
 <<<EOF
+	</br>
+	<div class="center">
+	<h1>$tituloPagina</h1>
+	</br>
     <div class="container-fluid">
 		<div class="row" >
+		<div class="container"><div class="card" style="width: 50rem;"><div class="card-header">
 				<div class="col-5">
 					$array
-				</div>
+				</div></div></div></div>
 				<div class="col align-self-center">
 					$htmlFormMensaje
 				</div>

@@ -22,17 +22,22 @@ class FormularioActualizarRespuesta extends Form
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
-                <div class="grupo-control">
-                <label>Mensaje:</label>
-                <br>
-                <textarea name='mensaje'></textarea>$errorComentario
-                <br>
-                </div>
-                </div>
-                <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
+                <div class="container">
+                    <div class="card" style="width: 17rem;">
+                    <div class="card-header">
+                        <div class="grupo-control">
+                            <label>Mensaje:</label>
+                            <br>
+                            <textarea name='mensaje'></textarea>$errorComentario
+                            <br>
+                        </div>
+                        <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </fieldset>
-            <div>
+        <div>
         EOF;
         return $html;
     }

@@ -22,6 +22,7 @@ class FormularioResponderMensaje extends Form
         <div id="foro">
             <fieldset>
                 $htmlErroresGlobales
+                <div class="container"><div class="card" style="width: 17rem;"><div class="card-header">
                 <div class="grupo-control">
                 <label>Respuesta:</label>
                 <br>
@@ -29,7 +30,7 @@ class FormularioResponderMensaje extends Form
                 <br>
                 </div>
                 <div class="grupo-control"><button class="btn btn-outline-success" type="submit" name="Enviar">Enviar</button>
-                </div>
+                </div></div></div></div>
             </fieldset>
             <div>
         EOF;

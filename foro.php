@@ -12,14 +12,21 @@ $tituloPagina = 'Foro';
 
 $contenidoPrincipal =
 <<<EOF
+</br>
+<div class="center">
+<h1>$tituloPagina</h1>
+</br>
  <div class="container-fluid">
 		<div class="row" >
-				<div class="col-5" id="prueba">
+				<div class="container"><div class="card" style="width: 50rem;"><div class="card-header">
+				<!--<div class="col-5" id="prueba">-->
 					$array
-				</div>
+					<!--</div>-->
+				</div></div></div>
 			</div>
 		</div>
 	</div>
+	</br>
 EOF;
 
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
