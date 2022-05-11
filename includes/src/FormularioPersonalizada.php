@@ -37,6 +37,10 @@ class FormularioPersonalizada extends Form
 
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
             <p id="precio">  ' . $precio . '</p>';
+            if(isset($_SESSION["esAdmin"])){
+                $admin="admin".$i;
+                $pizzaString = $pizzaString . '&nbsp;<input class="btn btn-outline-danger" name="'.$admin.'" type="submit" id="'.$i.'" value="Borrar"/>';
+            }else $admin=null;
             /*$id_precio = "precio" . $val.get_id();
             $pizzaString = $pizzaString . ' <h3>Precio:</h3> 
             <p id="'.$id_precio.'">  ' . $precio . '</p>';*/
@@ -107,6 +111,15 @@ class FormularioPersonalizada extends Form
                     $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, $id_masa, $id_tamanio)";
                     $resultado=$db->query($query);
                 }
+
+                if(isset($_POST[$admin])){
+                    $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$i";
+                    $resultado=$db->query($query);
+                    
+                    $query="DELETE FROM pizzas WHERE ID_Pizza=$i";
+                    $resultado=$db->query($query);
+                }
+
                 ++$i;
             }
             $pizzaString = $pizzaString . '</div>';
@@ -229,8 +242,8 @@ public function procesarPedido(){
 
                 $masas = Masas::muestraMasas();
                 $html= $html . '<h4>MASAS: </h4>';
-                $html= $html . '<select name="masas">
-                <option disabled selected>seleccione una opción</option>';
+                $html= $html . '<select name="masas">';
+                //<option disabled selected>seleccione una opción</option>';
 
                 foreach ($masas as $val) {
                     $tipo=$val->get_tipo();
@@ -241,8 +254,8 @@ public function procesarPedido(){
 
                 $tamaños = Tamaños::muestraTamaños();
                 $html= $html . '<h4>TAMAÑOS: </h4>';
-                $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>
-                <option disabled selected>seleccione una opción</option>';
+                $html = $html . '<select name="t_personalizada" onchange=precioTam(this)>';
+                //<option disabled selected>seleccione una opción</option>';
 
                 foreach ($tamaños as $val) {
                     $tamaño=$val->get_tamaño();
@@ -322,7 +335,21 @@ public function procesarPedido(){
             $arrayIngre=array();
             $lengt=count($masas);
             if(isset($_POST["PERS"])){
-                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";
+                /*$masa = $_POST['masas'];
+                $tamanio = $_POST['t_personalizada'];
+                //echo'<p>'.$tamanio.'</p>';
+
+                $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
+                $res_masa=$db->query($query_masa);
+                $row_masa=$res_masa->fetch_assoc();
+                $id_masa=$row_masa['ID_Masa'];
+
+                $query_tam="SELECT ID_Tamaño FROM tamaños WHERE Precio='$tamanio'";
+                $res_tam=$db->query($query_tam);
+                $row_tam=$res_tam->fetch_assoc();
+                $id_tamanio=$row_tam['ID_Tamaño'];*/
+
+                $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, 3, 1,1)";   
                 $resultado=$db->query($query);
             }
             foreach ($masas as $val) {

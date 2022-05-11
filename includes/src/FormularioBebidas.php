@@ -87,10 +87,10 @@ class FormularioBebidas extends Form
                 }
 
                 if(isset($_POST[$admin])){
-                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
-                    $resultado=$db->query($query);
-
                     $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
+                    $resultado=$db->query($query);
+                    
+                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
                     $resultado=$db->query($query);
                 }
             }
