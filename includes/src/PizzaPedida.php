@@ -64,7 +64,7 @@ class PizzaPedida{
     public function get_precio(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query="SELECT * FROM Pizzas WHERE ID_Pizza='$this->pizza'";
+        $query="SELECT * FROM pizzas WHERE ID_Pizza='$this->pizza'";
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $name=$row['Nombre'];
@@ -77,8 +77,8 @@ class PizzaPedida{
     public function get_nombre(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query="SELECT * FROM Pizzas WHERE ID_Pizza='$this->pizza'";
-        $resultado=$conn->query($query);
+        $query="SELECT * FROM pizzas WHERE ID_Pizza='$this->pizza'";
+        $resultado=$conn->query($query) or die($conn->error);
         $row = $resultado->fetch_assoc();
         $name=$row['Nombre'];
         if($name=="Personalizada")

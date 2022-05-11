@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/src/FormularioOfertas.php';
+require_once __DIR__.'/includes/src/formularioOfertas.php';
 
 $form = new FormularioOfertas();
 $ofertas = $form->ofertas();

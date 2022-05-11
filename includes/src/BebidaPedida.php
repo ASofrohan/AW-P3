@@ -61,7 +61,7 @@ class BebidaPedida{
     public function get_nombre(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query="SELECT * FROM Bebidas WHERE ID_Bebida='$this->bebida'";
+        $query="SELECT * FROM bebidas WHERE ID_Bebida='$this->bebida'";
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $t=new Bebidas($this->bebida,$row['Nombre'],$row['Precio'],null);
@@ -70,7 +70,7 @@ class BebidaPedida{
     public function get_precio(){
         $app = Aplicacion::getInstancia();
         $conn = $app->conexionBd();
-        $query="SELECT * FROM Bebidas WHERE ID_Bebida='$this->bebida'";
+        $query="SELECT * FROM bebidas WHERE ID_Bebida='$this->bebida'";
         $resultado=$conn->query($query);
         $row = $resultado->fetch_assoc();
         $t=new Bebidas($this->bebida,$row['Nombre'],$row['Precio'],null);

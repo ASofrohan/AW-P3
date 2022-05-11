@@ -79,7 +79,7 @@ class Carrito{
         $co=$_SESSION['correo'];
             $query="SELECT i.Nombre ,i.Precio FROM ingredientes i
                     JOIN pizza_ingredientes p ON i.ID_Ingrediente=p.ID_Ingrediente
-                    JOIN pedidos_Pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
+                    JOIN pedidos_pizzas a ON a.ID_PizzaPedida= p.ID_PizzaPedida
                     JOIN pedidos o ON a.ID_Pedido=o.ID_Pedido
                     WHERE o.Estado=1 AND a.ID_Pizza=3 AND o.Usuario='$co'
                     ";

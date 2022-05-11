@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__.'/Aplicacion.php';
-require_once __DIR__.'/Mensaje_Respuesta.php';
+require_once __DIR__.'/Mensaje_respuesta.php';
+
+
 class Mensaje
 {
     private $id;

@@ -105,8 +105,7 @@ span.red{
 
 }
 div.carrito{
-	padding-left: 10px;
-	float: right;
+	padding-left: 20px;
 	min-height: 525px;
 	width: 100%;
 }
@@ -176,12 +175,12 @@ div.saludo{
 div.registro{
 	padding-left: 5px;
 }
-#prueba2{
-	background-color: rgb(255, 255, 255);
+#actualizarPerfil{
+	padding-left: 15px;
 }
 
-#prueba3{
-	background-color: rgb(255, 255, 255);
+#actualizarPerfilC{
+	padding-left: 5px;
 }
 
 #formLogin {
