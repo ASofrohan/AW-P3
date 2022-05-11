@@ -19,6 +19,7 @@ class FormularioOfertas extends Form{
             $descuento=$val->get_descuento();
             $info=$val->get_info();
             $ofertaString = $ofertaString . '<div class="col-md-3">';
+            $ofertaString = $ofertaString . '<div class="container"><div class="card" style="width: 18rem;"><div class="card-header">';
             if($tipo != 3){
                 $ofertaString = $ofertaString . '<form id="form" name="form" method="post" autocomplete="off">';
                 $ofertaString = $ofertaString . '<h2>' . $codigo . '</h2>';
@@ -72,7 +73,7 @@ class FormularioOfertas extends Form{
             }
 
             $i++;
-            $ofertaString = $ofertaString . '</div>';
+            $ofertaString = $ofertaString . '</div></div></div></div>';
         }
         $ofertaString = $ofertaString . '</div>';
         return $ofertaString;
