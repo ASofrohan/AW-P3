@@ -12,9 +12,17 @@ $string=mostrar($nombre,$carrito);
 
 $tituloPagina = 'Carrito';
 $contenidoPrincipal=<<<EOF
+	</br>
+	<div class="container">
+	<div class="card" style="width: 30rem;">
+ 	<div class="card-header">
 	<div class="carrito">
 	$string
 	</div>
+	</div>
+	</div>
+	</div>
+	</br>
 EOF;
 include __DIR__.'/includes/vistas/plantillas/plantilla.php';
 

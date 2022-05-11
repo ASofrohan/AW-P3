@@ -10,9 +10,11 @@ $htmlFormLogin = $form->gestiona();
 $tituloPagina = 'Login';
 
 $contenidoPrincipal = <<<EOF
+		</br>
 		<div class="center">
 		<h1>Acceso al sistema</h1>
 		</div>
+		</br>
 		<div class="login">
 		<div class="container">
 		<div class="card" style="width: 18rem;">
@@ -22,6 +24,7 @@ $contenidoPrincipal = <<<EOF
 		</div>
 		</div>
 		</div>
+		</br>
 		
 EOF;
 
