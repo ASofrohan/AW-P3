@@ -196,7 +196,7 @@ class FormularioPersonalizada extends Form
                 $precio = $_POST["precio"];
                 $image = "images/pizzas/" . $file_name;
 
-                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($id,'$precio', 0, '$nombre', '$image')";
+                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
                 $resultado=$db->query($query);
             }
         } 

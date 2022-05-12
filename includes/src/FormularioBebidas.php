@@ -161,7 +161,7 @@ class FormularioBebidas extends Form
                 $precio = $_POST["precio"];
                 $image = "images/bebidas/" . $file_name;
 
-                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($id,'$nombre','$precio', '$image')";
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i,'$nombre','$precio', '$image')";
                 $resultado=$db->query($query);
             }
         } 

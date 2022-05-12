@@ -108,13 +108,13 @@ class FormularioOfertas extends Form{
                 $resultado1->free();
                 for($Q=0;$Q<$length;$Q++){
                     $insert=$arrofer[$Q];}
-
+                 
                 $oferta = $_POST["oferta"];
                 $Tipo = $_POST["Tipo"];
                 $Descuento = $_POST["Descuento"];
-                $Info = $_POST["Info"];
+                $info =$_POST["Info"];
 
-                $query="INSERT INTO ofertas(ID_Oferta,Codigo,Tipo,Descuento,Info) VALUES ($insert+1,$oferta,$Tipo, $Descuento, '$Info')";
+                $query="INSERT INTO ofertas(ID_Oferta,Codigo,Tipo,Descuento,Info) VALUES ($insert+1,'$oferta',$Tipo, $Descuento,'$info')";
                 $resultado=$db->query($query);
             }
             $ofertaString = $ofertaString . '</div></div></div></div>';
