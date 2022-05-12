@@ -306,7 +306,7 @@ function mostrarBebidas(){
     $string=$string.'<th><center>Imagen</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $b=1;
+    $b=1000000;
     foreach($bebidas as $val){
         $id =$val->get_id();
         $nombre=$val->get_nombre();
@@ -367,8 +367,8 @@ function mostrarOfertas(){
     $string=$string.'<th><center>Info</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $i=1;
-    $j=0;
+    
+    $s=100000000;
     foreach($ofertas as $val){
         $id =$val->get_id();
         $codigo=$val->get_codigo();
