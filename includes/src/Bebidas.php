@@ -42,6 +42,8 @@ class Bebidas
                 $i += 1;
             }
         }
+        $bebidas->free();
+        
         return $arrayBebidas;
     }
 

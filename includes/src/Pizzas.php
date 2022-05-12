@@ -46,6 +46,8 @@ class Pizzas
             }
         }
 
+        $pizzas->free();
+
         return $arrayPizzas;
     }
 
