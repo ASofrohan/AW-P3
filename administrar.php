@@ -393,7 +393,7 @@ function mostrarOfertas(){
         $string=$string.'<td><center>'.$info.'</td>';
         $string=$string.'<td></td>';
 
-        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$s.'" type="submit" id="'.$s.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
         $string = $string .'</td>';
         $string=$string.'</form>';
@@ -401,16 +401,15 @@ function mostrarOfertas(){
 
         if(isset($_POST[$i])){
             
-            $query="UPDATE pedidos SET Oferta='4' WHERE Oferta =$i";
+            $query="UPDATE pedidos SET Oferta='4' WHERE Oferta =$s";
             $resultado=$db->query($query);
 
-            $query="DELETE FROM ofertas WHERE ID_Oferta=$i";
+            $query="DELETE FROM ofertas WHERE ID_Oferta=$s";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");
         }
-        $i++;
-        $j++;
+        $s++;
     }
     $string=$string.'</table>';
     return $string;
