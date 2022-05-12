@@ -242,8 +242,7 @@ function mostrarPizzas(){
     $string=$string.'<th><center>Imagen</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $i=0;
-    $j=0;
+    $p=1;
     foreach($pizzas as $val){
         $id =$val->get_id();
         $nombre=$val->get_nombre();
@@ -268,38 +267,21 @@ function mostrarPizzas(){
         $string=$string.'<td><center>'.$imagen.'</td>';
         $string=$string.'<td></td>';
 
-        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$p.'" type="submit" id="'.$p.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
-        //$string = $string . '<td><input class="btn btn-outline-info" name="'.$j.'" type="submit" id="'.$j.'"value="Editar Pizza"/>';
-        //$string = $string .'&nbsp';
-            if($pers==0)$string=$string.'Normal';else $string=$string.'Personalizada';
-        $string = $string .'</td>';
         $string=$string.'</form>';
         $string=$string.'</tr>';
-
-        /*if(isset($_POST[$i])){
-            if($admin==0){
-                $query="UPDATE usuarios SET Admin=1 WHERE Correo='$correo'";
-                $resultado=$db->query($query);
-            }
-            else{
-                $query="UPDATE usuarios SET Admin=0 WHERE Correo='$correo'";
-                $resultado=$db->query($query);
-            }
-            header("Location:administrar.php");
-            
-        }  */  
-        if(isset($_POST[$i])){
-            $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$i";
+ 
+        if(isset($_POST[$p])){
+            $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$p";
             $resultado=$db->query($query);
             
-            $query="DELETE FROM pizzas WHERE ID_Pizza=$i";
+            $query="DELETE FROM pizzas WHERE ID_Pizza=$p";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");
         }
-        $i++;
-        $j++;
+        $p++;
     }
     $string=$string.'</table>';
     return $string;
@@ -322,8 +304,7 @@ function mostrarBebidas(){
     $string=$string.'<th><center>Imagen</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $i=0;
-    $j=0;
+    $b=1;
     foreach($bebidas as $val){
         $id =$val->get_id();
         $nombre=$val->get_nombre();
@@ -345,23 +326,21 @@ function mostrarBebidas(){
         $string=$string.'<td><center>'.$imagen.'</td>';
         $string=$string.'<td></td>';
 
-        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$i.'" type="submit" id="'.$i.'"value="Eliminar"/></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$b.'" type="submit" id="'.$b.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
-        $string = $string .'</td>';
         $string=$string.'</form>';
         $string=$string.'</tr>';
 
-        if(isset($_POST[$i])){
-            $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
+        if(isset($_POST[$b])){
+            $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$b";
             $resultado=$db->query($query);
             
-            $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
+            $query="DELETE FROM bebidas WHERE ID_Bebida=$b";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");
         }
-        $i++;
-        $j++;
+        $b++;
     }
     $string=$string.'</table>';
     return $string;
