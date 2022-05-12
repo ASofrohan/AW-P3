@@ -370,12 +370,12 @@ public function procesarPedido(){
                 
                 $nombre=$val->get_nombre();
                 $id=$val->get_id();
-
+                $obtencionIdPizzaPedida=array();
                 $query1="SELECT * FROM pizza_ingredientes";
                 $resultado1=$db->query($query1);
                 $row_cnt = mysqli_num_rows($resultado1);
                 while($row = $resultado1->fetch_assoc()) {
-                    array_push($obtencionIdPizzaPedida,$row['ID_PizzaPedida']);
+                    array_push($obtencionIdPizzaPedida,$row['ID_IngredientePizza']);
                 }
                 if($row_cnt==0)$idIP=0;
                 else{
@@ -387,6 +387,9 @@ public function procesarPedido(){
                    
                     if(isset($_POST["$nombre"])){
                        
+
+
+                        ///
                         $query="INSERT INTO pizza_ingredientes(ID_IngredientePizza,ID_PizzaPedida,ID_Ingrediente) VALUES($idIP+1,$idPP+1, $id)";
                         $resultado=$db->query($query);
 
