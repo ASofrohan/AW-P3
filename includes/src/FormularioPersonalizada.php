@@ -349,9 +349,8 @@ public function procesarPedido(){
             $arrayIngre=array();
             $lengt=count($masas);
             if(isset($_POST["PERS"])){
-                echo'<p>holaa</p>';
-                $masa = $_GET['masas'];
-                $tamanio = $_GET['t_personalizada'];
+                $masa = $_GET['masas'] ?? null;
+                $tamanio = $_GET['t_personalizada'] ?? null;
                 echo'<p>'.$tamanio.'</p>';
 
                /* $query_masa="SELECT ID_Masa FROM masas WHERE Tipo='$masa'";
