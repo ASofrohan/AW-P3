@@ -334,10 +334,10 @@ function mostrarBebidas(){
         $string=$string.'</tr>';
 
         if(isset($_POST[$b])){
-            $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$b";
+            $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$id";
             $resultado=$db->query($query);
             
-            $query="DELETE FROM bebidas WHERE ID_Bebida=$b";
+            $query="DELETE FROM bebidas WHERE ID_Bebida=$id";
             $resultado=$db->query($query);
 
             header("Location:administrar.php");
