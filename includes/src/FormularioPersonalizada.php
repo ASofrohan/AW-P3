@@ -18,6 +18,7 @@ class FormularioPersonalizada extends Form
         $pizzaString = $pizzaString . '<div class="row">';
         foreach ($pizzas as $val) {
             $pizzaString = $pizzaString . '<div class="col-md-3">';
+            $id=$val->get_id();
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
@@ -88,7 +89,7 @@ class FormularioPersonalizada extends Form
                     }
                     for($j=0;$j<$row_cnt;$j++){
                         $idpedido=$obtencionIdPedido[$j];}
-                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES('$idpedido','$co',4,CURDATE(),1, 0000-00-00)";
+                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1, 0000-00-00)";
                     $resultado4=$db->query($query4);
                     $idPedido=$idpedido+1;
 
@@ -115,16 +116,17 @@ class FormularioPersonalizada extends Form
                     $id_tamanio=$row_tam['ID_Tamaño'];
                     $res_tam->free();
                     ////////////////
-                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, $id_masa, $id_tamanio)";
+                    $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $id, $id_masa, $id_tamanio)";
                     $resultado=$db->query($query);
                 }
 
                 if(isset($_POST[$admin])){
-                    $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$i";
+                    $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$id";
                     $resultado=$db->query($query);
                     
-                    $query="DELETE FROM pizzas WHERE ID_Pizza=$i";
+                    $query="DELETE FROM pizzas WHERE ID_Pizza=$id";
                     $resultado=$db->query($query);
+                    header("Location:Pizzas.php");
                 }
 
                 ++$i;
@@ -194,7 +196,7 @@ class FormularioPersonalizada extends Form
                 $precio = $_POST["precio"];
                 $image = "images/pizzas/" . $file_name;
 
-                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($i,'$precio', 0, '$nombre', '$image')";
+                $query="INSERT INTO pizzas(ID_Pizza,Precio,Personalizada,Nombre,Imagen) VALUES ($id,'$precio', 0, '$nombre', '$image')";
                 $resultado=$db->query($query);
             }
         } 

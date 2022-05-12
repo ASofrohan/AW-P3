@@ -66,7 +66,7 @@ function mostrar(){
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
     $q=0;
-    $p=100;
+    $p=10;
     foreach($pedidos as $val){
         $pedido =$val->get_idPedido();
         $user=$val->get_usuario();
@@ -150,8 +150,8 @@ function mostrarUsuarios(){
     $string=$string.'<th><center>Codigo postal</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $i=0;
-    $j=0;
+    $i=100;
+    $j=1000;
     foreach($usuarios as $val){
         $correo =$val->getCorreo();
         $nombre=$val->getNombre();
@@ -242,7 +242,7 @@ function mostrarPizzas(){
     $string=$string.'<th><center>Imagen</th>';
     $string=$string.'<th></th>';
     $string=$string.'</tr>';
-    $p=1;
+    $m=10000;
     foreach($pizzas as $val){
         $id =$val->get_id();
         $nombre=$val->get_nombre();
@@ -267,21 +267,23 @@ function mostrarPizzas(){
         $string=$string.'<td><center>'.$imagen.'</td>';
         $string=$string.'<td></td>';
 
-        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$p.'" type="submit" id="'.$p.'"value="Eliminar"/></td>';
+        $string = $string . '<td><input class="btn btn-outline-danger" name="'.$m.'" type="submit" id="'.$m.'"value="Eliminar"/></td>';
         $string = $string .'&nbsp';
         $string=$string.'</form>';
         $string=$string.'</tr>';
  
-        if(isset($_POST[$p])){
-            $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$p";
+        if(isset($_POST[$m])){
+            
+            $query="DELETE FROM pedidos_pizzas WHERE ID_Pizza=$id";
             $resultado=$db->query($query);
             
-            $query="DELETE FROM pizzas WHERE ID_Pizza=$p";
+            $query="DELETE FROM pizzas WHERE ID_Pizza=$id";
             $resultado=$db->query($query);
+            
 
             header("Location:administrar.php");
         }
-        $p++;
+        $m++;
     }
     $string=$string.'</table>';
     return $string;

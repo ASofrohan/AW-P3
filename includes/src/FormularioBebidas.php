@@ -15,6 +15,7 @@ class FormularioBebidas extends Form
         $bebidaString = $bebidaString . '<div class="row">';
         foreach ($bebidas as $val) {
             $bebidaString = $bebidaString . '<div class="col-md-3">';
+            $id=$val->get_id();
             $nombre=$val->get_nombre();
             $image=$val->get_image();
             $precio=$val->get_precio();
@@ -87,17 +88,18 @@ class FormularioBebidas extends Form
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
                     for($j=1; $j<=$_POST[$nombre]; $j++){
-                        $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($idPP+$j, $idPedido, $i)";
+                        $query="INSERT INTO pedidos_bebidas(ID_BebidaPedida,ID_Pedido,ID_Bebida) VALUES($idPP+$j, $idPedido, $id)";
                         $resultado=$db->query($query);
                     }
                 }
 
                 if(isset($_POST[$admin])){
-                    $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$i";
+                    $query="DELETE FROM pedidos_bebidas WHERE ID_Bebida=$id";
                     $resultado=$db->query($query);
 
-                    $query="DELETE FROM bebidas WHERE ID_Bebida=$i";
+                    $query="DELETE FROM bebidas WHERE ID_Bebida=$id";
                     $resultado=$db->query($query);
+                    header("Location:Bebidas.php");
                 }
             }
             ++$i;
@@ -159,7 +161,7 @@ class FormularioBebidas extends Form
                 $precio = $_POST["precio"];
                 $image = "images/bebidas/" . $file_name;
 
-                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($i,'$nombre','$precio', '$image')";
+                $query="INSERT INTO bebidas(ID_Bebida,Nombre,Precio,Imagen) VALUES ($id,'$nombre','$precio', '$image')";
                 $resultado=$db->query($query);
             }
         } 
