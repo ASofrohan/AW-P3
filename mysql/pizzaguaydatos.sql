@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2022 a las 18:46:03
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.2
+-- Servidor: vm15.db.swarm.test
+-- Tiempo de generación: 12-05-2022 a las 21:04:45
+-- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
+-- Versión de PHP: 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pizazguayprueba`
+-- Base de datos: `pizzaguayfinal`
 --
 
 --
@@ -54,7 +54,7 @@ INSERT INTO `ingredientes` (`ID_Ingrediente`, `Nombre`, `Precio`, `Image`) VALUE
 (1, 'Cebolla', 1.99, 'images/ingredientes/onion.jpg'),
 (2, 'Queso', 0.99, 'images/ingredientes/queso.jpg'),
 (3, 'Barbacoa', 0.99, 'images/ingredientes/bbq.jpg'),
-(4, 'Carne de cerdo', 2.99, 'images/ingredientes/cerdo.jpg'),
+(4, 'Cerdo', 2.99, 'images/ingredientes/cerdo.jpg'),
 (5, 'Pimientos', 1.59, 'images/ingredientes/pim.jpg');
 
 --
@@ -92,7 +92,7 @@ INSERT INTO `ofertas_tipos` (`ID_TipoOferta`, `Tipo`) VALUES
 INSERT INTO `pedidos` (`ID_Pedido`, `Usuario`, `Oferta`, `Fecha`, `Estado`, `FechaC`) VALUES
 (1, 'usuario@pizzaguay.com', 4, '2022-03-24', 0, '2022-05-09'),
 (2, 'usuario@pizzaguay.com', 4, '2022-03-09', 0, '2022-05-09'),
-(3, 'contactpizzaguay@gmail.com', 2, '0000-00-00', 1, '2022-05-09');
+(3, 'contactpizzaguay@gmail.com', 4, '0000-00-00', 1, '2022-05-09');
 
 --
 -- Volcado de datos para la tabla `pedidos_bebidas`
@@ -110,7 +110,7 @@ INSERT INTO `pedidos_bebidas` (`ID_BebidaPedida`, `ID_Pedido`, `ID_Bebida`) VALU
 INSERT INTO `pedidos_pizzas` (`ID_PizzaPedida`, `ID_Pedido`, `ID_Pizza`, `ID_Masa`, `ID_Tamaño`) VALUES
 (1, 1, 1, 1, 3),
 (2, 1, 3, 1, 1),
-(3, 3, 1, 1, 1);
+(3, 1, 3, 1, 1);
 
 --
 -- Volcado de datos para la tabla `pizzas`
@@ -119,7 +119,8 @@ INSERT INTO `pedidos_pizzas` (`ID_PizzaPedida`, `ID_Pedido`, `ID_Pizza`, `ID_Mas
 INSERT INTO `pizzas` (`ID_Pizza`, `Precio`, `Personalizada`, `Nombre`, `Imagen`) VALUES
 (1, 8.99, 0, 'Barbacoa', 'images/pizzas/bbq.jpg'),
 (2, 8.99, 0, 'Carbonara', 'images/pizzas/carb.jpg'),
-(3, 4.99, 1, 'Personalizada', 'images/pizzas/pers.jpg');
+(3, 4.99, 1, 'Personalizada', 'images/pizzas/pers.jpg'),
+(4, 8.99, 0, 'Peperoni', 'images/pizzas/peperoni.jpg');
 
 --
 -- Volcado de datos para la tabla `pizza_ingredientes`
@@ -144,7 +145,7 @@ INSERT INTO `tamaños` (`ID_Tamaño`, `Tamaño`, `Precio`) VALUES
 --
 
 INSERT INTO `usuarios` (`Correo`, `Nombre`, `Apellidos`, `Contraseña`, `Admin`, `Domicilio`) VALUES
-('contactpizzaguay@gmail.com', 'Usuario', 'Admin', '$2y$10$UM7xU.flgSqjK0/.wdXOoONVTOgK/vslIUTWLtxrGj9gQkWXD1s6G', 1, 2),
+('contactpizzaguay@gmail.com', 'Admin', 'Admin', '$2y$10$UM7xU.flgSqjK0/.wdXOoONVTOgK/vslIUTWLtxrGj9gQkWXD1s6G', 1, 2),
 ('usuario@pizzaguay.com', 'Usuario', 'Prueba', '$2y$10$Ts8HWmUXPLUOmpuyRzhXbeQwniEIwpBmtkuq.7NXYv9gGbvJO/r.O', 0, 1);
 COMMIT;
 
