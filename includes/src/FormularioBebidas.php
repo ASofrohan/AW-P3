@@ -56,6 +56,8 @@ class FormularioBebidas extends Form
                     $idPP=$obtencionIdBebidaPedida[$j];
                 }
 
+                $resultado1->free();
+
                 $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
                 $resultado2=$db->query($query2);
                 $row_cnt2 = mysqli_num_rows($resultado2);
@@ -74,10 +76,14 @@ class FormularioBebidas extends Form
                     for($j=0;$j<$row_cnt;$j++){
                         $idpedido=$obtencionIdPedido[$j];
                     }
-                        $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
-                        $resultado4=$db->query($query4);
-                        $idPedido=$idpedido+1;
+                    $resultado1->free();
+
+                    $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
+                    $resultado4=$db->query($query4);
+                    $idPedido=$idpedido+1;
                 }
+                $resultado2->free();
+                
                 //modificar esto, los valores de las masasa, tamaños
                 if(isset($_POST[$i])){
                     for($j=1; $j<=$_POST[$nombre]; $j++){

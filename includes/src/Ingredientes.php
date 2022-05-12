@@ -44,6 +44,8 @@ class Ingredientes
             }
         }
 
+        $ingredientes->free();
+        
         return $arrayIngredientes;
     }
 

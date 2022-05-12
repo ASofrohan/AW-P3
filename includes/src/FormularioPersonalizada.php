@@ -26,7 +26,7 @@ class FormularioPersonalizada extends Form
 
             $pizzaString = $pizzaString . '<h2>' . $nombre . '</h2>';
             $pizzaString = $pizzaString . '<form id="form" name="form" method="post" autocomplete="off">';
-            if($pers==1){
+            if($pers==1 && isset($_SESSION['login'])){
                 $pizzaString = $pizzaString . '<a href="editorPizza.php"><img src="' . $image . '" WIDTH=250 HEIGHT=250 class="img-fluid"></a>';
             }
             else{
@@ -69,6 +69,8 @@ class FormularioPersonalizada extends Form
                 for($j=0;$j<$row_cnt;$j++){
                     $idPP=$obtencionIdPizzaPedida[$j];
                 }
+                $resultado1->free();
+
                 $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
                 $resultado2=$db->query($query2);
                 $row_cnt2 = mysqli_num_rows($resultado2);
@@ -89,7 +91,11 @@ class FormularioPersonalizada extends Form
                     $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES('$idpedido','$co',4,CURDATE(),1, 0000-00-00)";
                     $resultado4=$db->query($query4);
                     $idPedido=$idpedido+1;
+
+                    $resultado1->free();
                 }
+                $resultado2->free();
+
 
                 if(isset($_POST[$i]) && $pers!=1){
                     //modificar esto, los valores de las masasa, tamaños
@@ -101,12 +107,13 @@ class FormularioPersonalizada extends Form
                     $res_masa=$db->query($query_masa);
                     $row_masa=$res_masa->fetch_assoc();
                     $id_masa=$row_masa['ID_Masa'];
+                    $res_masa->free();
 
                     $query_tam="SELECT ID_Tamaño FROM tamaños WHERE Precio='$tamanio'";
                     $res_tam=$db->query($query_tam);
                     $row_tam=$res_tam->fetch_assoc();
                     $id_tamanio=$row_tam['ID_Tamaño'];
-
+                    $res_tam->free();
                     ////////////////
                     $query="INSERT INTO pedidos_pizzas(ID_PizzaPedida,ID_Pedido,ID_Pizza,ID_Masa,ID_Tamaño) VALUES($idPP+1, $idPedido, $i, $id_masa, $id_tamanio)";
                     $resultado=$db->query($query);
@@ -280,6 +287,8 @@ public function procesarPedido(){
             for($j=0;$j<$row_cnt;$j++){
                 $idPP=$obtencionIdPizzaPedida[$j];
             }
+            $resultado1->free();
+
             $query2="SELECT ID_Pedido FROM pedidos WHERE Usuario='$co' AND Estado=1";
             $resultado2=$db->query($query2);
             $row_cnt2 = mysqli_num_rows($resultado2);
@@ -297,11 +306,13 @@ public function procesarPedido(){
                 for($j=0;$j<$row_cnt;$j++){
                     $idpedido=$obtencionIdPizzaPedida[$j];
                 }
-                
+                $resultado1->free();
+
                 $query4="INSERT INTO pedidos(ID_Pedido,Usuario,Oferta,Fecha,Estado,FechaC) VALUES($idpedido+1,'$co',4,CURDATE(),1,0000-00-00)";
                 $resultado4=$db->query($query4);
                 $idPedido=$idpedido+1;
             }
+            $resultado2->free();
           
         }
         $html=$html.'</div>';
@@ -380,9 +391,9 @@ public function procesarPedido(){
 
                     }
                    
-                    
+                $resultado1->free();
             }
-        
+            
     
         $app = Aplicacion::getInstancia();
         $db = $app->conexionBd();

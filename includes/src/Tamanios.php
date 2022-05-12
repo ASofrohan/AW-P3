@@ -40,6 +40,8 @@ class Tamaños
             }
         }
 
+        $tamanio->free();
+
         return $arrayTamaño;
     }
 

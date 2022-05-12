@@ -37,6 +37,8 @@ class Masas
             }
         }
 
+        $masas->free();
+
         return $arrayMasas;
     }
 
