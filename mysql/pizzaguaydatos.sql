@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2022 a las 17:50:48
+-- Tiempo de generación: 12-05-2022 a las 18:46:03
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -36,12 +36,7 @@ INSERT INTO `bebidas` (`ID_Bebida`, `Nombre`, `Precio`, `Imagen`) VALUES
 
 INSERT INTO `domicilios` (`ID_Domicilio`, `Calle`, `Ciudad`, `Piso`, `CodigoPostal`) VALUES
 (1, 'c/Sofia 5', 'Madrid', '4', 28022),
-(2, 'Cristo Rey', 'Madrid', '5, puerta 401', 28040),
-(6, 'c/Albania', 'Madrid', '1', 28022),
-(7, 'c/Sofia 5', 'Madrid', '3', 28022),
-(8, 'c/Sofia 5', 'Madrid', '3', 28022),
-(9, '', '', '', 0),
-(10, 'uli', 'uli', '3', 28702);
+(2, 'Cristo Rey', 'Madrid', '5, puerta 401', 28040);
 
 --
 -- Volcado de datos para la tabla `foro`
