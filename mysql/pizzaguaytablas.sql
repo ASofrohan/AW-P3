@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2022 a las 17:40:37
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.2
+-- Servidor: vm15.db.swarm.test
+-- Tiempo de generación: 12-05-2022 a las 21:04:35
+-- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
+-- Versión de PHP: 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pizzaguay`
+-- Base de datos: `pizzaguayfinal`
 --
 
 -- --------------------------------------------------------
@@ -60,8 +60,8 @@ CREATE TABLE `foro` (
   `Puntuacion` int(11) NOT NULL,
   `Comentario` varchar(255) NOT NULL,
   `Fecha` datetime NOT NULL DEFAULT current_timestamp(),
-  `Editado` tinyint(1) NOT NULL,
-  `Respuestas` tinyint(1) NOT NULL
+  `Editado` tinyint(1) NOT NULL DEFAULT 0,
+  `Respuestas` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE `foro_respuestas` (
   `ID_Usuario` varchar(30) NOT NULL,
   `Respuesta` varchar(255) NOT NULL,
   `Fecha` datetime NOT NULL DEFAULT current_timestamp(),
-  `Editado` tinyint(1) NOT NULL
+  `Editado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -139,7 +139,7 @@ CREATE TABLE `pedidos` (
   `Usuario` varchar(30) NOT NULL,
   `Oferta` int(30) NOT NULL,
   `Fecha` date NOT NULL,
-  `Estado` tinyint(1) NOT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 0,
   `FechaC` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
