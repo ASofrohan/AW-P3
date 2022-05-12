@@ -399,7 +399,7 @@ function mostrarOfertas(){
         $string=$string.'</form>';
         $string=$string.'</tr>';
 
-        if(isset($_POST[$i])){
+        if(isset($_POST[$s])){
             
             $query="UPDATE pedidos SET Oferta='4' WHERE Oferta =$s";
             $resultado=$db->query($query);
